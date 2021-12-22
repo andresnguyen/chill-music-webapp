@@ -1,26 +1,8 @@
-import Header from 'components/Header';
-import ProductFeature from 'features/Product';
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import NotFound from './components/NotFound';
-import CounterFeature from './features/Counter';
+import MainLayout from './layout/MainLayout'
+import React from 'react'
 
 function App() {
-  return (
-    <div className="app">
-      <Header />
-
-      <Switch>
-        <Redirect from="/home" to="/" exact />
-        <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
-
-        <Route path="/" component={CounterFeature} exact />
-        <Route path="/products" component={ProductFeature} />
-
-        <Route component={NotFound} />
-      </Switch>
-    </div>
-  );
+  return <MainLayout />
 }
 
-export default App;
+export default App

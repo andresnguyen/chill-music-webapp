@@ -1,16 +1,9 @@
-import counterReducer from '../features/Counter/counterSlice';
-import userReducer from '../features/Auth/userSlice';
-import cartReducer from '../features/Cart/cartSlice';
-const { configureStore } = require('@reduxjs/toolkit');
+const { configureStore } = require('@reduxjs/toolkit')
 
-const rootReducer = {
-  count: counterReducer,
-  user: userReducer,
-  cart: cartReducer,
-};
+const rootReducer = {}
 
 const store = configureStore({
   reducer: rootReducer,
-});
+})
 
-export default store;
+export default store
