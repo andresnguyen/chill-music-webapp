@@ -20,11 +20,12 @@ function MainLayout() {
       <Header />
       <Sidebar />
       <Switch>
-        <Route path="personal" component={PersonalFeature} />
-        <Route path="following" component={FollowingFeature} />
-        <Route path="explore" component={ExploreFeature} />
-        <Route path="charts" component={ChartFeature} />
-        <Route component={NotFound} />
+        <Route path="/" exact component={PersonalFeature} />
+        <Route path="/mymusic" component={PersonalFeature} />
+        <Route path="/following" exact component={FollowingFeature} />
+        <Route path="/explore" exact component={ExploreFeature} />
+        <Route path="/charts" exact component={ChartFeature} />
+        <Route exact component={NotFound} />
       </Switch>
       <MusicPlayer />
     </div>

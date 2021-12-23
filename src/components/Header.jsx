@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 function Header(props) {
+  const headerRef = useRef(null)
+
+  useEffect(() => {
+    const mainContent = headerRef.current.parentElement.querySelector('.app__container')
+    mainContent.addEventListener("scroll", () => {
+      if (
+        mainContent.scrollTop > 0 ||
+        mainContent.scrollTop > 0
+      ) {
+        headerRef.current.classList.add("active");
+      } else {
+        headerRef.current.classList.remove("active");
+      }
+    });
+    return () => {
+      mainContent.removeEventListener("scroll", null);
+    };
+  }, []);
+
   return (
-    <header className="header grid">
+    <header className="header grid" ref={headerRef}>
       <div className="header__with-search">
         <button className="header__button">
           <i className="bi bi-arrow-left header__button-icon"></i>

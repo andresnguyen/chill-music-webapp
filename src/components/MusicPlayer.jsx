@@ -4,13 +4,9 @@ import PropTypes from 'prop-types'
 function MusicPlayer(props) {
   return (
     // open-popup
-    <div
-      className="player grid"
-      style={{
-        background:
-          "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')",
-      }}
-    >
+    <div className="player grid" style={{
+      backgroundImage: "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')"
+    }}>
       <div className="player__container">
         <div className="player__container-song">
           <div className="player__song-info media">
@@ -170,7 +166,7 @@ function MusicPlayer(props) {
                   <div
                     className="thumb-img"
                     style={{
-                      background:
+                      backgroundImage:
                         "url('https://i.ytimg.com/vi/kTJczUoc26U/maxresdefault.jpg') no-repeat center center / cover",
                     }}
                   ></div>

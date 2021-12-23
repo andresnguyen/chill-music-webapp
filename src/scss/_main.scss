@@ -374,6 +374,11 @@
   justify-content: space-between;
 }
 
+.header.active {
+  background-color: var(--layout-bg);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 1px;
+}
+
 .header__with-search {
   flex: 1;
   height: 100%;
@@ -903,7 +908,7 @@
 }
 
 .container__tab {
-  display: none;
+  // display: none;
   /* padding: 15px; */
 }
 
