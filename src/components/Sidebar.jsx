@@ -1,47 +1,64 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 function Sidebar(props) {
   return (
     <div className="app__sidebar">
       <div className="sidebar__logo hide-on-mobile">
-        <a href="#" className="sidebar__logo-link">
-          <img src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/main-logo.svg" alt="Logo" className="sidebar__logo-img" />
-          <img src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/small-logo.svg" alt="Logo" className="sidebar__small-logo" />
-        </a>
+        <Link to="/" className="sidebar__logo-link">
+          <img
+            src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/main-logo.svg"
+            alt="Logo"
+            className="sidebar__logo-img"
+          />
+          <img
+            src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/small-logo.svg"
+            alt="Logo"
+            className="sidebar__small-logo"
+          />
+        </Link>
       </div>
       <div className="sidebar__nav">
         <ul className="sidebar__nav-list sidebar__nav-list--separate ">
-          <li className="sidebar__nav-item active">
+          <NavLink to="/mymusic" className="sidebar__nav-item">
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-music-player"></i>
               <span>Cá Nhân</span>
             </a>
-          </li>
-          <li className="sidebar__nav-item">
+          </NavLink>
+          <NavLink
+            to="/"
+            className="sidebar__nav-item"
+            isActive={(match, location) => {
+              if (location.pathname === '/') {
+                return true
+              }
+            }}
+          >
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-vinyl"></i>
               <span>Khám Phá</span>
             </a>
-          </li>
-          <li className="sidebar__nav-item">
+          </NavLink>
+          <NavLink to="/zing-chart" className="sidebar__nav-item">
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-music-note-list"></i>
               <span>#zingchart</span>
             </a>
-          </li>
-          <li className="sidebar__nav-item">
+          </NavLink>
+          <NavLink to="/radio" className="sidebar__nav-item">
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-soundwave"></i>
               <span>Radio</span>
               <div className="sidebar__nav-label">LIVE</div>
             </a>
-          </li>
-          <li className="sidebar__nav-item">
+          </NavLink>
+          <NavLink to="/following" className="sidebar__nav-item">
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-file-earmark-slides"></i>
               <span>Theo Dõi</span>
             </a>
-          </li>
+          </NavLink>
         </ul>
       </div>
       <div className="sidebar__subnav hide-on-mobile">

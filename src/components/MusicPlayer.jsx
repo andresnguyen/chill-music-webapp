@@ -1,12 +1,53 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 function MusicPlayer(props) {
+  const [playing, setPlaying] = useState(false)
+  const [repeat, setRepeat] = useState(false)
+  const [seeking, setSeeking] = useState(false)
+
+
+  // Handle when click play
+  handlePlayClick = () => {
+    if (playing) {
+      return audio.pause()
+    }
+
+    audio.play()
+  }
+
+  // When the song is played
+
+  // When the song is paused
+
+  // Handle next song when audio ended
+  handleNextEnded = () => {
+    if(!repeat) {
+      handleNextClick()
+    }
+    audio.play();
+  }
+
+  // When the song progress changes
+  handleOnTimeUpdate = () => {
+    if(audio.duration) {
+      if(!seeking) {
+        
+      }
+    }
+  }
+
   return (
     // open-popup
-    <div className="player grid" style={{
-      backgroundImage: "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')"
-    }}>
+    <div
+      className="player grid"
+      style={{
+        backgroundImage:
+          "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')",
+      }}
+    >
+      <audio id="audio" ref={audioRef}></audio>
+
       <div className="player__container">
         <div className="player__container-song">
           <div className="player__song-info media">
@@ -106,7 +147,6 @@ function MusicPlayer(props) {
             </div>
           </div>
         </div>
-        <audio id="audio" src=""></audio>
       </div>
       <div className="player__popup">
         <div className="player__popup-header">

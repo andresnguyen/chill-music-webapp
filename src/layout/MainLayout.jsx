@@ -20,7 +20,7 @@ function MainLayout() {
       <Header />
       <Sidebar />
       <Switch>
-        <Route path="/" exact component={PersonalFeature} />
+        <Route path="/" exact component={ExploreFeature} />
         <Route path="/mymusic" component={PersonalFeature} />
         <Route path="/following" exact component={FollowingFeature} />
         <Route path="/explore" exact component={ExploreFeature} />
