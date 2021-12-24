@@ -1,52 +1,156 @@
-import React, { useRef, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useRef, useState } from 'react'
+import classNames from 'classnames'
 
 function MusicPlayer(props) {
+  const isMountRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [repeat, setRepeat] = useState(false)
   const [seeking, setSeeking] = useState(false)
+  const [random, setRandom] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [indexList, setIndexList] = useState([])
+  const [songList, setSongList] = useState([
+    {
+      name: 'Phố Đã Lên Đèn',
+      imageUrl: 'https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song21.jpg',
+      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song21.mp3',
+    },
+    {
+      name: 'Thiên Lý Ơi',
+      imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song20.jpg',
+      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song20.mp3',
+    },
+    {
+      name: 'Tôc ca',
+      imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song19.jpg',
+      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song19.mp3',
+    },
+    {
+      name: 'Hãy trao cho anh',
+      imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song18.jpg',
+      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song18.mp3',
+    },
+  ])
 
+  useEffect(() => {
+    if (isMountRef.current) {
+      setPlaying(true)
+    }
+    isMountRef.current = true
+  }, [currentIndex])
 
-  // Handle when click play
-  handlePlayClick = () => {
+  useEffect(() => {
+    if (isMountRef.current) {
+      if (playing) {
+        audioRef.current.play()
+      } else {
+        audioRef.current.pause()
+      }
+    }
+    isMountRef.current = true
+  }, [playing])
+
+  const audioRef = useRef(null)
+
+  const nextSong = () => {
+    if (currentIndex >= songList.lenth) {
+      setCurrentIndex(0)
+    } else {
+      setCurrentIndex(currentIndex + 1)
+    }
+  }
+
+  const prevSong = () => {
+    if (currentIndex < 0) {
+      setCurrentIndex(songList.length - 1)
+    } else {
+      setCurrentIndex(currentIndex - 1)
+    }
+  }
+
+  const handlePlayClick = () => {
+    setPlaying(!playing)
+    const audio = audioRef.current
     if (playing) {
       return audio.pause()
     }
-
+    
     audio.play()
   }
 
-  // When the song is played
-
-  // When the song is paused
-
-  // Handle next song when audio ended
-  handleNextEnded = () => {
-    if(!repeat) {
+  const handleSongEnded = () => {
+    const audio = audioRef.current
+    if (!repeat) {
       handleNextClick()
     }
-    audio.play();
+    audio.play()
   }
 
-  // When the song progress changes
-  handleOnTimeUpdate = () => {
-    if(audio.duration) {
-      if(!seeking) {
-        
+  // when the song progress changes
+  const handleOnTimeUpdate = () => {
+    const audio = audioRef.current
+
+    if (audio.duration) {
+      if (!seeking) {
       }
     }
   }
 
+  const playRandomSong = () => {
+    let newIndex
+
+    do {
+      newIndex = Math.floor(Math.random() * songList.length)
+    } while (newIndex === currentIndex || indexList.includes(newIndex))
+
+    indexList.push(newIndex)
+    setCurrentIndex(newIndex)
+    if (indexList.length === songList.length) {
+      setIndexList([])
+    }
+  }
+
+  // method 2 to seek
+  const handleSeek = () => {}
+
+  const handleNextClick = () => {
+    if (random) {
+      playRandomSong()
+    } else {
+      nextSong()
+    }
+  }
+
+  const handlePrevClick = () => {
+    if (random) {
+      playRandomSong()
+    } else {
+      prevSong()
+    }
+  }
+
+  const handleRandomClick = () => {
+    setRandom(!random)
+  }
+
+  const handleRepeatClick = () => {
+    setRepeat(!repeat)
+  }
+
+  const handleVolumChange = () => {}
+
+  const currentSong = songList[currentIndex]
+
   return (
     // open-popup
     <div
-      className="player grid"
+      className={classNames('player grid', { playing: playing })}
       style={{
         backgroundImage:
           "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')",
       }}
     >
-      <audio id="audio" ref={audioRef}></audio>
+      <audio id="audio" src={currentSong.songUrl} ref={audioRef}></audio>
 
       <div className="player__container">
         <div className="player__container-song">
@@ -56,8 +160,7 @@ function MusicPlayer(props) {
                 <div
                   className="thumb-img"
                   style={{
-                    background:
-                      "url('https://i.ytimg.com/vi/kTJczUoc26U/maxresdefault.jpg') no-repeat center center / cover",
+                    background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
                   }}
                 ></div>
                 <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -78,8 +181,8 @@ function MusicPlayer(props) {
               <div className="player__song-body media__info">
                 <div className="player__song-title info__title">
                   <div className="player__title-animate">
-                    <div className="title__item">Music name</div>
-                    <div className="title__item">Music name</div>
+                    <div className="title__item">{currentSong.name}</div>
+                    <div className="title__item">{currentSong.name}</div>
                   </div>
                 </div>
                 <div className="player__song-author info__author">Author</div>
@@ -99,20 +202,20 @@ function MusicPlayer(props) {
         </div>
         <div className="player__control">
           <div className="player__control-btn">
-            <div className="control-btn btn-random is-small">
+            <div className="control-btn btn-random is-small" onClick={handleRandomClick}>
               <i className="bi bi-shuffle"></i>
             </div>
-            <div className="control-btn btn-prev">
+            <div className="control-btn btn-prev" onClick={handlePrevClick}>
               <i className="bi bi-skip-start-fill"></i>
             </div>
-            <div className="control-btn btn-toggle-play btn--play-song is-medium">
+            <div className="control-btn btn-toggle-play btn--play-song is-medium" onClick={handlePlayClick}>
               <i className="bi bi-pause icon-pause"></i>
               <i className="bi bi-play-fill icon-play"></i>
             </div>
-            <div className="control-btn btn-next">
+            <div className="control-btn btn-next" onClick={handleNextClick}>
               <i className="bi bi-skip-end-fill"></i>
             </div>
-            <div className="control-btn btn-repeat is-small is-medium">
+            <div className="control-btn btn-repeat is-small is-medium" onClick={handleRepeatClick}>
               <i className="bi bi-arrow-repeat"></i>
             </div>
           </div>
@@ -249,20 +352,20 @@ function MusicPlayer(props) {
           </div>
           <div className="player__control">
             <div className="player__control-btn">
-              <div className="control-btn btn-random is-small">
+              <div className="control-btn btn-random is-small" onClick={handleRandomClick}>
                 <i className="bi bi-shuffle"></i>
               </div>
-              <div className="control-btn btn-prev">
+              <div className="control-btn btn-prev" onClick={handlePrevClick}>
                 <i className="bi bi-skip-start-fill"></i>
               </div>
-              <div className="control-btn btn-toggle-play btn--play-song is-medium">
+              <div className="control-btn btn-toggle-play btn--play-song is-medium" onClick={handlePlayClick}>
                 <i className="bi bi-pause icon-pause"></i>
                 <i className="bi bi-play-fill icon-play"></i>
               </div>
-              <div className="control-btn btn-next">
+              <div className="control-btn btn-next" onClick={handleNextClick}>
                 <i className="bi bi-skip-end-fill"></i>
               </div>
-              <div className="control-btn btn-repeat is-small is-medium">
+              <div className="control-btn btn-repeat is-small is-medium" onClick={handleRepeatClick}>
                 <i className="bi bi-arrow-repeat"></i>
               </div>
             </div>
