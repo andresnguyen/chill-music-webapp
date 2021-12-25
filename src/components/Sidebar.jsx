@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import smallLogo from 'assets/images/small-logo.png'
+import logo from 'assets/images/logo.svg'
+
 
 function Sidebar(props) {
   return (
@@ -7,12 +10,12 @@ function Sidebar(props) {
       <div className="sidebar__logo hide-on-mobile">
         <Link to="/" className="sidebar__logo-link">
           <img
-            src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/main-logo.svg"
+            src={logo}
             alt="Logo"
             className="sidebar__logo-img"
           />
           <img
-            src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/small-logo.svg"
+            src={smallLogo}
             alt="Logo"
             className="sidebar__small-logo"
           />

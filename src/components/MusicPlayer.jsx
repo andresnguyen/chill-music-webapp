@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { formatSongTime } from 'utils'
+import smallLogo from 'assets/images/small-logo.png'
 
 function MusicPlayer(props) {
   const isMountRef = useRef(null)
@@ -176,7 +177,7 @@ function MusicPlayer(props) {
       className={classNames('player grid', { 'open-popup': popupShow, playing: playing })}
       style={{
         backgroundImage:
-          "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')",
+          "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/theme1.svg')",
       }}
     >
       <audio
@@ -334,7 +335,7 @@ function MusicPlayer(props) {
         <div className="player__popup-header">
           <div className="player__popup-logo">
             <img
-              src="https://vikdang.github.io/Code_web_music_player/assets/img/logos/small-logo.svg"
+              src={smallLogo}
               alt="Logo"
               className="player__logo-img"
             />

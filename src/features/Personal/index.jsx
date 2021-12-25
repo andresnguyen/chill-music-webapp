@@ -8,6 +8,8 @@ import NotFound from './components/NotFound'
 import PlaylistTab from './components/PlaylistTab'
 import SongTab from './components/SongTab'
 import UploadTab from './components/UploadTab'
+import avatar from 'assets/images/avatar.jpg'
+
 
 function PersonalFeature(props) {
   const match = useRouteMatch()
@@ -26,12 +28,12 @@ function PersonalFeature(props) {
           <div className="app__header-user">
             <div className="app__user-avatar">
               <img
-                src="https://vikdang.github.io/Code_web_music_player/assets/img/avatars/avatar.jpg"
+                src={avatar}
                 alt=""
                 className="app__user-img"
               />
             </div>
-            <span className="app__user-name">Trần Huyền My</span>
+            <span className="app__user-name">Thường Nguyễn</span>
           </div>
           <div className="app__header-actions">
             <a href="#" className="vip-btn is-small button button-gold hide-on-mobile">

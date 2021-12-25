@@ -1,25 +1,22 @@
-import React, { useRef, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import avatar from 'assets/images/avatar.jpg'
+import React, { useEffect, useRef } from 'react'
 
 function Header(props) {
   const headerRef = useRef(null)
 
   useEffect(() => {
     const mainContent = headerRef.current.parentElement.querySelector('.app__container')
-    mainContent.addEventListener("scroll", () => {
-      if (
-        mainContent.scrollTop > 0 ||
-        mainContent.scrollTop > 0
-      ) {
-        headerRef.current.classList.add("active");
+    mainContent.addEventListener('scroll', () => {
+      if (mainContent.scrollTop > 0 || mainContent.scrollTop > 0) {
+        headerRef.current.classList.add('active')
       } else {
-        headerRef.current.classList.remove("active");
+        headerRef.current.classList.remove('active')
       }
-    });
+    })
     return () => {
-      mainContent.removeEventListener("scroll", null);
-    };
-  }, []);
+      mainContent.removeEventListener('scroll', null)
+    }
+  }, [])
 
   return (
     <header className="header grid" ref={headerRef}>
@@ -255,7 +252,7 @@ function Header(props) {
             </div>
           </li>
           <li className="header__nav-item">
-            <img src="https://vikdang.github.io/Code_web_music_player/assets/img/avatars/avatar.jpg" alt="" className="header__nav-btn" />
+            <img src={avatar} alt="" className="header__nav-btn" />
           </li>
         </ul>
       </div>
