@@ -29,7 +29,7 @@ function MusicPlayer(props) {
       songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song20.mp3',
     },
     {
-      name: 'Tôc ca',
+      name: 'Tộc ca',
       imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song19.jpg',
       songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song19.mp3',
     },
@@ -40,9 +40,18 @@ function MusicPlayer(props) {
     },
   ])
 
+  const audioRef = useRef(null)
+  const currentSong = songList[currentIndex]
+
   useEffect(() => {
     setVolume()
   }, [])
+
+  useEffect(() => {
+    if (playing) {
+      document.title = songList?.[currentIndex].name || 'Chillmusic'
+    }
+  }, [playing, currentIndex])
 
   useEffect(() => {
     if (isMountRef.current) {
@@ -62,8 +71,6 @@ function MusicPlayer(props) {
       }
     }
   }, [playing])
-
-  const audioRef = useRef(null)
 
   const nextSong = () => {
     if (currentIndex === songList.length - 1) {
@@ -169,10 +176,7 @@ function MusicPlayer(props) {
     setPopupShow(!popupShow)
   }
 
-  const currentSong = songList[currentIndex]
-
   return (
-    // open-popup
     <div
       className={classNames('player grid', { 'open-popup': popupShow, playing: playing })}
       style={{
@@ -334,11 +338,7 @@ function MusicPlayer(props) {
       <div className="player__popup">
         <div className="player__popup-header">
           <div className="player__popup-logo">
-            <img
-              src={smallLogo}
-              alt="Logo"
-              className="player__logo-img"
-            />
+            <img src={smallLogo} alt="Logo" className="player__logo-img" />
           </div>
           <div className="player__popup-container">
             <ul className="player__popup-menu">
