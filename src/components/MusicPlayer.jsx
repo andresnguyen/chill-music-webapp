@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
+import { formatSongTime } from 'utils'
 
 function MusicPlayer(props) {
   const isMountRef = useRef(null)
@@ -7,7 +8,13 @@ function MusicPlayer(props) {
   const [repeat, setRepeat] = useState(false)
   const [seeking, setSeeking] = useState(false)
   const [random, setRandom] = useState(false)
+  const [value, setValue] = useState(0)
+  const [popupShow, setPopupShow] = useState(false)
+
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [currentVolume, setCurrentVolume] = useState(10)
+
   const [indexList, setIndexList] = useState([])
   const [songList, setSongList] = useState([
     {
@@ -33,9 +40,15 @@ function MusicPlayer(props) {
   ])
 
   useEffect(() => {
+    setVolume()
+  }, [])
+
+  useEffect(() => {
     if (isMountRef.current) {
       setPlaying(true)
+      audioRef.current.play()
     }
+
     isMountRef.current = true
   }, [currentIndex])
 
@@ -47,13 +60,12 @@ function MusicPlayer(props) {
         audioRef.current.pause()
       }
     }
-    isMountRef.current = true
   }, [playing])
 
   const audioRef = useRef(null)
 
   const nextSong = () => {
-    if (currentIndex >= songList.lenth) {
+    if (currentIndex === songList.length - 1) {
       setCurrentIndex(0)
     } else {
       setCurrentIndex(currentIndex + 1)
@@ -61,7 +73,7 @@ function MusicPlayer(props) {
   }
 
   const prevSong = () => {
-    if (currentIndex < 0) {
+    if (currentIndex === 0) {
       setCurrentIndex(songList.length - 1)
     } else {
       setCurrentIndex(currentIndex - 1)
@@ -70,12 +82,6 @@ function MusicPlayer(props) {
 
   const handlePlayClick = () => {
     setPlaying(!playing)
-    const audio = audioRef.current
-    if (playing) {
-      return audio.pause()
-    }
-    
-    audio.play()
   }
 
   const handleSongEnded = () => {
@@ -86,19 +92,16 @@ function MusicPlayer(props) {
     audio.play()
   }
 
-  // when the song progress changes
-  const handleOnTimeUpdate = () => {
-    const audio = audioRef.current
-
-    if (audio.duration) {
-      if (!seeking) {
-      }
+  const handleOnTimeUpdate = (e) => {
+    if (!seeking) {
+      const audio = e.target
+      setValue(Math.round((audio.currentTime / audio.duration) * 100))
+      setCurrentTime(audio.currentTime)
     }
   }
 
   const playRandomSong = () => {
     let newIndex
-
     do {
       newIndex = Math.floor(Math.random() * songList.length)
     } while (newIndex === currentIndex || indexList.includes(newIndex))
@@ -109,9 +112,6 @@ function MusicPlayer(props) {
       setIndexList([])
     }
   }
-
-  // method 2 to seek
-  const handleSeek = () => {}
 
   const handleNextClick = () => {
     if (random) {
@@ -137,24 +137,59 @@ function MusicPlayer(props) {
     setRepeat(!repeat)
   }
 
-  const handleVolumChange = () => {}
+  const setVolume = (volume = currentVolume) => {
+    const audio = audioRef.current
+    audio.volume = volume / 100
+    setCurrentVolume(volume)
+  }
+
+  const handleVolumeChange = (e) => {
+    setVolume(e.target.value)
+  }
+
+  const handleOnInput = (e) => {
+    const audio = audioRef.current
+    const seekTime = (e.target.value * audio.duration) / 100
+    setCurrentTime(seekTime)
+    setValue(e.target.value)
+  }
+
+  const startSeeking = () => {
+    setSeeking(true)
+  }
+
+  const endSeeking = () => {
+    const audio = audioRef.current
+    setSeeking(false)
+    audio.currentTime = currentTime
+  }
+
+  const handlePopupClick = () => {
+    setPopupShow(!popupShow)
+  }
 
   const currentSong = songList[currentIndex]
 
   return (
     // open-popup
     <div
-      className={classNames('player grid', { playing: playing })}
+      className={classNames('player grid', { 'open-popup': popupShow, playing: playing })}
       style={{
         backgroundImage:
           "url('https://vikdang.github.io/Code_web_music_player/assets/img/themeBgs/listTheme1/playerThemes/theme1.png')",
       }}
     >
-      <audio id="audio" src={currentSong.songUrl} ref={audioRef}></audio>
+      <audio
+        id="audio"
+        src={currentSong.songUrl}
+        ref={audioRef}
+        onEnded={handleSongEnded}
+        onTimeUpdate={handleOnTimeUpdate}
+      ></audio>
 
       <div className="player__container">
         <div className="player__container-song">
-          <div className="player__song-info media">
+          <div className={classNames('player__song-info media', { playing: playing })}>
             <div className="media__left">
               <div className="player__song-thumb media__thumb note-1">
                 <div
@@ -180,9 +215,10 @@ function MusicPlayer(props) {
             <div className="media__content">
               <div className="player__song-body media__info">
                 <div className="player__song-title info__title">
-                  <div className="player__title-animate">
-                    <div className="title__item">{currentSong.name}</div>
-                    <div className="title__item">{currentSong.name}</div>
+                  <div className="player__song-title-custom">
+                    <marquee scrollDelay={130} className="player__song-title-marquee">
+                      <span className="player__song-title-span">{currentSong.name}</span>
+                    </marquee>
                   </div>
                 </div>
                 <div className="player__song-author info__author">Author</div>
@@ -202,7 +238,12 @@ function MusicPlayer(props) {
         </div>
         <div className="player__control">
           <div className="player__control-btn">
-            <div className="control-btn btn-random is-small" onClick={handleRandomClick}>
+            <div
+              className={classNames('control-btn btn-random is-small', {
+                active: random,
+              })}
+              onClick={handleRandomClick}
+            >
               <i className="bi bi-shuffle"></i>
             </div>
             <div className="control-btn btn-prev" onClick={handlePrevClick}>
@@ -215,17 +256,42 @@ function MusicPlayer(props) {
             <div className="control-btn btn-next" onClick={handleNextClick}>
               <i className="bi bi-skip-end-fill"></i>
             </div>
-            <div className="control-btn btn-repeat is-small is-medium" onClick={handleRepeatClick}>
+            <div
+              className={classNames('control-btn btn-repeat is-small is-medium', {
+                active: repeat,
+              })}
+              onClick={handleRepeatClick}
+            >
               <i className="bi bi-arrow-repeat"></i>
             </div>
           </div>
           <div className="progress-block hide-on-mobile">
-            <span className="tracktime">00:00</span>
-            <input id="progress--main" className="progress" type="range" value="0" step="1" min="0" max="100" />
+            <span className="tracktime">{formatSongTime(currentTime)}</span>
+            <input
+              id="progress--main"
+              className="progress"
+              type="range"
+              value={value}
+              step={1}
+              min={0}
+              max={100}
+              onInput={handleOnInput}
+              onMouseDown={startSeeking}
+              onTouchStart={startSeeking}
+              onMouseUp={endSeeking}
+              onTouchEnd={endSeeking}
+            />
             <div className="progress__track song--track">
-              <div className="progress__track-update"></div>
+              <div
+                className="progress__track-update"
+                style={{
+                  width: `${value}%`,
+                }}
+              ></div>
             </div>
-            <span className="durationtime">--:--</span>
+            <span className="durationtime">
+              {audioRef.current?.duration ? formatSongTime(audioRef.current.duration) : '--:--'}
+            </span>
           </div>
         </div>
         <div className="player__options hide-on-mobile">
@@ -240,12 +306,25 @@ function MusicPlayer(props) {
               <i className="bi bi-volume-up btn--icon"></i>
             </div>
             <div className="player__volume-progress">
-              <input type="range" className="volume__range" value="100" step="1" min="0" max="100" />
+              <input
+                type="range"
+                className="volume__range"
+                value={currentVolume}
+                step={1}
+                min={0}
+                max={100}
+                onChange={handleVolumeChange}
+              />
               <div className="progress__track volume--track">
-                <div className="progress__track-update"></div>
+                <div
+                  className="progress__track-update"
+                  style={{
+                    width: `${currentVolume}%`,
+                  }}
+                ></div>
               </div>
             </div>
-            <div className="player__list-icon">
+            <div className="player__list-icon" onClick={handlePopupClick}>
               <i className="bi bi-music-note-list"></i>
             </div>
           </div>
@@ -281,7 +360,7 @@ function MusicPlayer(props) {
               <li className="popup__action-btn hide-on-tablet-mobile">
                 <i className="bi bi-gear popup__action-btn-icon"></i>
               </li>
-              <li className="popup__action-btn btn--pop-down">
+              <li className="popup__action-btn btn--pop-down" onClick={handlePopupClick}>
                 <i className="bi bi-chevron-down popup__action-btn-icon"></i>
               </li>
             </ul>
@@ -291,26 +370,28 @@ function MusicPlayer(props) {
           <div
             className="player__popup-cd-img"
             style={{
-              background:
-                "url('https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song1.jpg') no-repeat center center / cover",
+              background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
             }}
           ></div>
         </div>
-        <div className="player__popup-cd-info">
+        <div class="player__popup-cd-info">
           <h4>Now playing</h4>
-          <h2 className="is-twoline"></h2>
-          <h3></h3>
+          <h2 class="is-twoline">{currentSong.name}</h2>
+          <h3>
+            <a href="#" class="is-ghost">
+              Thường Nguyễn
+            </a>
+          </h3>
         </div>
         <div className="player__popup-footer">
           <div className="player__container-song hide-on-mobile">
-            <div className="player__song-info media">
+            <div className={classNames('player__song-info media', { playing: playing })}>
               <div className="media__left">
                 <div className="player__song-thumb media__thumb note-1">
                   <div
                     className="thumb-img"
                     style={{
-                      backgroundImage:
-                        "url('https://i.ytimg.com/vi/kTJczUoc26U/maxresdefault.jpg') no-repeat center center / cover",
+                      background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
                     }}
                   ></div>
                   <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -330,9 +411,10 @@ function MusicPlayer(props) {
               <div className="media__content">
                 <div className="player__song-body media__info">
                   <div className="player__song-title info__title">
-                    <div className="player__title-animate">
-                      <div className="title__item">Music name</div>
-                      <div className="title__item">Music name</div>
+                    <div className="player__song-title-custom">
+                      <marquee scrollDelay={130} className="player__song-title-marquee">
+                        <span className="player__song-title-span">{currentSong.name}</span>
+                      </marquee>
                     </div>
                   </div>
                   <div className="player__song-author info__author">Author</div>
@@ -352,7 +434,12 @@ function MusicPlayer(props) {
           </div>
           <div className="player__control">
             <div className="player__control-btn">
-              <div className="control-btn btn-random is-small" onClick={handleRandomClick}>
+              <div
+                className={classNames('control-btn btn-random is-small', {
+                  active: random,
+                })}
+                onClick={handleRandomClick}
+              >
                 <i className="bi bi-shuffle"></i>
               </div>
               <div className="control-btn btn-prev" onClick={handlePrevClick}>
@@ -365,17 +452,42 @@ function MusicPlayer(props) {
               <div className="control-btn btn-next" onClick={handleNextClick}>
                 <i className="bi bi-skip-end-fill"></i>
               </div>
-              <div className="control-btn btn-repeat is-small is-medium" onClick={handleRepeatClick}>
+              <div
+                className={classNames('control-btn btn-repeat is-small is-medium', {
+                  active: repeat,
+                })}
+                onClick={handleRepeatClick}
+              >
                 <i className="bi bi-arrow-repeat"></i>
               </div>
             </div>
             <div className="progress-block">
-              <span className="tracktime">00:00</span>
-              <input id="progress--pop-up" className="progress" type="range" value="0" step="1" min="0" max="100" />
+              <span className="tracktime">{formatSongTime(currentTime)}</span>
+              <input
+                id="progress--pop-up"
+                className="progress"
+                type="range"
+                value={value}
+                step={1}
+                min={0}
+                max={100}
+                onInput={handleOnInput}
+                onMouseDown={startSeeking}
+                onTouchStart={startSeeking}
+                onMouseUp={endSeeking}
+                onTouchEnd={endSeeking}
+              />
               <div className="progress__track song--track">
-                <div className="progress__track-update"></div>
+                <div
+                  className="progress__track-update"
+                  style={{
+                    width: `${value}%`,
+                  }}
+                ></div>
               </div>
-              <span className="durationtime">--:--</span>
+              <span className="durationtime">
+                {audioRef.current?.duration ? formatSongTime(audioRef.current.duration) : '--:--'}
+              </span>
             </div>
           </div>
           <div className="player__options hide-on-mobile">
@@ -390,9 +502,22 @@ function MusicPlayer(props) {
                 <i className="bi bi-volume-up btn--icon"></i>
               </div>
               <div className="player__volume-progress">
-                <input type="range" className="volume__range" value="100" step="1" min="0" max="100" />
+                <input
+                  type="range"
+                  className="volume__range"
+                  value={currentVolume}
+                  step={1}
+                  min={0}
+                  max={100}
+                  onInput={handleVolumeChange}
+                />
                 <div className="progress__track volume--track">
-                  <div className="progress__track-update"></div>
+                  <div
+                    className="progress__track-update"
+                    style={{
+                      width: `${currentVolume}%`,
+                    }}
+                  ></div>
                 </div>
                 <span className="volume__background"></span>
               </div>
