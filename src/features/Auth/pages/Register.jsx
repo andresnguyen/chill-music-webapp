@@ -26,7 +26,7 @@ function Register(props) {
     <div className="register-container">
       <Form form={form} onFinish={handleFinish} className="login-form">
         <Form.Item
-          name="username"
+          name="fullName"
           rules={[
             { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
             {
@@ -38,7 +38,7 @@ function Register(props) {
           <Input size="large" placeholder="Tên đầy đủ" />
         </Form.Item>
         <Form.Item
-          name="username"
+          name="email"
           rules={[
             { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
             {
@@ -60,7 +60,7 @@ function Register(props) {
         </Form.Item>
 
         <Form.Item
-          name="password"
+          name="re-password"
           rules={[
             { required: true, message: 'Vui lòng nhập mật khẩu!' },
             { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự!' },
