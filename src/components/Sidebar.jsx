@@ -91,12 +91,12 @@ function Sidebar(props) {
             </a>
           </li>
         </ul>
-        <div className="sidebar__login">
+        {/* <div className="sidebar__login">
           <p className="sidebar__login-description">Nghe nhạc không quảng cáo cùng kho nhạc VIP</p>
           <a href="#" className="sidebar__login-btn button is-small button-gold">
             Mua vip
           </a>
-        </div>
+        </div> */}
         <ul className="sidebar__subnav-menu">
           <li className="sidebar__menu-item menu-header">
             <h2 className="sidebar__menu-title">THƯ VIỆN</h2>
