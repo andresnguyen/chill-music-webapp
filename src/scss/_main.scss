@@ -568,6 +568,34 @@
   padding: 1px 0;
 }
 
+.header__nav-btn-auth {
+  padding: 0;
+  border: none;
+  height: 40px;
+  margin: auto;
+  outline: none;
+  display: flex;
+  cursor: pointer;
+  border-radius: 8px;
+  background: var(--bg-content-color);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.05s;
+}
+
+.header__nav-btn-auth.active {
+  color: var(--link-text-hover)
+}
+
+.header__nav-btn-auth:hover, .header__nav-btn:hover {
+ opacity: 0.8;
+}
+
 .header__nav-btn {
   padding: 0;
   width: 40px;
@@ -579,6 +607,11 @@
   cursor: pointer;
   border-radius: 50%;
   background: var(--bg-content-color);
+  transition: all 0.05s;
+}
+
+.avatar .header__nav-btn:hover {
+  opacity: 1;
 }
 
 .header__nav-item:last-child .header__nav-btn {

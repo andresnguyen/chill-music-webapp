@@ -1,11 +1,30 @@
 import avatar from 'assets/images/avatar.jpg'
-import React, { useEffect, useRef } from 'react'
+import classNames from 'classnames'
+import React, { Fragment, useEffect, useRef } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 function Header(props) {
   const headerRef = useRef(null)
+  const wrapperRef = useRef(null)
+  const location = useLocation()
+  let login, register
+
+  if (location.pathname === '/auth/login') {
+    login = true
+  }
+
+  if (location.pathname === '/auth/register') {
+    register = true
+  }
+
+  const isLogin = false
 
   useEffect(() => {
     const mainContent = headerRef.current.parentElement.querySelector('.app__container')
+    if (!mainContent) {
+      return
+    }
+
     mainContent.addEventListener('scroll', () => {
       if (mainContent.scrollTop > 0 || mainContent.scrollTop > 0) {
         headerRef.current.classList.add('active')
@@ -13,9 +32,41 @@ function Header(props) {
         headerRef.current.classList.remove('active')
       }
     })
+
     return () => {
       mainContent.removeEventListener('scroll', null)
     }
+  }, [])
+
+  const addEvent = () => {
+    const mainContent = headerRef.current.parentElement.querySelector('.app__container')
+    if (!mainContent) {
+      return
+    }
+
+    mainContent.addEventListener('scroll', () => {
+      if (mainContent.scrollTop > 0 || mainContent.scrollTop > 0) {
+        headerRef.current.classList.add('active')
+      } else {
+        headerRef.current.classList.remove('active')
+      }
+    })
+  }
+
+  useEffect(() => {
+    const element = wrapperRef.current.querySelector('.setting__menu')
+
+    document.addEventListener('click', (e) => {
+      if (e.target.dataset.id === 'avatar') {
+        return element.classList.toggle('open')
+      }
+
+      if (!wrapperRef.current.contains(e.target)) {
+        return element.classList.remove('open')
+      }
+
+      return element.classList.add('open')
+    })
   }, [])
 
   return (
@@ -190,15 +241,32 @@ function Header(props) {
               </label>
             </div>
           </li>
-          <li className="header__nav-item hide-on-mobile">
+          {!isLogin && (
+            <Fragment>
+              <li className="header__nav-item hide-on-mobile">
+                <Link to="/auth/register">
+                  <div className={classNames('header__nav-btn-auth', { active: register })}>Đăng ký</div>
+                </Link>
+              </li>
+
+              <li className="header__nav-item hide-on-mobile">
+                <Link to="/auth/login">
+                  <div className={classNames('header__nav-btn-auth', { active: login })}>Đăng nhập</div>
+                </Link>
+              </li>
+            </Fragment>
+          )}
+          <li className={classNames('header__nav-item avatar hide-on-mobile', { hideAll: !isLogin })} ref={wrapperRef}>
             <div className="header__nav-btn btn--nav-setting">
-              <i className="bi bi-gear header__nav-icon"></i>
-              <div className="setting__menu">
+              <li className="header__nav-item">
+                <img src={avatar} alt="" className="header__nav-btn" data-id="avatar" />
+              </li>
+              <div className={classNames('setting__menu')}>
                 <div className="setting__nav">
                   <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-shield-lock setting__item-icon"></i>
-                      <span>Danh sách chặn</span>
+                      <span>Thông tin cá nhân</span>
                     </div>
                   </div>
                   <div className="setting__item">
@@ -244,15 +312,12 @@ function Header(props) {
                   <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-file-text setting__item-icon"></i>
-                      <span>Thỏa thuận sử dụng</span>
+                      <span>Đăng xuất</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </li>
-          <li className="header__nav-item">
-            <img src={avatar} alt="" className="header__nav-btn" />
           </li>
         </ul>
       </div>

@@ -44,6 +44,14 @@
   --placeholder-text: #dadada;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+}
+
+a:hover {
+  color: var(--link-text-hover)
+}
+
 * {
   box-sizing: inherit;
   text-rendering: optimizeLegibility;
@@ -56,13 +64,19 @@ html {
   word-wrap: break-word;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
 body {
+  font-size: 100%;
+  line-height: 1.6rem;
   overflow: hidden;
   background: var(--layout-bg);
+  font-family: 'Inter', sans-serif;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 i {
@@ -178,6 +192,10 @@ a {
 .is-outline--text {
   -webkit-text-stroke: 1.5px var(--text-color);
   opacity: 0.7;
+}
+
+.hideAll {
+  display: none !important;
 }
 
 .is-description {

@@ -1,17 +1,26 @@
+import 'antd/dist/antd.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import 'scss/index.scss'
 import App from './App'
 import store from './app/store'
-import 'scss/index.scss'
+
+
+const queryClient = new QueryClient()
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
