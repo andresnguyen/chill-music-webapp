@@ -1,6 +1,6 @@
 import { LockOutlined, UserOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons'
 import { unwrapResult } from '@reduxjs/toolkit'
-import { Button, Form, Input, message } from 'antd'
+import { Button, Card, Descriptions, Form, Input, message } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -30,63 +30,73 @@ function Login(props) {
         initialValues={{ username: 'thuongnguyen@gmail.com', password: '123456a@' }}
         className="login-form"
       >
-        <Form.Item
-          name="username"
-          rules={[
-            { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
-            {
-              type: 'email',
-              message: 'Vui lòng nhập đúng định dạng email!',
-            },
-          ]}
-        >
-          <Input size="large" prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Tên đăng nhập" />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            { required: true, message: 'Vui lòng nhập mật khẩu!' },
-            { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự!' },
-          ]}
-        >
-          <Input.Password
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            size="large"
-            type="password"
-            placeholder="Mật khẩu"
-          />
-        </Form.Item>
+        <Card>
+          <Descriptions column={1} bordered>
+            <Descriptions.Item label="ĐĂNG NHẬP">
+              <Form.Item
+                name="username"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
+                  {
+                    type: 'email',
+                    message: 'Vui lòng nhập đúng định dạng email!',
+                  },
+                ]}
+              >
+                <Input
+                  size="large"
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="Tên đăng nhập"
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập mật khẩu!' },
+                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự!' },
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  size="large"
+                  type="password"
+                  placeholder="Mật khẩu"
+                />
+              </Form.Item>
 
-        <Form.Item>
-          <Button size="large" type="primary" htmlType="submit" className="login-form-button" block>
-            Đăng nhập
-          </Button>
-        </Form.Item>
-        <div className="text-end">
-          <a className="text-decoration-underline" href="">
-            Quên mật khẩu
-          </a>
-        </div>
-        <Button
-          size="large"
-          type="primary"
-          htmlType="submit"
-          className="login-form-google"
-          icon={<GoogleOutlined />}
-          block
-        >
-          Đăng nhập bằng Google
-        </Button>
-        <Button
-          icon={<FacebookOutlined />}
-          size="large"
-          type="primary"
-          htmlType="submit"
-          className="login-form-facebook"
-          block
-        >
-          Đăng nhập bằng Facebook
-        </Button>
+              <Form.Item>
+                <Button size="large" type="primary" htmlType="submit" className="login-form-button" block>
+                  Đăng nhập
+                </Button>
+              </Form.Item>
+              <div className="text-end">
+                <a className="text-decoration-underline" href="">
+                  Quên mật khẩu
+                </a>
+              </div>
+              <Button
+                size="large"
+                type="primary"
+                htmlType="submit"
+                className="login-form-google"
+                icon={<GoogleOutlined />}
+                block
+              >
+                Đăng nhập bằng Google
+              </Button>
+              <Button
+                icon={<FacebookOutlined />}
+                size="large"
+                type="primary"
+                htmlType="submit"
+                className="login-form-facebook"
+                block
+              >
+                Đăng nhập bằng Facebook
+              </Button>
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
       </Form>
     </div>
   )

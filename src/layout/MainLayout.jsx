@@ -7,6 +7,7 @@ import AuthFeature from 'features/Auth'
 import ChartFeature from 'features/Chart'
 import ExploreFeature from 'features/Explore'
 import FollowingFeature from 'features/Following'
+import DetailFeature from 'features/Auth/pages/Detail'
 import PersonalFeature from 'features/Personal'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
@@ -25,6 +26,7 @@ function MainLayout() {
       <Switch>
         <Route path="/" exact component={ExploreFeature} />
         <Route path="/auth" component={AuthFeature} />
+        <Route path="/my-account" component={DetailFeature} />
         <Route path="/mymusic" component={PersonalFeature} />
         <Route path="/following" exact component={FollowingFeature} />
         <Route path="/explore" exact component={ExploreFeature} />

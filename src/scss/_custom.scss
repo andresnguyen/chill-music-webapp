@@ -1,4 +1,3 @@
-
 .login-form-google {
   margin-bottom: 16px;
 }
@@ -7,20 +6,29 @@
 }
 
 .login-container {
-  max-width: 400px;
+  max-width: 800px;
   margin: 0 auto;
-  margin-top: 200px;
+  margin-top: 170px;
 }
 
 .text-end {
   text-align: right;
   text-decoration: underline;
   margin-bottom: 20px;
-  color: #fff;
+  color: #333;
 }
 
 .register-container {
-  max-width: 400px;
+  max-width: 800px;
   margin: 0 auto;
-  margin-top: 200px;
+  margin-top: 70px;
+}
+
+.change-pw-form {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.change-pw-form .ant-form-item-label {
+  text-align: left;
 }
