@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import fallbackImage from 'assets/images/fallback.jpg'
 
 function Album({ data, playlist }) {
   const { imageURL, name, _id } = data || {}
@@ -7,10 +8,10 @@ function Album({ data, playlist }) {
 
   const handleItemClick = () => {
     history.push({
-      pathname: `/playlists/${_id}`
+      pathname: `/playlists/${_id}`,
     })
   }
-  
+
   const handleHeartClick = (e) => {
     e.stopPropagation()
   }
@@ -19,7 +20,6 @@ function Album({ data, playlist }) {
     e.stopPropagation()
   }
 
-  
   return (
     <div class="col l-2-4 m-3 c-4 mb-30">
       <div class="row__item item--playlist" onClick={handleItemClick}>
@@ -28,9 +28,7 @@ function Album({ data, playlist }) {
             <div
               class="row__item-img img--square"
               style={{
-                background: `url('${
-                  imageURL || 'https://vikdang.github.io/Code_web_music_player/assets/img/playlists/playlist2.jpg'
-                }') no-repeat center center / cover`,
+                background: `url('${imageURL}'), url('${fallbackImage}') no-repeat center center / cover`,
               }}
             ></div>
             <div class="row__item-actions">
@@ -42,9 +40,7 @@ function Album({ data, playlist }) {
                   <i class="bi bi-play-fill"></i>
                 </div>
               </div>
-              <div class="action-btn-delete">
-                {/* <i class="btn--icon bi bi-three-dots"></i> */}
-              </div>
+              <div class="action-btn-delete">{/* <i class="btn--icon bi bi-three-dots"></i> */}</div>
             </div>
             <div class="overlay"></div>
           </div>
