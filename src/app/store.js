@@ -1,8 +1,11 @@
 import userReducer from '../features/Auth/userSlice';
+import musicPlayerReducer from '../features/MusicPlayer/musicPlayerSlice';
+
 const { configureStore } = require('@reduxjs/toolkit')
 
 const rootReducer = {
-  user: userReducer
+  user: userReducer,
+  musicPlayer: musicPlayerReducer,
 }
 
 const store = configureStore({
@@ -10,3 +13,4 @@ const store = configureStore({
 })
 
 export default store
+

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import userApi from 'api/userApi';
+import userApi from 'api/authAPI';
 import StorageKeys from 'constants/storage-keys';
 
 export const register = createAsyncThunk('user/register', async (payload) => {
@@ -28,6 +28,7 @@ const userSlice = createSlice({
     current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
     settings: {},
     isModalOpen: false,
+    isDrawerOpen: false,
     mode: 'LOGIN',
   },
   reducers: {

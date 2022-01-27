@@ -32,3 +32,26 @@
 .change-pw-form .ant-form-item-label {
   text-align: left;
 }
+
+.music-list-drawer {
+  .ant-drawer-content {
+    background: #37075d;
+    border-left: 1px solid hsla(0,0%,100%,0.1);
+  }
+
+  .ant-tabs-tab {
+    color: #fff;
+  }
+
+  .ant-tabs-tab-btn:active {
+    color: var(--link-text-hover) !important;
+  }
+
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--link-text-hover) !important;
+  }
+
+  .ant-tabs-ink-bar {
+    background-color: var(--link-text-hover) !important;
+  }
+}

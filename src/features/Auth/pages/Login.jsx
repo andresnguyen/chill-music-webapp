@@ -32,7 +32,7 @@ function Login(props) {
       >
         <Card>
           <Descriptions column={1} bordered>
-            <Descriptions.Item label="ĐĂNG NHẬP">
+            <Descriptions.Item label={<b>ĐĂNG NHẬP</b>}>
               <Form.Item
                 name="username"
                 rules={[

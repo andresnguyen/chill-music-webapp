@@ -1,17 +1,17 @@
+import { Tabs } from 'antd'
 import Header from 'components/Header'
 import Modal from 'components/Modal'
-import MusicPlayer from 'components/MusicPlayer'
 import NotFound from 'components/NotFound'
 import Sidebar from 'components/Sidebar'
 import AuthFeature from 'features/Auth'
+import DetailFeature from 'features/Auth/pages/Detail'
 import ChartFeature from 'features/Chart'
 import ExploreFeature from 'features/Explore'
 import FollowingFeature from 'features/Following'
-import DetailFeature from 'features/Auth/pages/Detail'
+import MusicPlayer from 'features/MusicPlayer'
 import PersonalFeature from 'features/Personal'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-
 
 function MainLayout() {
   return (

@@ -2,12 +2,29 @@ import classNames from 'classnames'
 import React, { Fragment } from 'react'
 
 const defaultImageUrl = 'https://photo-zmp3.zadn.vn/audio_default.png'
-
-function SongItem({ imageURL, playing, active, name, artistList, hiddenAction }) {
+function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
+  const { imageURL, playing, active, name, artistList } = data || {}
   return (
     <div data-index="0" className={classNames('playlist__list-song media', { active: active, playing: playing })}>
       <div className="playlist__song-info media__left">
-        {!hiddenAction && (
+        {showRank && (
+          <div className="playlist__song-rank">
+            <div
+              className={classNames('playlist__rank-number is-outline--text', {
+                'is-outline--blue': index === 0,
+                'is-outline--green': index === 1,
+                'is-outline--red': index === 2,
+              })}
+            >
+              {index + 1}
+            </div>
+            <div className="playlist__rank-icon">
+              <i className="bi bi-dash-lg"></i>
+            </div>
+          </div>
+        )}
+
+        {showCheck && (
           <Fragment>
             <div className="playlist__song-check">
               <input type="checkbox" name="" id="playlist__check-0" className="mr-10" style={{ display: 'none' }} />
@@ -55,17 +72,21 @@ function SongItem({ imageURL, playing, active, name, artistList, hiddenAction })
           </p>
         </div>
       </div>
-      <span className="playlist__song-time media__content">04:30</span>
+      {!hiddenAll && <span className="playlist__song-time media__content">04:30</span>}
       <div className="playlist__song-option song--tab media__right">
-        <div className="playlist__song-btn btn--mic option-btn hide-on-mobile">
-          <i className="btn--icon song__icon bi bi-mic-fill"></i>
-        </div>
+        {!hiddenAll && (
+          <div className="playlist__song-btn btn--mic option-btn hide-on-mobile">
+            <i className="btn--icon song__icon bi bi-mic-fill"></i>
+          </div>
+        )}
         <div className="playlist__song-btn song-btn--heart option-btn hide-on-mobile">
           <i className="btn--icon song__icon icon--heart bi bi-heart-fill primary"></i>
         </div>
-        <div className="playlist__song-btn option-btn ">
-          <i className="btn--icon bi bi-three-dots"></i>
-        </div>
+        {!hiddenAll && (
+          <div className="playlist__song-btn option-btn ">
+            <i className="btn--icon bi bi-three-dots"></i>
+          </div>
+        )}
       </div>
     </div>
   )

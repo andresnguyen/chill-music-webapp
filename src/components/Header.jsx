@@ -7,14 +7,17 @@ function Header(props) {
   const headerRef = useRef(null)
   const wrapperRef = useRef(null)
   const location = useLocation()
-  let login, register
+
+  console.log("re-render");
+
+  let mode
 
   if (location.pathname === '/auth/login') {
-    login = true
+    mode = "LOGIN"
   }
 
   if (location.pathname === '/auth/register') {
-    register = true
+    mode = "REGISTER"
   }
 
   const isLogin = false
@@ -36,22 +39,7 @@ function Header(props) {
     return () => {
       mainContent.removeEventListener('scroll', null)
     }
-  }, [])
-
-  const addEvent = () => {
-    const mainContent = headerRef.current.parentElement.querySelector('.app__container')
-    if (!mainContent) {
-      return
-    }
-
-    mainContent.addEventListener('scroll', () => {
-      if (mainContent.scrollTop > 0 || mainContent.scrollTop > 0) {
-        headerRef.current.classList.add('active')
-      } else {
-        headerRef.current.classList.remove('active')
-      }
-    })
-  }
+  }, [location.pathname])
 
   useEffect(() => {
     const element = wrapperRef.current.querySelector('.setting__menu')
@@ -245,13 +233,13 @@ function Header(props) {
             <Fragment>
               <li className="header__nav-item hide-on-mobile">
                 <Link to="/auth/register">
-                  <div className={classNames('header__nav-btn-auth', { active: register })}>Đăng ký</div>
+                  <div className={classNames('header__nav-btn-auth', { active: mode === "REGISTER" })}>Đăng ký</div>
                 </Link>
               </li>
 
               <li className="header__nav-item hide-on-mobile">
                 <Link to="/auth/login">
-                  <div className={classNames('header__nav-btn-auth', { active: login })}>Đăng nhập</div>
+                  <div className={classNames('header__nav-btn-auth', { active: mode === "LOGIN" })}>Đăng nhập</div>
                 </Link>
               </li>
             </Fragment>

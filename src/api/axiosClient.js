@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-  baseURL: 'https://api.ezfrontend.com/',
+  baseURL: process.env.REACT_APP_API_URL + "/v1/",
   headers: {
     'Content-Type': 'application/json',
   },

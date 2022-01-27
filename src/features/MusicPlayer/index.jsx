@@ -1,53 +1,58 @@
-
-
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { formatSongTime } from 'utils'
 import smallLogo from 'assets/images/small-logo.png'
 import { useDispatch } from 'react-redux'
 import { changeValue } from 'features/Auth/userSlice'
+import { useSelector } from 'react-redux'
+import { changeMusicPlayerValue } from './musicPlayerSlice'
+import { Drawer, Tabs } from 'antd'
+import SongList from 'components/SongList'
+const { TabPane } = Tabs
 
 function MusicPlayer(props) {
   const isMountRef = useRef(null)
-  const [playing, setPlaying] = useState(false)
-  const [repeat, setRepeat] = useState(false)
-  const [seeking, setSeeking] = useState(false)
-  const [random, setRandom] = useState(false)
+  const audioRef = useRef(null)
+  const { playing, repeat, seeking, random, currentIndex, currentVolume, indexList, songList, isDrawerOpen } =
+    useSelector((state) => state.musicPlayer)
+  console.log('first')
+
   const [value, setValue] = useState(0)
   const [popupShow, setPopupShow] = useState(false)
 
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
-  const [currentVolume, setCurrentVolume] = useState(10)
 
-  const [indexList, setIndexList] = useState([])
-  const [songList, setSongList] = useState([
-    {
-      name: 'Phố Đã Lên Đèn',
-      imageUrl: 'https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song21.jpg',
-      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song21.mp3',
-    },
-    {
-      name: 'Thiên Lý Ơi',
-      imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song20.jpg',
-      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song20.mp3',
-    },
-    {
-      name: 'Tộc ca',
-      imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song19.jpg',
-      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song19.mp3',
-    },
-    {
-      name: 'Hãy trao cho anh',
-      imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song18.jpg',
-      songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song18.mp3',
-    },
-  ])
+  const currentSong = songList[currentIndex]
 
   const dispatch = useDispatch()
 
-  const audioRef = useRef(null)
-  const currentSong = songList[currentIndex]
+  const setPlaying = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'playing', value }))
+  }
+
+  const setRepeat = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'repeat', value }))
+  }
+
+  const setSeeking = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'seeking', value }))
+  }
+
+  const setRandom = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'random', value }))
+  }
+
+  const setCurrentIndex = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'currentIndex', value }))
+  }
+
+  const setCurrentVolume = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'currentVolume', value }))
+  }
+
+  const setIndexList = (value) => {
+    dispatch(changeMusicPlayerValue({ name: 'indexList', value }))
+  }
 
   useEffect(() => {
     setVolume()
@@ -183,7 +188,7 @@ function MusicPlayer(props) {
   }
 
   const handleDrawerChange = () => {
-    dispatch(changeValue({ name: 'isDrawerOpen', value: true }))
+    dispatch(changeMusicPlayerValue({ name: 'isDrawerOpen', value: true }))
   }
 
   return (
@@ -539,6 +544,26 @@ function MusicPlayer(props) {
           </div>
         </div>
       </div>
+
+      <Drawer
+        title=""
+        placement="right"
+        closable={false}
+        onClose={() => dispatch(changeMusicPlayerValue({ name: 'isDrawerOpen', value: false }))}
+        visible={isDrawerOpen}
+        className="music-list-drawer"
+      >
+        <Tabs defaultActiveKey="1" onChange={(value) => console.log(value)}>
+          <TabPane tab="Danh sách phát" key="1">
+            <SongList data={songList} hiddenHeader hiddenAll />
+          </TabPane>
+          <TabPane tab="Nghe gần đây" key="2">
+            <div>
+              <SongList data={[1, 2, 3, 4, 5, 6, 7, 8, 9]} hiddenHeader hiddenAll />
+            </div>
+          </TabPane>
+        </Tabs>
+      </Drawer>
     </div>
   )
 }

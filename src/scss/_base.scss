@@ -177,6 +177,11 @@ a {
   border-radius: 999px !important;
 }
 
+.is-outline--text {
+  -webkit-text-stroke: 1.5px var(--text-color);
+  opacity: 0.7;
+}
+
 .is-outline--blue {
   -webkit-text-stroke: 1px #4a90e2;
 }
@@ -187,11 +192,6 @@ a {
 
 .is-outline--red {
   -webkit-text-stroke: 1px #e35050;
-}
-
-.is-outline--text {
-  -webkit-text-stroke: 1.5px var(--text-color);
-  opacity: 0.7;
 }
 
 .hideAll {

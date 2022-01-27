@@ -27,7 +27,7 @@ function SongTab(props) {
           </div>
         </div>
         <div class="col l-12 m-12 c-12">
-          <SongList />
+          <SongList showCheck showHeader />
         </div>
       </div>
     </div>

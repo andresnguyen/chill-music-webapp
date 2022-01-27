@@ -1,6 +1,6 @@
 import axiosClient from './axiosClient'
 
-const userApi = {
+const authAPI = {
   register(data) {
     const url = '/auth/local/register'
     return axiosClient.post(url, data)
@@ -12,4 +12,4 @@ const userApi = {
   },
 }
 
-export default userApi
+export default authAPI

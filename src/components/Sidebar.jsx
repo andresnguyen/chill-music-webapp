@@ -43,10 +43,10 @@ function Sidebar(props) {
               <span>Khám Phá</span>
             </a>
           </NavLink>
-          <NavLink to="/zing-chart" className="sidebar__nav-item">
+          <NavLink to="/charts" className="sidebar__nav-item">
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-music-note-list"></i>
-              <span>#zingchart</span>
+              <span>#chillchart</span>
             </a>
           </NavLink>
           <NavLink to="/radio" className="sidebar__nav-item">
