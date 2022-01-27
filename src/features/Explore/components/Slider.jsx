@@ -8,6 +8,7 @@ function Slider(props) {
 
     const prev = () => {
       const container = containerRef.current
+      if(!container) return
       const slideMoveItems = Array.from(container.querySelectorAll('.explore__slide-item'))
 
       container.querySelector('.explore__slide-item.next').classList.remove('next')
@@ -31,6 +32,7 @@ function Slider(props) {
       sixthSlide.classList.add('next')
       sixthSlide.classList.replace('sixth', 'first')
     }
+
     const next = () => {
       const container = containerRef.current
       const slideMoveItems =  Array.from(container.querySelectorAll('.explore__slide-item'))
@@ -62,20 +64,27 @@ function Slider(props) {
         const prevBtn = e.target.closest('.slide__move-btn.btn--prev')
         const nextBtn = e.target.closest('.slide__move-btn.btn--next')
 
+        if(!prevBtn && !nextBtn) {
+          autoMoveSlideId.current = setInterval(next, 3500)
+        }
+
         if (prevBtn) {
           prev()
-          clearTimeout(autoMoveSlideId.current)
-          autoMoveSlideId.current = setTimeout(run, 4000)
+          clearInterval(autoMoveSlideId.current)
+          autoMoveSlideId.current = setInterval(prev, 3500)
         }
 
         if (nextBtn) {
           next()
-          clearTimeout(autoMoveSlideId.current)
-          autoMoveSlideId.current = setTimeout(run, 4000)
+          clearInterval(autoMoveSlideId.current)
+          autoMoveSlideId.current = setInterval(next, 3500)
         }
       }
     }
     run()
+    slideMove.click()
+
+    return () => clearInterval(autoMoveSlideId)
   }, [])
 
   return (
