@@ -1,6 +1,5 @@
+import fallbackImage from 'assets/images/fallback.jpg'
 import React from 'react'
-import PropTypes from 'prop-types'
-
 function Artist(props) {
   return (
     <div class="col l-2-4 m-3 c-6 mb-30">
@@ -9,8 +8,8 @@ function Artist(props) {
           <div class="row__item-display is-rounded">
             <div
               class="row__item-img img--square is-rounded"
-              style={{ 
-                background: "url('https://vikdang.github.io/Code_web_music_player/assets/img/artists/artist2.jpg') no-repeat center center / contain"
+              style={{
+                background: `url('${fallbackImage}') no-repeat center center / contain`,
               }}
             ></div>
             <div class="row__item-actions">

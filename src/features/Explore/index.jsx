@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import { useQuery } from 'react-query'
 import Partner from './components/Partner'
 import Section from './components/Section'
+import SectionSkeleton from './components/SectionSkeleton'
 import Slider from './components/Slider'
 import SliderSection from './components/SliderSection'
 
@@ -21,11 +22,13 @@ function ExploreFeature(props) {
             {data.data &&
               data.data.map((item, index) => (
                 <Fragment>
-                  <Section data={item} />
+                  <Section key={item._id} data={item} />
                   {index === 3 && <SliderSection />}
                   {index === 7 && <Partner />}
                 </Fragment>
               ))}
+
+            {(isLoading || isError) && [1, 2, 3, 4, 5].map((item) => <SectionSkeleton key={item} />)}
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
         <div
           className="playlist__song-thumb media__thumb mr-10"
           style={{
-            background: `url('${imageURL || defaultImageUrl}') no-repeat center center / cover`,
+            background: `url('${imageURL}'), url('${defaultImageUrl}') no-repeat center center / cover`,
           }}
         >
           <div className="thumb--animate">
