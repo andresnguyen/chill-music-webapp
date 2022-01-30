@@ -36,7 +36,7 @@
 .music-list-drawer {
   .ant-drawer-content {
     background: #37075d;
-    border-left: 1px solid hsla(0,0%,100%,0.1);
+    border-left: 1px solid hsla(0, 0%, 100%, 0.1);
   }
 
   .ant-tabs-tab {
@@ -53,5 +53,18 @@
 
   .ant-tabs-ink-bar {
     background-color: var(--link-text-hover) !important;
+  }
+}
+
+.row__item-img.img--skeleton {
+  .ant-skeleton {
+    position: absolute;
+    inset: 0;
+
+    & > span {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
   }
 }

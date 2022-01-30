@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd'
 import React from 'react'
 
-function SectionSkeleton({ data = {} }) {
+function SectionSkeleton() {
   return (
     <div class="row container__section normal-playlist--section mt-30">
       <div class="col l-12 m-12 c-12 mb-16">
