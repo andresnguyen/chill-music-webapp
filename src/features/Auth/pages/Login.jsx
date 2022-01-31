@@ -1,9 +1,10 @@
-import { LockOutlined, UserOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons'
+import { FacebookOutlined, GoogleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { Button, Card, Descriptions, Form, Input, message } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { login } from '../userSlice'
 
 function Login(props) {
   const history = useHistory()
@@ -12,34 +13,35 @@ function Login(props) {
 
   const handleFinish = async (values) => {
     try {
-      const result = await dispatch(null)
+      const result = await dispatch(login(values))
       unwrapResult(result)
       history.push({
         pathname: '/',
       })
     } catch (error) {
-      message.error('Đăng nhập không thành công.')
+      message.error('Đăng nhập không thành công')
       form.setFieldsValue({ password: undefined })
     }
   }
+
   return (
     <div className="login-container">
       <Form
         form={form}
         onFinish={handleFinish}
-        initialValues={{ username: 'thuongnguyen@gmail.com', password: '123456a@' }}
+        initialValues={{ email: 'thuongnguyen.it78@gmail.com', password: '123456a@' }}
         className="login-form"
       >
         <Card>
           <Descriptions column={1} bordered>
             <Descriptions.Item label={<b>ĐĂNG NHẬP</b>}>
               <Form.Item
-                name="username"
+                name="email"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
+                  { required: true, message: 'Vui lòng nhập trên đăng nhập' },
                   {
                     type: 'email',
-                    message: 'Vui lòng nhập đúng định dạng email!',
+                    message: 'Vui lòng nhập đúng định dạng email',
                   },
                 ]}
               >
@@ -52,8 +54,8 @@ function Login(props) {
               <Form.Item
                 name="password"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập mật khẩu!' },
-                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự!' },
+                  { required: true, message: 'Vui lòng nhập mật khẩu' },
+                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự' },
                 ]}
               >
                 <Input.Password

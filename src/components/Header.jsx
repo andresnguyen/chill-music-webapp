@@ -1,26 +1,28 @@
 import avatar from 'assets/images/avatar.jpg'
 import classNames from 'classnames'
+import { logout } from 'features/Auth/userSlice'
 import React, { Fragment, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 function Header(props) {
   const headerRef = useRef(null)
   const wrapperRef = useRef(null)
   const location = useLocation()
-
-  console.log("re-render");
+  const dispatch = useDispatch()
 
   let mode
 
   if (location.pathname === '/auth/login') {
-    mode = "LOGIN"
+    mode = 'LOGIN'
   }
 
   if (location.pathname === '/auth/register') {
-    mode = "REGISTER"
+    mode = 'REGISTER'
   }
 
-  const isLogin = false
+  const isLogin = Boolean(useSelector((state) => state.user.current._id))
 
   useEffect(() => {
     const mainContent = headerRef.current.parentElement.querySelector('.app__container')
@@ -42,9 +44,9 @@ function Header(props) {
   }, [location.pathname])
 
   useEffect(() => {
-    const element = wrapperRef.current.querySelector('.setting__menu')
-
     document.addEventListener('click', (e) => {
+      const element = wrapperRef.current.querySelector('.setting__menu')
+
       if (e.target.dataset.id === 'avatar') {
         return element.classList.toggle('open')
       }
@@ -53,9 +55,13 @@ function Header(props) {
         return element.classList.remove('open')
       }
 
-      return element.classList.add('open')
+      return element.classList.remove('open')
     })
   }, [])
+
+  const handleLogoutClick = () => {
+    dispatch(logout())
+  }
 
   return (
     <header className="header grid" ref={headerRef}>
@@ -233,13 +239,13 @@ function Header(props) {
             <Fragment>
               <li className="header__nav-item hide-on-mobile">
                 <Link to="/auth/register">
-                  <div className={classNames('header__nav-btn-auth', { active: mode === "REGISTER" })}>Đăng ký</div>
+                  <div className={classNames('header__nav-btn-auth', { active: mode === 'REGISTER' })}>Đăng ký</div>
                 </Link>
               </li>
 
               <li className="header__nav-item hide-on-mobile">
                 <Link to="/auth/login">
-                  <div className={classNames('header__nav-btn-auth', { active: mode === "LOGIN" })}>Đăng nhập</div>
+                  <div className={classNames('header__nav-btn-auth', { active: mode === 'LOGIN' })}>Đăng nhập</div>
                 </Link>
               </li>
             </Fragment>
@@ -252,10 +258,10 @@ function Header(props) {
               <div className={classNames('setting__menu')}>
                 <div className="setting__nav">
                   <div className="setting__item">
-                    <div className="setting__item-content">
+                    <Link className="setting__item-content" to="/my-account">
                       <i className="bi bi-shield-lock setting__item-icon"></i>
                       <span>Thông tin cá nhân</span>
-                    </div>
+                    </Link>
                   </div>
                   <div className="setting__item">
                     <div className="setting__item-content">
@@ -298,7 +304,7 @@ function Header(props) {
                     </div>
                   </div>
                   <div className="setting__item">
-                    <div className="setting__item-content">
+                    <div className="setting__item-content" onClick={handleLogoutClick}>
                       <i className="bi bi-file-text setting__item-icon"></i>
                       <span>Đăng xuất</span>
                     </div>

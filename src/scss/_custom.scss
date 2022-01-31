@@ -68,3 +68,13 @@
     }
   }
 }
+
+.my-account {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 70px;
+
+  .ant-descriptions-item-label {
+    width: 40%;
+  }
+}

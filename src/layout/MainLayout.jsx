@@ -1,7 +1,6 @@
-import { Tabs } from 'antd'
 import Header from 'components/Header'
-import Modal from 'components/Modal'
 import NotFound from 'components/NotFound'
+import { PrivateRoute } from 'components/PrivateRoute'
 import Sidebar from 'components/Sidebar'
 import AuthFeature from 'features/Auth'
 import DetailFeature from 'features/Auth/pages/Detail'
@@ -26,15 +25,14 @@ function MainLayout() {
       <Switch>
         <Route path="/" exact component={ExploreFeature} />
         <Route path="/auth" component={AuthFeature} />
-        <Route path="/my-account" component={DetailFeature} />
-        <Route path="/mymusic" component={PersonalFeature} />
+        <PrivateRoute path="/my-account" component={DetailFeature} />
+        <PrivateRoute path="/mymusic" component={PersonalFeature} />
         <Route path="/following" exact component={FollowingFeature} />
         <Route path="/explore" exact component={ExploreFeature} />
         <Route path="/charts" exact component={ChartFeature} />
         <Route exact component={NotFound} />
       </Switch>
       <MusicPlayer />
-      <Modal />
     </div>
   )
 }

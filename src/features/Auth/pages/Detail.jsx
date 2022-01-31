@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import UserForm from '../components/UserForm'
 import ChangePassForm from '../components/ChangePassForm'
+import UserForm from '../components/UserForm'
 
 function Detail(props) {
   return (
@@ -10,7 +9,7 @@ function Detail(props) {
       <div class="explore__container">
         <div class="grid">
           <div class="row container__section">
-            <div class="col l-12 m-12 c-12">
+            <div class="col l-12 m-12 c-12 my-account">
               <UserForm />
               <ChangePassForm />
             </div>

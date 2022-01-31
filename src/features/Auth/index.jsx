@@ -1,11 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Route, Switch, useRouteMatch } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 
 function AuthFeature(props) {
   const match = useRouteMatch()
+  const isLogin = Boolean(useSelector((state) => state.user.current._id))
+
+  if (isLogin) {
+    return <Redirect to="/" />
+  }
 
   return (
     <div class="app__container tab--explore">

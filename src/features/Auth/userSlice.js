@@ -1,26 +1,26 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import userApi from 'api/authAPI';
-import StorageKeys from 'constants/storage-keys';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import userAPI from 'api/userAPI'
+import StorageKeys from 'constants/storage-keys'
 
 export const register = createAsyncThunk('user/register', async (payload) => {
-  const data = await userApi.register(payload);
+  const { data } = await userAPI.register(payload)
 
   // save data to local storage
-  localStorage.setItem(StorageKeys.TOKEN, data.jwt);
-  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+  localStorage.setItem(StorageKeys.TOKEN, data.token)
+  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user))
 
-  return data.user;
-});
+  return data.data
+})
 
 export const login = createAsyncThunk('user/login', async (payload) => {
-  const data = await userApi.login(payload);
+  const { data } = await userAPI.login(payload)
 
   // save data to local storage
-  localStorage.setItem(StorageKeys.TOKEN, data.jwt);
-  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+  localStorage.setItem(StorageKeys.TOKEN, data.token)
+  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user))
 
-  return data.user;
-});
+  return data.user
+})
 
 const userSlice = createSlice({
   name: 'user',
@@ -28,33 +28,31 @@ const userSlice = createSlice({
     current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
     settings: {},
     isModalOpen: false,
-    isDrawerOpen: false,
-    mode: 'LOGIN',
   },
   reducers: {
     logout(state) {
       // clear local storage
-      localStorage.removeItem(StorageKeys.USER);
-      localStorage.removeItem(StorageKeys.TOKEN);
+      localStorage.removeItem(StorageKeys.USER)
+      localStorage.removeItem(StorageKeys.TOKEN)
 
-      state.current = {};
+      state.current = {}
     },
 
     changeValue(state, action) {
       state[action.payload.name] = action.payload.value
-    }
+    },
   },
   extraReducers: {
     [register.fulfilled]: (state, action) => {
-      state.current = action.payload;
+      state.current = action.payload
     },
 
     [login.fulfilled]: (state, action) => {
-      state.current = action.payload;
+      state.current = action.payload
     },
   },
-});
+})
 
-const { actions, reducer } = userSlice;
-export const { logout, changeValue } = actions;
-export default reducer;
+const { actions, reducer } = userSlice
+export const { logout, changeValue } = actions
+export default reducer

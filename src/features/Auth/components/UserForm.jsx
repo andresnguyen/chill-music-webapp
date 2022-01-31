@@ -27,7 +27,6 @@ function Detail({ data, onUpdate }) {
     onUpdate(data.id, changedData)
   }
 
-
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
     if (!isJpgOrPng) {
@@ -72,7 +71,7 @@ function Detail({ data, onUpdate }) {
 
   return (
     <Form form={form} initialValues={data} onValuesChange={handleValuesChange}>
-      <Card>
+      <Card title="Thông tin cá nhân">
         <Descriptions column={1} bordered>
           <Descriptions.Item label={requiredLabel('Ảnh đại diện')}>
             <Form.Item className="mb-0" name="avatarURL">
@@ -91,19 +90,19 @@ function Detail({ data, onUpdate }) {
           </Descriptions.Item>
 
           <Descriptions.Item label={requiredLabel('Email')}>
-            <Form.Item className="mb-0" name="email">
+            <Form.Item name="email">
               <Input placeholder="Email" disabled />
             </Form.Item>
           </Descriptions.Item>
 
           <Descriptions.Item label={requiredLabel('Họ và tên')}>
-            <Form.Item className="mb-0" name="fullName">
+            <Form.Item name="fullName">
               <Input placeholder="Họ và tên" />
             </Form.Item>
           </Descriptions.Item>
 
           <Descriptions.Item label={requiredLabel('Giới tính')}>
-            <Form.Item className="mb-0" name="gender">
+            <Form.Item name="gender">
               <Select placeholder="Giới tính" allowClear>
                 {genderList.map((gender) => (
                   <Select.Option value={gender.id}>{gender.name}</Select.Option>
@@ -113,7 +112,7 @@ function Detail({ data, onUpdate }) {
           </Descriptions.Item>
 
           <Descriptions.Item label={requiredLabel('Ngày sinh')}>
-            <Form.Item className="mb-0" name="dateOfBirth">
+            <Form.Item name="dateOfBirth">
               <DatePicker placeholder="Ngày sinh" style={{ display: 'block' }} />
             </Form.Item>
           </Descriptions.Item>
@@ -131,16 +130,18 @@ function Detail({ data, onUpdate }) {
             </Descriptions.Item>
           )} */}
 
-          <Descriptions.Item>
-            <div style={{ display: 'flex', justifyContent: 'flex-end  ' }}>
-              <Button type="default" className="me-2">
-                Hủy bỏ
-              </Button>
-              <Button type="primary" onClick={handleUpdateClick} style={{ marginLeft: 12 }}>
-                Cập nhật
-              </Button>
-            </div>
-          </Descriptions.Item>
+          {false && (
+            <Descriptions.Item>
+              <div style={{ display: 'flex', justifyContent: 'flex-end  ' }}>
+                <Button type="default" className="me-2">
+                  Hủy bỏ
+                </Button>
+                <Button type="primary" onClick={handleUpdateClick} style={{ marginLeft: 12 }}>
+                  Cập nhật
+                </Button>
+              </div>
+            </Descriptions.Item>
+          )}
         </Descriptions>
       </Card>
     </Form>

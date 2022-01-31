@@ -32,10 +32,10 @@ function Register(props) {
               <Form.Item
                 name="fullName"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
+                  { required: true, message: 'Vui lòng nhập trên đăng nhập' },
                   {
                     type: 'email',
-                    message: 'Vui lòng nhập đúng định dạng email!',
+                    message: 'Vui lòng nhập đúng định dạng email',
                   },
                 ]}
               >
@@ -44,10 +44,10 @@ function Register(props) {
               <Form.Item
                 name="email"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập trên đăng nhập!' },
+                  { required: true, message: 'Vui lòng nhập trên đăng nhập' },
                   {
                     type: 'email',
-                    message: 'Vui lòng nhập đúng định dạng email!',
+                    message: 'Vui lòng nhập đúng định dạng email',
                   },
                 ]}
               >
@@ -56,8 +56,8 @@ function Register(props) {
               <Form.Item
                 name="password"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập mật khẩu!' },
-                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự!' },
+                  { required: true, message: 'Vui lòng nhập mật khẩu' },
+                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự' },
                 ]}
               >
                 <Input.Password size="large" type="password" placeholder="Mật khẩu" />
@@ -66,8 +66,8 @@ function Register(props) {
               <Form.Item
                 name="re-password"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập mật khẩu!' },
-                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự!' },
+                  { required: true, message: 'Vui lòng nhập mật khẩu' },
+                  { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự' },
                 ]}
               >
                 <Input.Password size="large" type="password" placeholder="Nhập lại mật khẩu" />
