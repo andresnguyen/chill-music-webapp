@@ -3,7 +3,7 @@ import { unwrapResult } from '@reduxjs/toolkit'
 import { Button, Card, Descriptions, Form, Input, message } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { login } from '../userSlice'
 
 function Login(props) {
@@ -38,7 +38,7 @@ function Login(props) {
               <Form.Item
                 name="email"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập trên đăng nhập' },
+                  { required: true, message: 'Vui lòng nhập email' },
                   {
                     type: 'email',
                     message: 'Vui lòng nhập đúng định dạng email',
@@ -48,7 +48,7 @@ function Login(props) {
                 <Input
                   size="large"
                   prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="Tên đăng nhập"
+                  placeholder="Email"
                 />
               </Form.Item>
               <Form.Item
@@ -72,9 +72,9 @@ function Login(props) {
                 </Button>
               </Form.Item>
               <div className="text-end">
-                <a className="text-decoration-underline" href="">
+                <Link className="text-decoration-underline" to="/auth/forgotten-password">
                   Quên mật khẩu
-                </a>
+                </Link>
               </div>
               <Button
                 size="large"

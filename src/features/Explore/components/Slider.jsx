@@ -88,19 +88,19 @@ function Slider(props) {
   }, [])
 
   return (
-    <div class="row explore__slide--container" ref={containerRef}>
-      <div class="explore__slide-move">
-        <div class="slide__move-btn btn--prev">
-          <i class="bi bi-chevron-left"></i>
+    <div className="row explore__slide--container" ref={containerRef}>
+      <div className="explore__slide-move">
+        <div className="slide__move-btn btn--prev">
+          <i className="bi bi-chevron-left"></i>
         </div>
-        <div class="slide__move-btn btn--next">
-          <i class="bi bi-chevron-right"></i>
+        <div className="slide__move-btn btn--next">
+          <i className="bi bi-chevron-right"></i>
         </div>
       </div>
-      <div class="col l-4 m-4 c-6 explore__slide-item fourth">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item fourth">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide1.jpg') no-repeat center center / cover",
@@ -109,10 +109,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item fifth">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item fifth">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide2.jpg') no-repeat center center / cover",
@@ -121,10 +121,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item fifth">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item fifth">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide3.jpg') no-repeat center center / cover",
@@ -133,10 +133,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item fifth">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item fifth">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide4.jpg') no-repeat center center / cover",
@@ -145,10 +145,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item sixth prev">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item sixth prev">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide5.jpg') no-repeat center center / cover",
@@ -157,10 +157,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item first">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item first">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide6.jpg') no-repeat center center / cover",
@@ -169,10 +169,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item second">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item second">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide7.jpg') no-repeat center center / cover",
@@ -181,10 +181,10 @@ function Slider(props) {
         </div>
       </div>
 
-      <div class="col l-4 m-4 c-6 explore__slide-item third next">
-        <div class="row__item-display">
+      <div className="col l-4 m-4 c-6 explore__slide-item third next">
+        <div className="row__item-display">
           <div
-            class="explore__slide-img row__item-img img--rec"
+            className="explore__slide-img row__item-img img--rec"
             style={{
               background:
                 "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/slides/slide8.jpg') no-repeat center center / cover",

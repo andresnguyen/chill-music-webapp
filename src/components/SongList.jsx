@@ -5,14 +5,14 @@ const fakeData = new Array(20).fill()
 
 function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck, hiddenAll }) {
   return (
-    <div class="container__playlist">
+    <div className="container__playlist">
       {showHeader && (
-        <div class="playlist__header mt-5">
-          <span class="playlist__header-title">Bài hát</span>
-          <span class="playlist__header-time">Thời gian</span>
+        <div className="playlist__header mt-5">
+          <span className="playlist__header-title">Bài hát</span>
+          <span className="playlist__header-time">Thời gian</span>
         </div>
       )}
-      <div class="playlist__list mb-30 overflow-visible">
+      <div className="playlist__list mb-30 overflow-visible">
         {data.length > 0 &&
           data.map((item, index) => (
             <SongItem

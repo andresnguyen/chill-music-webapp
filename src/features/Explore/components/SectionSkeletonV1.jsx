@@ -4,17 +4,17 @@ import React from 'react'
 
 function SectionSkeletonV1({ data = {} }) {
   return (
-    <div class="row container__section normal-playlist--section mt-30">
-      <div class="col l-12 m-12 c-12 mb-16">
-        <div class="container__header">
-          <span href="#" class="container__header-title">
+    <div className="row container__section normal-playlist--section mt-30">
+      <div className="col l-12 m-12 c-12 mb-16">
+        <div className="container__header">
+          <span href="#" className="container__header-title">
             <Skeleton.Button active style={{ width: 270, height: 20 }} />
           </span>
         </div>
       </div>
 
-      <div class="col l-12 m-12 c-12">
-        <div class="row no-wrap normal-playlist--container">
+      <div className="col l-12 m-12 c-12">
+        <div className="row no-wrap normal-playlist--container">
           {[1, 2, 3, 4, 5, 6, 7].map((item) => (
             <AlbumSkeleton />
           ))}

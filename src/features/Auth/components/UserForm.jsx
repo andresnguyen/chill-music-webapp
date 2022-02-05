@@ -3,8 +3,11 @@ import { Button, Card, DatePicker, Descriptions, Form, Input, message, Select, U
 import { genderList } from 'constants/user'
 import React, { useEffect, useRef, useState } from 'react'
 import { requiredLabel } from 'utils/common'
+import { differentObject } from 'utils'
+import moment from 'moment'
+import { IMAGE_API_URL } from 'config'
 
-function Detail({ data, onUpdate }) {
+function Detail({ data, updateLoading, onUpdate }) {
   const [form] = Form.useForm()
   const [avatarLoading, setAvatarLoading] = useState(false)
   const [avatarURL, setAvatarURL] = useState(null)
@@ -13,18 +16,30 @@ function Detail({ data, onUpdate }) {
   const [changedData, setChangedData] = useState({})
 
   useEffect(() => {
-    form.setFieldsValue(data)
+    setFieldsValue(data)
     dataRef.current = data
   }, [data])
 
+  useEffect(() => {
+    setAvatarURL(data.avatarURL)
+  }, [data])
+
   const handleValuesChange = (changedValues, allValues) => {
-    // const changedValue = differentObject(allValues, dataRef.current)
-    // setChangedData(changedValue)
+    const changedValue = differentObject(changedValues, dataRef.current)
+    if (changedValues.dateOfBirth && moment(changedValues.dateOfBirth).isSame(dataRef.current.dateOfBirth)) {
+      delete changedValue.dateOfBirth
+    }
+    setChangedData(changedValue)
   }
 
   const handleUpdateClick = () => {
+    const payload = { ...changedData }
     setChangedData({})
-    onUpdate(data.id, changedData)
+    if (payload.avatarURL) {
+      payload.avatarURL = payload.avatarURL.fileList.slice(-1)[0].response.data.path
+    }
+
+    onUpdate(data._id, payload)
   }
 
   const beforeUpload = (file) => {
@@ -49,10 +64,12 @@ function Detail({ data, onUpdate }) {
 
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl) => {
-        setAvatarLoading(false)
-        setAvatarURL(imageUrl)
-      })
+      const avatarURL = info.file?.response?.data?.path
+      setAvatarURL(avatarURL)
+      setAvatarLoading(false)
+      // getBase64(info.file.originFileObj, (imageURL) => {
+      //   form.setFieldsValue({ imageURL: imageURL })
+      // })
     }
   }
 
@@ -69,18 +86,29 @@ function Detail({ data, onUpdate }) {
     </div>
   )
 
+  const isActionDisable = !Boolean(Object.keys(changedData).length > 0)
+
+  const handleCancelClick = () => {
+    setFieldsValue(data)
+    setChangedData({})
+  }
+
+  const setFieldsValue = (values) => {
+    form.setFieldsValue({ ...values, dateOfBirth: moment(values.dateOfBirth) })
+  }
+
   return (
-    <Form form={form} initialValues={data} onValuesChange={handleValuesChange}>
+    <Form form={form} onValuesChange={handleValuesChange}>
       <Card title="Thông tin cá nhân">
         <Descriptions column={1} bordered>
           <Descriptions.Item label={requiredLabel('Ảnh đại diện')}>
             <Form.Item className="mb-0" name="avatarURL">
               <Upload
-                name="avatar"
+                name="image"
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                action={`${IMAGE_API_URL}images`}
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
               >
@@ -103,7 +131,7 @@ function Detail({ data, onUpdate }) {
 
           <Descriptions.Item label={requiredLabel('Giới tính')}>
             <Form.Item name="gender">
-              <Select placeholder="Giới tính" allowClear>
+              <Select placeholder="Giới tính">
                 {genderList.map((gender) => (
                   <Select.Option value={gender.id}>{gender.name}</Select.Option>
                 ))}
@@ -113,35 +141,26 @@ function Detail({ data, onUpdate }) {
 
           <Descriptions.Item label={requiredLabel('Ngày sinh')}>
             <Form.Item name="dateOfBirth">
-              <DatePicker placeholder="Ngày sinh" style={{ display: 'block' }} />
+              <DatePicker placeholder="Ngày sinh" style={{ display: 'block' }} format="DD/MM/YYYY" allowClear={false} />
             </Form.Item>
           </Descriptions.Item>
 
-          {/* {Object.keys(changedData).length > 0 && (
-            <Descriptions.Item>
-              <div className="d-flex justify-content-end">
-                <Button type="default" className="me-2">
-                  Hủy bỏ
-                </Button>
-                <Button type="primary" onClick={handleUpdateClick}>
-                  Cập nhật
-                </Button>
-              </div>
-            </Descriptions.Item>
-          )} */}
-
-          {false && (
-            <Descriptions.Item>
-              <div style={{ display: 'flex', justifyContent: 'flex-end  ' }}>
-                <Button type="default" className="me-2">
-                  Hủy bỏ
-                </Button>
-                <Button type="primary" onClick={handleUpdateClick} style={{ marginLeft: 12 }}>
-                  Cập nhật
-                </Button>
-              </div>
-            </Descriptions.Item>
-          )}
+          <Descriptions.Item>
+            <div style={{ display: 'flex', justifyContent: 'flex-end  ' }}>
+              <Button danger className="me-2" disabled={isActionDisable} onClick={handleCancelClick}>
+                Hủy bỏ
+              </Button>
+              <Button
+                type="primary"
+                disabled={isActionDisable}
+                onClick={handleUpdateClick}
+                style={{ marginLeft: 12 }}
+                loading={updateLoading}
+              >
+                Cập nhật
+              </Button>
+            </div>
+          </Descriptions.Item>
         </Descriptions>
       </Card>
     </Form>

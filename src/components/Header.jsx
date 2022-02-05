@@ -257,12 +257,12 @@ function Header(props) {
               </li>
               <div className={classNames('setting__menu')}>
                 <div className="setting__nav">
-                  <div className="setting__item">
-                    <Link className="setting__item-content" to="/my-account">
+                  <Link className="setting__item" to="/my-account">
+                    <div className="setting__item-content" >
                       <i className="bi bi-shield-lock setting__item-icon"></i>
                       <span>Thông tin cá nhân</span>
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                   <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-badge-hd setting__item-icon"></i>
@@ -297,6 +297,12 @@ function Header(props) {
                       <span>Liên hệ</span>
                     </div>
                   </div>
+                  <Link className="setting__item" to="/change-pw">
+                    <div className="setting__item-content" >
+                      <i className="bi bi-shield-lock setting__item-icon"></i>
+                      <span>Đổi mật khẩu</span>
+                    </div>
+                  </Link>
                   <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-badge-ad setting__item-icon"></i>

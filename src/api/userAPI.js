@@ -12,8 +12,18 @@ const userAPI = {
     return axiosClient.post(url, data, { baseURL: USER_API_URL })
   },
 
-  forgottenPassword(data) {
-    const url = '/auth/forgotten-password'
+  forgottenPasswordS1(data) {
+    const url = '/auth/forgotten-password-s1'
+    return axiosClient.post(url, data, { baseURL: USER_API_URL })
+  },
+
+  forgottenPasswordS2(data) {
+    const url = '/auth/forgotten-password-s2'
+    return axiosClient.post(url, data, { baseURL: USER_API_URL })
+  },
+
+  forgottenPasswordS3(data) {
+    const url = '/auth/forgotten-password-s3'
     return axiosClient.post(url, data, { baseURL: USER_API_URL })
   },
 
@@ -37,8 +47,8 @@ const userAPI = {
     return axiosClient.post(url, data, { baseURL: USER_API_URL })
   },
 
-  update(data) {
-    const url = `/users/${data.id}`
+  update(id, data) {
+    const url = `/users/${id}`
     return axiosClient.patch(url, data, { baseURL: USER_API_URL })
   },
 

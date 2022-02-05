@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
+import ForgottenPassword from './pages/ForgottenPassword'
 import Login from './pages/Login'
 import Register from './pages/Register'
 
@@ -13,15 +14,16 @@ function AuthFeature(props) {
   }
 
   return (
-    <div class="app__container tab--explore">
-      <div class="app__container-content">
-        <div class="explore__container">
-          <div class="grid">
-            <div class="row container__section">
-              <div class="col l-12 m-12 c-12">
+    <div className="app__container tab--explore">
+      <div className="app__container-content">
+        <div className="explore__container">
+          <div className="grid">
+            <div className="row container__section">
+              <div className="col l-12 m-12 c-12">
                 <Switch>
                   <Route path={`${match.url}/login`} exact component={Login} />
                   <Route path={`${match.url}/register`} exact component={Register} />
+                  <Route path={`${match.url}/forgotten-password`} exact component={ForgottenPassword} />
                 </Switch>
               </div>
             </div>

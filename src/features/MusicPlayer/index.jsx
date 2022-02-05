@@ -15,7 +15,6 @@ function MusicPlayer(props) {
   const audioRef = useRef(null)
   const { playing, repeat, seeking, random, currentIndex, currentVolume, indexList, songList, isDrawerOpen } =
     useSelector((state) => state.musicPlayer)
-  console.log('first')
 
   const [value, setValue] = useState(0)
   const [popupShow, setPopupShow] = useState(false)
@@ -390,11 +389,11 @@ function MusicPlayer(props) {
             }}
           ></div>
         </div>
-        <div class="player__popup-cd-info">
+        <div className="player__popup-cd-info">
           <h4>Now playing</h4>
-          <h2 class="is-twoline">{currentSong.name}</h2>
+          <h2 className="is-twoline">{currentSong.name}</h2>
           <h3>
-            <a href="#" class="is-ghost">
+            <a href="#" className="is-ghost">
               Thường Nguyễn
             </a>
           </h3>

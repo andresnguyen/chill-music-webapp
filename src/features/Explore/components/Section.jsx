@@ -4,63 +4,63 @@ import Album from 'components/Album'
 
 function Section({ data = {} }) {
   return (
-    <div class="row container__section normal-playlist--section mt-30">
-      <div class="col l-12 m-12 c-12 mb-16">
-        <div class="container__header">
-          <a href="#" class="container__header-title">
+    <div className="row container__section normal-playlist--section mt-30">
+      <div className="col l-12 m-12 c-12 mb-16">
+        <div className="container__header">
+          <a href="#" className="container__header-title">
             <h3>{data.title}</h3>
           </a>
-          <h3 class="container__header-subtitle">{data.title}</h3>
+          <h3 className="container__header-subtitle">{data.title}</h3>
         </div>
       </div>
 
-      <div class="col l-12 m-12 c-12">
-        <div class="row no-wrap normal-playlist--container">
+      <div className="col l-12 m-12 c-12">
+        <div className="row no-wrap normal-playlist--container">
           {data.data && data.data.map((item) => (
             <Album key={item._id} data={item} />
           ))}
 
-          {/* <div class="col l-2-4 m-3 c-4 ">
-            <div class="row__item item--playlist">
-              <div class="row__item-container flex--top-left">
-                <div class="row__item-display br-5">
+          {/* <div className="col l-2-4 m-3 c-4 ">
+            <div className="row__item item--playlist">
+              <div className="row__item-container flex--top-left">
+                <div className="row__item-display br-5">
                   <div
-                    class="row__item-img img--square"
+                    className="row__item-img img--square"
                     style={{
                       background:
                         "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/normalPlaylists/playlistList1/playlist2.jpg') no-repeat center center / cover",
                     }}
                   ></div>
-                  <div class="row__item-actions">
-                    <div class="action-btn btn--heart">
-                      <i class="btn--icon icon--heart bi bi-heart"></i>
+                  <div className="row__item-actions">
+                    <div className="action-btn btn--heart">
+                      <i className="btn--icon icon--heart bi bi-heart"></i>
                     </div>
-                    <div class="btn--play-playlist">
-                      <div class="control-btn btn-toggle-play">
-                        <i class="bi bi-play-fill"></i>
+                    <div className="btn--play-playlist">
+                      <div className="control-btn btn-toggle-play">
+                        <i className="bi bi-play-fill"></i>
                       </div>
                     </div>
-                    <div class="action-btn">
-                      <i class="btn--icon bi bi-three-dots"></i>
+                    <div className="action-btn">
+                      <i className="btn--icon bi bi-three-dots"></i>
                     </div>
                   </div>
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </div>
-                <div class="row__item-info explore-playlist--info">
-                  <a href="#" class="row__info-name is-oneline">
+                <div className="row__item-info explore-playlist--info">
+                  <a href="#" className="row__info-name is-oneline">
                     V-Pop: The A-List
                   </a>
 
-                  <p class="info__artist">
-                    <a href="#" class="is-ghost">
+                  <p className="info__artist">
+                    <a href="#" className="is-ghost">
                       Bích Phương
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       Hoàng Thùy Linh
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       ERIK
                     </a>
                   </p>
@@ -69,47 +69,47 @@ function Section({ data = {} }) {
             </div>
           </div>
 
-          <div class="col l-2-4 m-3 c-4 ">
-            <div class="row__item item--playlist">
-              <div class="row__item-container flex--top-left">
-                <div class="row__item-display br-5">
+          <div className="col l-2-4 m-3 c-4 ">
+            <div className="row__item item--playlist">
+              <div className="row__item-container flex--top-left">
+                <div className="row__item-display br-5">
                   <div
-                    class="row__item-img img--square"
+                    className="row__item-img img--square"
                     style={{
                       background:
                         "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/normalPlaylists/playlistList1/playlist3.jpg') no-repeat center center / cover",
                     }}
                   ></div>
-                  <div class="row__item-actions">
-                    <div class="action-btn btn--heart">
-                      <i class="btn--icon icon--heart bi bi-heart"></i>
+                  <div className="row__item-actions">
+                    <div className="action-btn btn--heart">
+                      <i className="btn--icon icon--heart bi bi-heart"></i>
                     </div>
-                    <div class="btn--play-playlist">
-                      <div class="control-btn btn-toggle-play">
-                        <i class="bi bi-play-fill"></i>
+                    <div className="btn--play-playlist">
+                      <div className="control-btn btn-toggle-play">
+                        <i className="bi bi-play-fill"></i>
                       </div>
                     </div>
-                    <div class="action-btn">
-                      <i class="btn--icon bi bi-three-dots"></i>
+                    <div className="action-btn">
+                      <i className="btn--icon bi bi-three-dots"></i>
                     </div>
                   </div>
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </div>
-                <div class="row__item-info explore-playlist--info">
-                  <a href="#" class="row__info-name is-oneline">
+                <div className="row__item-info explore-playlist--info">
+                  <a href="#" className="row__info-name is-oneline">
                     Tỏ Tình Nhẹ Nhàng Thôi
                   </a>
 
-                  <p class="info__artist">
-                    <a href="#" class="is-ghost">
+                  <p className="info__artist">
+                    <a href="#" className="is-ghost">
                       Quân A.P
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       Changg
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       Hoàng Duyên
                     </a>
                   </p>
@@ -118,47 +118,47 @@ function Section({ data = {} }) {
             </div>
           </div>
 
-          <div class="col l-2-4 m-3 c-4 ">
-            <div class="row__item item--playlist">
-              <div class="row__item-container flex--top-left">
-                <div class="row__item-display br-5">
+          <div className="col l-2-4 m-3 c-4 ">
+            <div className="row__item item--playlist">
+              <div className="row__item-container flex--top-left">
+                <div className="row__item-display br-5">
                   <div
-                    class="row__item-img img--square"
+                    className="row__item-img img--square"
                     style={{
                       background:
                         "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/normalPlaylists/playlistList1/playlist4.jpg') no-repeat center center / cover",
                     }}
                   ></div>
-                  <div class="row__item-actions">
-                    <div class="action-btn btn--heart">
-                      <i class="btn--icon icon--heart bi bi-heart"></i>
+                  <div className="row__item-actions">
+                    <div className="action-btn btn--heart">
+                      <i className="btn--icon icon--heart bi bi-heart"></i>
                     </div>
-                    <div class="btn--play-playlist">
-                      <div class="control-btn btn-toggle-play">
-                        <i class="bi bi-play-fill"></i>
+                    <div className="btn--play-playlist">
+                      <div className="control-btn btn-toggle-play">
+                        <i className="bi bi-play-fill"></i>
                       </div>
                     </div>
-                    <div class="action-btn">
-                      <i class="btn--icon bi bi-three-dots"></i>
+                    <div className="action-btn">
+                      <i className="btn--icon bi bi-three-dots"></i>
                     </div>
                   </div>
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </div>
-                <div class="row__item-info explore-playlist--info">
-                  <a href="#" class="row__info-name is-oneline">
+                <div className="row__item-info explore-playlist--info">
+                  <a href="#" className="row__info-name is-oneline">
                     Nhạc Trẻ Gây Nghiện
                   </a>
 
-                  <p class="info__artist">
-                    <a href="#" class="is-ghost">
+                  <p className="info__artist">
+                    <a href="#" className="is-ghost">
                       AMEE
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       Quân A.P
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       ERIK
                     </a>
                   </p>
@@ -167,47 +167,47 @@ function Section({ data = {} }) {
             </div>
           </div>
 
-          <div class="col l-2-4 m-3 c-4 ">
-            <div class="row__item item--playlist">
-              <div class="row__item-container flex--top-left">
-                <div class="row__item-display br-5">
+          <div className="col l-2-4 m-3 c-4 ">
+            <div className="row__item item--playlist">
+              <div className="row__item-container flex--top-left">
+                <div className="row__item-display br-5">
                   <div
-                    class="row__item-img img--square"
+                    className="row__item-img img--square"
                     style={{
                       background:
                         "url('https://vikdang.github.io/Code_web_music_player/assets/img/tabExplore/normalPlaylists/playlistList1/playlist5.jpg') no-repeat center center / cover",
                     }}
                   ></div>
-                  <div class="row__item-actions">
-                    <div class="action-btn btn--heart">
-                      <i class="btn--icon icon--heart bi bi-heart"></i>
+                  <div className="row__item-actions">
+                    <div className="action-btn btn--heart">
+                      <i className="btn--icon icon--heart bi bi-heart"></i>
                     </div>
-                    <div class="btn--play-playlist">
-                      <div class="control-btn btn-toggle-play">
-                        <i class="bi bi-play-fill"></i>
+                    <div className="btn--play-playlist">
+                      <div className="control-btn btn-toggle-play">
+                        <i className="bi bi-play-fill"></i>
                       </div>
                     </div>
-                    <div class="action-btn">
-                      <i class="btn--icon bi bi-three-dots"></i>
+                    <div className="action-btn">
+                      <i className="btn--icon bi bi-three-dots"></i>
                     </div>
                   </div>
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </div>
-                <div class="row__item-info explore-playlist--info">
-                  <a href="#" class="row__info-name is-oneline">
+                <div className="row__item-info explore-playlist--info">
+                  <a href="#" className="row__info-name is-oneline">
                     HIT-MAKER: Nổi Bật
                   </a>
 
-                  <p class="info__artist">
-                    <a href="#" class="is-ghost">
+                  <p className="info__artist">
+                    <a href="#" className="is-ghost">
                       LyLy
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       RIN9
                     </a>
                     ,
-                    <a href="#" class="is-ghost">
+                    <a href="#" className="is-ghost">
                       Vương Anh Tú
                     </a>
                   </p>

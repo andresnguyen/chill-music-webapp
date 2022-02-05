@@ -3,7 +3,8 @@ import NotFound from 'components/NotFound'
 import { PrivateRoute } from 'components/PrivateRoute'
 import Sidebar from 'components/Sidebar'
 import AuthFeature from 'features/Auth'
-import DetailFeature from 'features/Auth/pages/Detail'
+import DetailPage from 'features/Auth/pages/UserDetail'
+import ChangePasswordPage from 'features/Auth/pages/ChangePassword'
 import ChartFeature from 'features/Chart'
 import ExploreFeature from 'features/Explore'
 import FollowingFeature from 'features/Following'
@@ -25,7 +26,8 @@ function MainLayout() {
       <Switch>
         <Route path="/" exact component={ExploreFeature} />
         <Route path="/auth" component={AuthFeature} />
-        <PrivateRoute path="/my-account" component={DetailFeature} />
+        <PrivateRoute path="/my-account" component={DetailPage} />
+        <PrivateRoute path="/change-pw" component={ChangePasswordPage} />
         <PrivateRoute path="/mymusic" component={PersonalFeature} />
         <Route path="/following" exact component={FollowingFeature} />
         <Route path="/explore" exact component={ExploreFeature} />
