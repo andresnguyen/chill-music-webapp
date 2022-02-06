@@ -11,6 +11,11 @@ const artistAPI = {
     return axiosClient.get(url);
   },
 
+  getDetail(id) {
+    const url = `/artists/${id}/detail`;
+    return axiosClient.get(url);
+  },
+
   add(data) {
     const url = '/artists';
     return axiosClient.post(url, data);

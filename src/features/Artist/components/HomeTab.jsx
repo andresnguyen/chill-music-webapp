@@ -1,36 +1,10 @@
-import collectionAPI from 'api/collectionAPI'
 import AlbumList from 'components/AlbumList'
 import ArtistList from 'components/ArtistList'
 import SongList from 'components/SongList'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-function HomeTab(props) {
-  const [loading, setLoading] = useState(false)
-  const [data, setData] = useState({})
-
-  useEffect(() => {
-    try {
-      ;(async () => {
-        setLoading(true)
-        const { data } = await collectionAPI.getInfo()
-        setData(data)
-      })()
-    } catch (error) {
-      console.log('Failed to fetch')
-    } finally {
-      setLoading(false)
-    }
-  }, [])
-
-  const {
-    favoriteSongList = [],
-    favoriteAlbumList = [],
-    playlistList = [],
-    favoritePlaylistList = [],
-    mySongList = [],
-    favoriteArtistList = [],
-  } = data || {}
-
+function HomeTab({ data, loading }) {
+  const { songList = [], albumList = [], artistList = [] } = data || {}
   return (
     <div className="grid container__tab tab-home active">
       <div className="container__control row">
@@ -42,13 +16,7 @@ function HomeTab(props) {
             </a>
             <h3 className="container__header-subtitle">Bài Hát</h3>
             <div className="container__header-actions">
-              <div className="button is-small container__header-btn hide-on-mobile">
-                <input type="file" name="upload song" id="home__upload-input" className="container__header-input" />
-                <label htmlFor="home__upload-input">
-                  <i className="bi bi-upload container__header-icon"></i>
-                  Tải lên
-                </label>
-              </div>
+              <input type="hidden" />
               <button className="button is-small button-primary container__header-btn btn--play-all">
                 <i className="bi bi-play-fill container__header-icon"></i>
                 <span>Phát tất cả</span>
@@ -58,34 +26,22 @@ function HomeTab(props) {
         </div>
         <div className="col l-12 m-12 c-12">
           <div className="container__playmusic">
-            <div className="container__slide hide-on-mobile">
-              <div className="container__slide-show">
-                {[...favoriteSongList, mySongList].map((item, index) => (
-                  <div
-                    className={`container__slide-item ${(index === 0 || index === 1) && ' first '}  ${
-                      index === 2 && ' second '
-                    } ${index === 3 && ' third '} ${index > 3 && ' fourth '}`}
-                  >
-                    <div
-                      style={{
-                        background: `url('${item.imageURL}') no-repeat center center / cover`,
-                      }}
-                      className="container__slide-img"
-                    ></div>
-                  </div>
-                ))}
-              </div>
-            </div>
             <div className="container__playlist">
               <div className="playlist__list">
-                <SongList hiddenHeader hiddenAction data={[...favoriteSongList, ...mySongList]} />
+                <SongList data={songList} />
+                {!loading && songList.length === 0 && (
+                  <div className="box--no-content">
+                    <div className="no-content-image"></div>
+                    <span className="no-content-text">Danh sách rỗng</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container__section row">
+      {/* <div className="container__section row">
         <div className="col l-12 m-12 c-12 mb-16">
           <div className="container__header">
             <a href="#" className="container__header-title">
@@ -104,9 +60,9 @@ function HomeTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
+          <AlbumList hiddenCreate playlist data={data.albumList} />
         </div>
-      </div>
+      </div> */}
 
       <div className="container__section row mt-50">
         <div className="col l-12 m-12 c-12 mb-16">
@@ -127,7 +83,13 @@ function HomeTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList data={favoriteAlbumList} />
+          <AlbumList hiddenCreate data={albumList} />
+          {!loading && albumList.length === 0 && (
+            <div className="box--no-content">
+              <div className="no-content-image"></div>
+              <span className="no-content-text">Danh sách rỗng</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -135,7 +97,7 @@ function HomeTab(props) {
         <div className="col l-12 m-12 c-12 mb-16">
           <div className="container__header">
             <a href="#" className="container__header-title">
-              <h3>Nghệ Sĩ&nbsp;</h3>
+              <h3>Có thể bạn quan tâm&nbsp;</h3>
               <i className="bi bi-chevron-right container__header-icon"></i>
             </a>
             <h3 className="container__header-subtitle">Nghệ Sĩ</h3>
@@ -150,7 +112,7 @@ function HomeTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <ArtistList data={favoriteArtistList} />
+          <ArtistList data={artistList} />
         </div>
       </div>
     </div>

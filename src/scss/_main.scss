@@ -1292,6 +1292,7 @@ label .container__header-icon {
   height: 40px;
   border-radius: 4px;
   position: relative;
+  background-size: contain !important;
 }
 
 .thumb--animate {

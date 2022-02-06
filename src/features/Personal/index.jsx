@@ -1,4 +1,6 @@
+import avatar from 'assets/images/avatar.jpg'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom'
 import AlbumTab from './components/AlbumTab'
 import ArtistTab from './components/ArtistTab'
@@ -8,11 +10,11 @@ import NotFound from './components/NotFound'
 import PlaylistTab from './components/PlaylistTab'
 import SongTab from './components/SongTab'
 import UploadTab from './components/UploadTab'
-import avatar from 'assets/images/avatar.jpg'
-
 
 function PersonalFeature(props) {
   const match = useRouteMatch()
+  const user = useSelector((state) => state.user.current)
+
   return (
     <div className="app__container tab--personal active">
       <div className="app__header">
@@ -27,15 +29,11 @@ function PersonalFeature(props) {
         <div className="app__header-container">
           <div className="app__header-user">
             <div className="app__user-avatar">
-              <img
-                src={avatar}
-                alt=""
-                className="app__user-img"
-              />
+              <img src={user.avatarURL || avatar} alt="avatar" className="app__user-img" />
             </div>
-            <span className="app__user-name">Thường Nguyễn</span>
+            <span className="app__user-name">{user.fullName}</span>
           </div>
-          <div className="app__header-actions">
+          {/* <div className="app__header-actions">
             <a href="#" className="vip-btn is-small button button-gold hide-on-mobile">
               Mua vip ngay
             </a>
@@ -49,7 +47,7 @@ function PersonalFeature(props) {
                 <span>Đăng xuất</span>
               </div>
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -61,7 +59,7 @@ function PersonalFeature(props) {
                 to="/mymusic"
                 className="content__navbar-item"
                 isActive={(match, location) => {
-                  if(location.pathname === "/mymusic") {
+                  if (location.pathname === '/mymusic') {
                     return true
                   }
                 }}
@@ -77,9 +75,9 @@ function PersonalFeature(props) {
               <NavLink to="/mymusic/library/album" className="content__navbar-item hide-on-mobile">
                 <span>Album</span>
               </NavLink>
-              <NavLink to="/mymusic/library/video" className="content__navbar-item">
+              {/* <NavLink to="/mymusic/library/video" className="content__navbar-item">
                 <span>MV</span>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/mymusic/library/artist" className="content__navbar-item hide-on-mobile">
                 <span>Nghệ sĩ</span>
               </NavLink>
@@ -91,7 +89,7 @@ function PersonalFeature(props) {
         </div>
         <div className="content__container">
           <Switch>
-            <Route path={match.url} exact component={HomeTab} />
+            <Route path={match.url} exact component={HomeTab} song="fdfd"/>
             <Route path={`${match.url}/library/song`} exact component={SongTab} />
             <Route path={`${match.url}/library/playlist`} exact component={PlaylistTab} />
             <Route path={`${match.url}/library/album`} exact component={AlbumTab} />

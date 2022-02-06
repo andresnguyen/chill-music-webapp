@@ -1,9 +1,19 @@
+import { pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import SongItem from './SongItem'
 
 const fakeData = new Array(20).fill()
 
 function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck, hiddenAll }) {
+  const dispatch = useDispatch()
+  const currentSong = useSelector((state) => state.musicPlayer.songList?.[state.musicPlayer.currentIndex]) || {}
+  const playing = useSelector((state) => state.musicPlayer.playing)
+
+  const handlePlayPauseClick = (data) => {
+    dispatch(pushToSongList(data))
+  }
+
   return (
     <div className="container__playlist">
       {showHeader && (
@@ -16,12 +26,16 @@ function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck
         {data.length > 0 &&
           data.map((item, index) => (
             <SongItem
+              key={item?._id || index}
               index={index}
               data={item}
+              active={item?._id === currentSong._id}
+              playing={playing}
               showAction={showAction}
               showRank={showRank}
               showCheck={showCheck}
               hiddenAll={hiddenAll}
+              onPlayPauseClick={handlePlayPauseClick}
             />
           ))}
       </div>

@@ -8,7 +8,7 @@ function Slider(props) {
 
     const prev = () => {
       const container = containerRef.current
-      if(!container) return
+      if (!container) return
       const slideMoveItems = Array.from(container.querySelectorAll('.explore__slide-item'))
 
       container.querySelector('.explore__slide-item.next').classList.remove('next')
@@ -35,7 +35,8 @@ function Slider(props) {
 
     const next = () => {
       const container = containerRef.current
-      const slideMoveItems =  Array.from(container.querySelectorAll('.explore__slide-item'))
+      if (!container) return
+      const slideMoveItems = Array.from(container.querySelectorAll('.explore__slide-item'))
 
       container.querySelector('.explore__slide-item.next').classList.remove('next')
       container.querySelector('.explore__slide-item.prev').classList.remove('prev')
@@ -64,7 +65,7 @@ function Slider(props) {
         const prevBtn = e.target.closest('.slide__move-btn.btn--prev')
         const nextBtn = e.target.closest('.slide__move-btn.btn--next')
 
-        if(!prevBtn && !nextBtn) {
+        if (!prevBtn && !nextBtn) {
           autoMoveSlideId.current = setInterval(next, 3500)
         }
 

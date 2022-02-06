@@ -1,11 +1,34 @@
+import { message } from 'antd'
+import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const defaultImageUrl = 'https://photo-zmp3.zadn.vn/audio_default.png'
-function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
-  const { imageURL, playing, active, name, artistList } = data || {}
+function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClick, active, playing }) {
+  const { imageURL, name, artistList } = data || {}
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  const handlePlayPauseClick = () => {
+    onPlayPauseClick(data)
+  }
+
+  const handleHeartClick = async () => {
+    try {
+      if (isFavorite) await collectionAPI.deleteFavoriteSong(data._id)
+      else await collectionAPI.addFavoriteSong({ songId: data._id })
+      message.success('Cập nhật thành công')
+      setIsFavorite(!isFavorite)
+    } catch (error) {
+      message.error('Cập nhật thất bại')
+    }
+  }
+
   return (
-    <div data-index="0" className={classNames('playlist__list-song media', { active: active, playing: playing })}>
+    <div
+      data-index="0"
+      className={classNames('playlist__list-song media', { active: active, playing: playing && active })}
+    >
       <div className="playlist__song-info media__left">
         {showRank && (
           <div className="playlist__song-rank">
@@ -28,7 +51,7 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
           <Fragment>
             <div className="playlist__song-check">
               <input type="checkbox" name="" id="playlist__check-0" className="mr-10" style={{ display: 'none' }} />
-              <label for="playlist__check-0"></label>
+              <label htmlFor="playlist__check-0"></label>
             </div>
             <i className="bi bi-music-note-beamed mr-10"></i>
           </Fragment>
@@ -39,6 +62,7 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
           style={{
             background: `url('${imageURL}'), url('${defaultImageUrl}') no-repeat center center / cover`,
           }}
+          onClick={handlePlayPauseClick}
         >
           <div className="thumb--animate">
             <div
@@ -56,19 +80,17 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
           </div>
         </div>
         <div className="playlist__song-body media__info">
-          <span className="playlist__song-title info__title">Cứ Chill Thôi</span>
+          <span className="playlist__song-title info__title">{name}</span>
           <p className="playlist__song-author info__author">
-            <a href="#" className="is-ghost">
-              Chillies
-            </a>
-            ,&ensp;
-            <a href="#" className="is-ghost">
-              Suni Hạ Linh
-            </a>
-            ,&ensp;
-            <a href="#" className="is-ghost">
-              Rhymastic
-            </a>
+            {artistList?.length > 0 &&
+              artistList.map((item, index) => (
+                <Fragment key={item._id}>
+                  <Link to={`/artists/${item._id}`} className="is-ghost">
+                    {item.fullName}
+                  </Link>
+                  {artistList.length - 1 !== index && ',&ensp;'}
+                </Fragment>
+              ))}
           </p>
         </div>
       </div>
@@ -79,8 +101,13 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll }) {
             <i className="btn--icon song__icon bi bi-mic-fill"></i>
           </div>
         )}
-        <div className="playlist__song-btn song-btn--heart option-btn hide-on-mobile">
-          <i className="btn--icon song__icon icon--heart bi bi-heart-fill primary"></i>
+        <div className="playlist__song-btn song-btn--heart option-btn hide-on-mobile" onClick={handleHeartClick}>
+          <i
+            className={classNames('btn--icon icon--heart bi', {
+              'bi-heart': !isFavorite,
+              'bi-heart-fill primary': isFavorite,
+            })}
+          ></i>
         </div>
         {!hiddenAll && (
           <div className="playlist__song-btn option-btn ">

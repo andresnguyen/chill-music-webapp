@@ -48,10 +48,35 @@ const musicPlayerSlice = createSlice({
 
     changeMusicPlayerValue(state, action) {
       state[action.payload.name] = action.payload.value
+    },
+
+    pushToSongList(state, action) {
+      const song = action.payload
+      const currentIndex = state.songList.findIndex((songItem) => songItem?._id === song?._id)
+     
+      if(currentIndex === state.currentIndex) {
+        state.playing = !state.playing 
+        return 
+      }
+
+      if(currentIndex === -1) {
+        state.songList.unshift(song)
+      } 
+
+      state.currentIndex = currentIndex > 0 ? currentIndex : 0
+      state.playing = true
+    },
+
+    changeSongList(state, action) {
+      const songList = action.payload
+     
+      state.songList = songList
+      state.currentIndex = 0
+      state.playing = true
     }
   }
 });
 
 const { actions, reducer } = musicPlayerSlice;
-export const { logout, changeMusicPlayerValue } = actions;
+export const { logout, changeMusicPlayerValue, pushToSongList, changeSongList } = actions;
 export default reducer;

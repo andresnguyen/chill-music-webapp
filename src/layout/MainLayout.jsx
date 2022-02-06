@@ -10,6 +10,8 @@ import ExploreFeature from 'features/Explore'
 import FollowingFeature from 'features/Following'
 import MusicPlayer from 'features/MusicPlayer'
 import PersonalFeature from 'features/Personal'
+import ArtistFeature from 'features/Artist'
+import AlbumFeature from 'features/Album'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
@@ -30,7 +32,9 @@ function MainLayout() {
         <PrivateRoute path="/change-pw" component={ChangePasswordPage} />
         <PrivateRoute path="/mymusic" component={PersonalFeature} />
         <Route path="/following" exact component={FollowingFeature} />
+        <Route path="/list" component={AlbumFeature} />
         <Route path="/explore" exact component={ExploreFeature} />
+        <Route path="/artists/:id" exact component={ArtistFeature} />
         <Route path="/charts" exact component={ChartFeature} />
         <Route exact component={NotFound} />
       </Switch>

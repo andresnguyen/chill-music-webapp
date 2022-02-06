@@ -196,7 +196,7 @@ function MusicPlayer(props) {
     >
       <audio
         id="audio"
-        src={currentSong.songUrl}
+        src={currentSong.mediaURL}
         ref={audioRef}
         onEnded={handleSongEnded}
         onTimeUpdate={handleOnTimeUpdate}

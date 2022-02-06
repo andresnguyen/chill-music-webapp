@@ -1,23 +1,57 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { message } from 'antd'
+import collectionAPI from 'api/collectionAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
+import classNames from 'classnames'
+import { pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
-function Album({ data, playlist }) {
-  const { imageURL, name, _id } = data || {}
+function Album({ data = {}, playlist }) {
+  const { imageURL, name, _id } = data
+  const isAlbum = data.songList
+  const isPlaylist = data.songList && !data.artistId
+  const [isFavorite, setIsFavorite] = useState(false)
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const handleItemClick = () => {
-    history.push({
-      pathname: `/playlists/${_id}`,
-    })
+    if (isAlbum) {
+      history.push({
+        pathname: `/list/${_id}`,
+      })
+      return
+    }
   }
 
-  const handleHeartClick = (e) => {
+  const handleHeartClick = async (e) => {
     e.stopPropagation()
+    try {
+      if (isAlbum) {
+        if (isFavorite) await collectionAPI.deleteAlbumFromFavorite(_id)
+        else await collectionAPI.addAlbumToFavorite({ albumId: _id })
+      } else if (isPlaylist) {
+        if (isFavorite) await collectionAPI.deletePlaylistFromFavorite(_id)
+        else await collectionAPI.addPlaylistToFavorite({ playlistId: _id })
+      } else {
+        if (isFavorite) await collectionAPI.deleteFavoriteSong(_id)
+        else await collectionAPI.addFavoriteSong({ songId: _id })
+      }
+
+      message.success('Cập nhật thành công')
+      setIsFavorite(!isFavorite)
+    } catch (error) {
+      message.success('Cập nhật thất bại')
+    }
   }
 
   const handlePlayClick = (e) => {
     e.stopPropagation()
+    if (isAlbum) {
+      return
+    }
+
+    dispatch(pushToSongList(data))
   }
 
   return (
@@ -33,7 +67,12 @@ function Album({ data, playlist }) {
             ></div>
             <div className="row__item-actions">
               <div className="action-btn btn--heart" onClick={handleHeartClick}>
-                <i className="btn--icon icon--heart bi bi-heart-fill primary"></i>
+                <i
+                  className={classNames('btn--icon icon--heart bi', {
+                    'bi-heart': !isFavorite,
+                    'bi-heart-fill primary': isFavorite,
+                  })}
+                ></i>
               </div>
               <div className="btn--play-playlist" onClick={handlePlayClick}>
                 <div className="control-btn btn-toggle-play">

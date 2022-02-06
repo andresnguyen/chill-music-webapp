@@ -70,7 +70,7 @@ function MusicPlayer(props) {
     }
 
     isMountRef.current = true
-  }, [currentIndex])
+  }, [currentIndex, songList])
 
   useEffect(() => {
     if (isMountRef.current) {
@@ -200,7 +200,7 @@ function MusicPlayer(props) {
     >
       <audio
         id="audio"
-        src={currentSong.songUrl}
+        src={currentSong.mediaURL}
         ref={audioRef}
         onEnded={handleSongEnded}
         onTimeUpdate={handleOnTimeUpdate}
@@ -214,7 +214,7 @@ function MusicPlayer(props) {
                 <div
                   className="thumb-img"
                   style={{
-                    background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
+                    background: `url('${currentSong.imageURL}') no-repeat center center / cover`,
                   }}
                 ></div>
                 <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -385,7 +385,7 @@ function MusicPlayer(props) {
           <div
             className="player__popup-cd-img"
             style={{
-              background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
+              background: `url('${currentSong.imageURL}') no-repeat center center / cover`,
             }}
           ></div>
         </div>
@@ -406,7 +406,7 @@ function MusicPlayer(props) {
                   <div
                     className="thumb-img"
                     style={{
-                      background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
+                      background: `url('${currentSong.imageURL}') no-repeat center center / cover`,
                     }}
                   ></div>
                   <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">

@@ -24,10 +24,10 @@ function Sidebar(props) {
       <div className="sidebar__nav">
         <ul className="sidebar__nav-list sidebar__nav-list--separate ">
           <NavLink to="/mymusic" className="sidebar__nav-item">
-            <a href="#" className="sidebar__item-link">
+            <span className="sidebar__item-link">
               <i className="bi bi-music-player"></i>
               <span>Cá Nhân</span>
-            </a>
+            </span>
           </NavLink>
           <NavLink
             to="/"
@@ -38,29 +38,29 @@ function Sidebar(props) {
               }
             }}
           >
-            <a href="#" className="sidebar__item-link">
+            <span className="sidebar__item-link">
               <i className="bi bi-vinyl"></i>
               <span>Khám Phá</span>
-            </a>
+            </span>
           </NavLink>
           <NavLink to="/charts" className="sidebar__nav-item">
-            <a href="#" className="sidebar__item-link">
+            <span className="sidebar__item-link">
               <i className="bi bi-music-note-list"></i>
               <span>#chillchart</span>
-            </a>
+            </span>
           </NavLink>
           <NavLink to="/radio" className="sidebar__nav-item">
-            <a href="#" className="sidebar__item-link">
+            <span className="sidebar__item-link">
               <i className="bi bi-soundwave"></i>
               <span>Radio</span>
               <div className="sidebar__nav-label">LIVE</div>
-            </a>
+            </span>
           </NavLink>
           <NavLink to="/following" className="sidebar__nav-item">
-            <a href="#" className="sidebar__item-link">
+            <span className="sidebar__item-link">
               <i className="bi bi-file-earmark-slides"></i>
               <span>Theo Dõi</span>
-            </a>
+            </span>
           </NavLink>
         </ul>
       </div>
@@ -107,15 +107,15 @@ function Sidebar(props) {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <defs>
                   <linearGradient id="0783s0j89a" x1="0%" x2="0%" y1="0%" y2="100%">
-                    <stop offset="0%" stop-color="#3CA2FF" />
-                    <stop offset="100%" stop-color="#008FFF" />
+                    <stop offset="0%" stopColor="#3CA2FF" />
+                    <stop offset="100%" stopColor="#008FFF" />
                   </linearGradient>
                   <linearGradient id="prx3tly02b" x1="21.839%" x2="21.839%" y1="43.679%" y2="100%">
-                    <stop offset="0%" stop-color="#FFF" />
-                    <stop offset="100%" stop-color="#FFF" stop-opacity=".9" />
+                    <stop offset="0%" stopColor="#FFF" />
+                    <stop offset="100%" stopColor="#FFF" stopOpacity=".9" />
                   </linearGradient>
                 </defs>
-                <g fill="none" fill-rule="evenodd">
+                <g fill="none" fillRule="evenodd">
                   <g>
                     <g>
                       <path
@@ -130,15 +130,15 @@ function Sidebar(props) {
                       />
                       <path
                         fill="#FFF"
-                        fill-opacity=".6"
-                        fill-rule="nonzero"
+                        fillOpacity=".6"
+                        fillRule="nonzero"
                         d="M7.5 5.25c0-.414.336-.75.75-.75h7.5c.414 0 .75.336.75.75h-9z"
                         transform="translate(-21 -433) translate(21 433)"
                       />
                       <path
                         fill="#FFF"
-                        fill-opacity=".9"
-                        fill-rule="nonzero"
+                        fillOpacity=".9"
+                        fillRule="nonzero"
                         d="M6 6.75c0-.414.336-.75.75-.75h10.5c.414 0 .75.336.75.75H6z"
                         transform="translate(-21 -433) translate(21 433)"
                       />
@@ -154,11 +154,11 @@ function Sidebar(props) {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <defs>
                   <linearGradient id="ghd4ngt38a" x1="50%" x2="50%" y1="0%" y2="100%">
-                    <stop offset="0%" stop-color="#9FD465" />
-                    <stop offset="100%" stop-color="#70B129" />
+                    <stop offset="0%" stopColor="#9FD465" />
+                    <stop offset="100%" stopColor="#70B129" />
                   </linearGradient>
                 </defs>
-                <g fill="none" fill-rule="evenodd">
+                <g fill="none" fillRule="evenodd">
                   <g>
                     <g>
                       <path
@@ -168,9 +168,9 @@ function Sidebar(props) {
                       />
                       <path
                         stroke="#FFF"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
                         d="M13.5 11.5h5m-5 3h5M6 17.5h12.5"
                         transform="translate(-21 -467) translate(21 467)"
                       />
@@ -192,15 +192,15 @@ function Sidebar(props) {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <defs>
                   <linearGradient id="v6mduhifwa" x1="50%" x2="50%" y1="0%" y2="100%">
-                    <stop offset="0%" stop-color="#FFD677" />
-                    <stop offset="100%" stop-color="#F7AA45" />
+                    <stop offset="0%" stopColor="#FFD677" />
+                    <stop offset="100%" stopColor="#F7AA45" />
                   </linearGradient>
                   <linearGradient id="dkfkk30hhb" x1="21.205%" x2="21.205%" y1="43.042%" y2="100.632%">
-                    <stop offset="0%" stop-color="#FFF" />
-                    <stop offset="100%" stop-color="#FFF" stop-opacity=".9" />
+                    <stop offset="0%" stopColor="#FFF" />
+                    <stop offset="100%" stopColor="#FFF" stopOpacity=".9" />
                   </linearGradient>
                 </defs>
-                <g fill="none" fill-rule="evenodd">
+                <g fill="none" fillRule="evenodd">
                   <g>
                     <g>
                       <path

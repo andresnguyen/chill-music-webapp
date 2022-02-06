@@ -1,7 +1,28 @@
+import collectionAPI from 'api/collectionAPI'
+import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
 import React from 'react'
+import { useEffect, useState } from 'react'
 
 function SongTab(props) {
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState({})
+
+  useEffect(() => {
+    try {
+      ;(async () => {
+        setLoading(true)
+        const { data } = await collectionAPI.getInfo()
+        setData(data)
+      })()
+    } catch (error) {
+      console.log('Failed to fetch')
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const { favoriteSongList = [] } = data || {}
   return (
     <div className="grid container__tab tab-song">
       <div className="row no-gutters">
@@ -14,7 +35,7 @@ function SongTab(props) {
             <div className="container__header-actions">
               <div className="button is-small container__header-btn hide-on-mobile">
                 <input type="file" name="upload song" id="song__upload-input" className="container__header-input" />
-                <label for="song__upload-input">
+                <label htmlFor="song__upload-input">
                   <i className="bi bi-upload container__header-icon"></i>
                   Tải lên
                 </label>
@@ -27,7 +48,8 @@ function SongTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <SongList showCheck showHeader />
+          <SongList showCheck showHeader data={favoriteSongList} />
+          {!loading && favoriteSongList.length === 0 && <EmptyBox />}
         </div>
       </div>
     </div>
