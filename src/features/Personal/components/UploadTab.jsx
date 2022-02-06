@@ -33,7 +33,7 @@ function UploadTab(props) {
           </a>
         </div>
         <div className="col l-12 m-12 c-12">
-          <SongList data={mySongList} />
+          {mySongList.length > 0 && <SongList data={mySongList} />}
           {!loading && mySongList.length === 0 && <EmptyBox />}
         </div>
       </div>

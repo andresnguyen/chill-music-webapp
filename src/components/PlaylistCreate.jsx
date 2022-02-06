@@ -23,7 +23,6 @@ function PlaylistCreate(props) {
   const handleFinish = async (values) => {
     try {
       setLoading(true)
-      console.log(values);
       const value = await collectionAPI.createPlaylist(values)
       message.success('Thêm playlist mới thành công')
     } catch (error) {
