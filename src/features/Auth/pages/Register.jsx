@@ -1,26 +1,34 @@
-import { LockOutlined, UserOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons'
 import { unwrapResult } from '@reduxjs/toolkit'
-import { Button, Form, Input, message, Select, DatePicker, Descriptions, Card } from 'antd'
+import { Button, Card, DatePicker, Descriptions, Form, Input, message, Select } from 'antd'
+import userAPI from 'api/userAPI'
 import { genderList } from 'constants/user'
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 function Register(props) {
   const history = useHistory()
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
   const [form] = Form.useForm()
 
   const handleFinish = async (values) => {
     try {
-      const result = await dispatch(null)
+      setLoading(true)
+      const result = await userAPI.register(values)
       unwrapResult(result)
-      history.push({
-        pathname: '/',
-      })
+
+      setLoading(false)
+      message.success('Đăng ký thành công. Chuyển về trang login sau 2s')
+      setTimeout(
+        () =>
+          history.push({
+            pathname: '/auth/login',
+          }),
+        2000
+      )
     } catch (error) {
-      message.error('Đăng nhập không thành công.')
-      form.setFieldsValue({ password: undefined })
+      setLoading(false)
+      message.error('Đăng ký không thành công.')
+      form.setFieldsValue({ password: undefined, rePassword: undefined })
     }
   }
   return (
@@ -29,22 +37,13 @@ function Register(props) {
         <Card>
           <Descriptions column={1} bordered>
             <Descriptions.Item label={<b>ĐĂNG KÝ</b>}>
-              <Form.Item
-                name="fullName"
-                rules={[
-                  { required: true, message: 'Vui lòng nhập trên đăng nhập' },
-                  {
-                    type: 'email',
-                    message: 'Vui lòng nhập đúng định dạng email',
-                  },
-                ]}
-              >
+              <Form.Item name="fullName" rules={[{ required: true, message: 'Vui lòng nhập tên đầy đủ' }]}>
                 <Input size="large" placeholder="Tên đầy đủ" />
               </Form.Item>
               <Form.Item
                 name="email"
                 rules={[
-                  { required: true, message: 'Vui lòng nhập trên đăng nhập' },
+                  { required: true, message: 'Vui lòng nhập email' },
                   {
                     type: 'email',
                     message: 'Vui lòng nhập đúng định dạng email',
@@ -64,10 +63,18 @@ function Register(props) {
               </Form.Item>
 
               <Form.Item
-                name="re-password"
+                name="rePassword"
                 rules={[
                   { required: true, message: 'Vui lòng nhập mật khẩu' },
                   { min: 6, message: 'Mật khẩu tổi thiểu là 6 kí tự' },
+                  ({ getFieldValue }) => ({
+                    validator(rule, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve()
+                      }
+                      return Promise.reject('Phải nhập đúng với mật khẩu trước đó')
+                    },
+                  }),
                 ]}
               >
                 <Input.Password size="large" type="password" placeholder="Nhập lại mật khẩu" />
@@ -86,7 +93,7 @@ function Register(props) {
               </Form.Item>
 
               <Form.Item>
-                <Button size="large" type="primary" htmlType="submit" className="login-form-button" block>
+                <Button size="large" type="primary" htmlType="submit" className="login-form-button" block loading={loading} disabled={loading}>
                   Đăng ký
                 </Button>
               </Form.Item>
