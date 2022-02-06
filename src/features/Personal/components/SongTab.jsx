@@ -22,7 +22,7 @@ function SongTab(props) {
     }
   }, [])
 
-  const { favoriteSongList = [] } = data || {}
+  const { favoriteSongList } = data || {}
   return (
     <div className="grid container__tab tab-song">
       <div className="row no-gutters">
@@ -48,8 +48,8 @@ function SongTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <SongList showCheck showHeader data={favoriteSongList} />
-          {!loading && favoriteSongList.length === 0 && <EmptyBox />}
+          {favoriteSongList?.length > 0 && <SongList showCheck showHeader data={favoriteSongList} />}
+          {favoriteSongList?.length === 0 && <EmptyBox />}
         </div>
       </div>
     </div>

@@ -1,16 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import AlbumList from 'components/AlbumList'
-import { useState } from 'react'
-import { useEffect } from 'react'
 import collectionAPI from 'api/collectionAPI'
+import AlbumList from 'components/AlbumList'
 import EmptyBox from 'components/EmptyBox'
+import React, { useEffect, useState } from 'react'
 
 function PlaylistTab(props) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({})
+  let isMount = false
 
   useEffect(() => {
+    isMount = true
     try {
       ;(async () => {
         setLoading(true)
@@ -37,8 +36,10 @@ function PlaylistTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
-          {!loading && [...playlistList, ...favoritePlaylistList].length === 0 && <EmptyBox />}
+          {[...playlistList, ...favoritePlaylistList].length > 0 && (
+            <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
+          )}
+          {isMount && !loading && [...playlistList, ...favoritePlaylistList].length === 0 && <EmptyBox />}
         </div>
       </div>
     </div>

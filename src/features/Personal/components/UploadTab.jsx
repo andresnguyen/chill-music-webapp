@@ -1,9 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
-import SongList from 'components/SongList'
 import collectionAPI from 'api/collectionAPI'
 import EmptyBox from 'components/EmptyBox'
+import SongList from 'components/SongList'
+import React, { useEffect, useState } from 'react'
 
 function UploadTab(props) {
   const [loading, setLoading] = useState(false)
@@ -23,7 +21,7 @@ function UploadTab(props) {
     }
   }, [])
 
-  const { mySongList = [] } = data || {}
+  const { mySongList } = data || {}
   return (
     <div className="grid container__tab tab-upload">
       <div className="container__section row">
@@ -33,8 +31,8 @@ function UploadTab(props) {
           </a>
         </div>
         <div className="col l-12 m-12 c-12">
-          {mySongList.length > 0 && <SongList data={mySongList} />}
-          {!loading && mySongList.length === 0 && <EmptyBox />}
+          {mySongList?.length > 0 && <SongList data={mySongList} />}
+          {mySongList?.length === 0 && <EmptyBox />}
         </div>
       </div>
     </div>

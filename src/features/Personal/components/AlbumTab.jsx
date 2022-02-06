@@ -6,8 +6,10 @@ import React, { useEffect, useState } from 'react'
 function AlbumTab(props) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({})
+  let isMount = false
 
   useEffect(() => {
+    isMount = true
     try {
       ;(async () => {
         setLoading(true)
@@ -33,8 +35,8 @@ function AlbumTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList data={favoriteAlbumList} />
-          {!loading && favoriteAlbumList.length === 0 && <EmptyBox />}
+          {favoriteAlbumList.length > 0 && <AlbumList data={favoriteAlbumList} />}
+          {isMount && !loading && favoriteAlbumList.length === 0 && <EmptyBox />}
         </div>
       </div>
     </div>
