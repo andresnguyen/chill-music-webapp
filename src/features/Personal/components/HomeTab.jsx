@@ -68,7 +68,7 @@ function HomeTab(props) {
                   >
                     <div
                       style={{
-                        background: `url('${item.imageURL}') no-repeat center center / cover`,
+                        background: `url('${item.imageURL}'), url('https://photo-zmp3.zadn.vn/audio_default.png') no-repeat center center / cover`,
                       }}
                       className="container__slide-img"
                     ></div>
