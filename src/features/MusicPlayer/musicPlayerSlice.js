@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import StorageKeys from 'constants/storage-keys';
+import { createSlice } from '@reduxjs/toolkit'
+import StorageKeys from 'constants/storage-keys'
 
 const songList = [
   {
@@ -29,39 +29,43 @@ const musicPlayerSlice = createSlice({
   initialState: {
     isDrawerOpen: false,
     playing: false,
-    repeat: false,
-    seeking: false,
-    random: false,
+    repeat: JSON.parse(localStorage.getItem('repeat')) || false,
+    seeking: JSON.parse(localStorage.getItem('seeking')) || false,
+    random: JSON.parse(localStorage.getItem('random')) || false,
     currentIndex: 0,
-    currentVolume: 10,
+    currentVolume: JSON.parse(localStorage.getItem('currentVolume')) || 10,
     indexList: [],
-    songList: songList
+    songList: songList,
   },
   reducers: {
     logout(state) {
       // clear local storage
-      localStorage.removeItem(StorageKeys.USER);
-      localStorage.removeItem(StorageKeys.TOKEN);
+      localStorage.removeItem(StorageKeys.USER)
+      localStorage.removeItem(StorageKeys.TOKEN)
 
-      state.current = {};
+      state.current = {}
     },
 
     changeMusicPlayerValue(state, action) {
+      const actionList = ['seeking', 'random', 'repeat', 'currentVolume']
+      if (actionList.includes(action.payload.name)) {
+        localStorage.setItem(action.payload.name, JSON.stringify(action.payload.value))
+      }
       state[action.payload.name] = action.payload.value
     },
 
     pushToSongList(state, action) {
       const song = action.payload
       const currentIndex = state.songList.findIndex((songItem) => songItem?._id === song?._id)
-     
-      if(currentIndex === state.currentIndex) {
-        state.playing = !state.playing 
-        return 
+
+      if (currentIndex === state.currentIndex) {
+        state.playing = !state.playing
+        return
       }
 
-      if(currentIndex === -1) {
+      if (currentIndex === -1) {
         state.songList.unshift(song)
-      } 
+      }
 
       state.currentIndex = currentIndex > 0 ? currentIndex : 0
       state.playing = true
@@ -69,14 +73,14 @@ const musicPlayerSlice = createSlice({
 
     changeSongList(state, action) {
       const songList = action.payload
-     
+
       state.songList = songList
       state.currentIndex = 0
       state.playing = true
-    }
-  }
-});
+    },
+  },
+})
 
-const { actions, reducer } = musicPlayerSlice;
-export const { logout, changeMusicPlayerValue, pushToSongList, changeSongList } = actions;
-export default reducer;
+const { actions, reducer } = musicPlayerSlice
+export const { logout, changeMusicPlayerValue, pushToSongList, changeSongList } = actions
+export default reducer
