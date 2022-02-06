@@ -2,6 +2,7 @@ import { unwrapResult } from '@reduxjs/toolkit'
 import { Button, Card, DatePicker, Descriptions, Form, Input, message, Select } from 'antd'
 import userAPI from 'api/userAPI'
 import { genderList } from 'constants/user'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
@@ -89,11 +90,28 @@ function Register(props) {
               </Form.Item>
 
               <Form.Item name="dateOfBirth" rules={[{ required: true }]}>
-                <DatePicker size="large" style={{ width: '100%' }} placeholder="Chọn ngày tháng năm sinh của bạn" />
+                <DatePicker
+                  disabledDate={(value) => {
+                    if (value.valueOf() > moment().valueOf()) {
+                      return true
+                    }
+                  }}
+                  size="large"
+                  style={{ width: '100%' }}
+                  placeholder="Chọn ngày tháng năm sinh của bạn"
+                />
               </Form.Item>
 
               <Form.Item>
-                <Button size="large" type="primary" htmlType="submit" className="login-form-button" block loading={loading} disabled={loading}>
+                <Button
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                  block
+                  loading={loading}
+                  disabled={loading}
+                >
                   Đăng ký
                 </Button>
               </Form.Item>

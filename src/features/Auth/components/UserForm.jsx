@@ -141,7 +141,17 @@ function Detail({ data, updateLoading, onUpdate }) {
 
           <Descriptions.Item label={requiredLabel('Ngày sinh')}>
             <Form.Item name="dateOfBirth">
-              <DatePicker placeholder="Ngày sinh" style={{ display: 'block' }} format="DD/MM/YYYY" allowClear={false} />
+              <DatePicker
+                disabledDate={(value) => {
+                  if (value.valueOf() > moment().valueOf()) {
+                    return true
+                  }
+                }}
+                placeholder="Ngày sinh"
+                style={{ display: 'block' }}
+                format="DD/MM/YYYY"
+                allowClear={false}
+              />
             </Form.Item>
           </Descriptions.Item>
 
