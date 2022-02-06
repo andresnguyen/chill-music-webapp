@@ -6,7 +6,6 @@ function PlaylistCreate(props) {
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
 
-
   const [form] = Form.useForm()
 
   const handleClick = () => {
@@ -29,7 +28,7 @@ function PlaylistCreate(props) {
       message.success('Thêm playlist mới thành công')
     } catch (error) {
       console.log('Failed to add new playlist ' + error)
-      message.success('Thêm playlist mới thất bại')
+      message.error('Thêm playlist mới thất bại')
     } finally {
       setLoading(false)
       setVisible(false)
