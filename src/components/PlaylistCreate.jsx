@@ -25,13 +25,14 @@ function PlaylistCreate(props) {
       setLoading(true)
       const value = await collectionAPI.createPlaylist(values)
       message.success('Thêm playlist mới thành công')
-    } catch (error) {
-      console.log('Failed to add new playlist ' + error)
-      message.error('Thêm playlist mới thất bại')
-    } finally {
       setLoading(false)
       setVisible(false)
       form.resetFields()
+    } catch (error) {
+      setLoading(false)
+      setVisible(false)
+      form.resetFields()
+      message.error('Thêm playlist mới thất bại')
     }
   }
 

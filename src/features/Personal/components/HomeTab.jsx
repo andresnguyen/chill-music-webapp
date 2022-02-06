@@ -1,8 +1,10 @@
+import { Skeleton } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import AlbumList from 'components/AlbumList'
 import ArtistList from 'components/ArtistList'
 import SongList from 'components/SongList'
-import React, { useEffect, useState } from 'react'
+import SectionSkeletonV1 from 'features/Explore/components/SectionSkeletonV1'
+import React, { Fragment, useEffect, useState } from 'react'
 
 function HomeTab(props) {
   const [loading, setLoading] = useState(false)
@@ -14,10 +16,9 @@ function HomeTab(props) {
         setLoading(true)
         const { data } = await collectionAPI.getInfo()
         setData(data)
+        setLoading(false)
       })()
     } catch (error) {
-      console.log('Failed to fetch')
-    } finally {
       setLoading(false)
     }
   }, [])
@@ -78,7 +79,21 @@ function HomeTab(props) {
             </div>
             <div className="container__playlist">
               <div className="playlist__list">
-                <SongList hiddenHeader hiddenAction data={[...favoriteSongList, ...mySongList]} />
+                {loading && (
+                  <Fragment>
+                    <Skeleton.Button active size="large" block />
+                    <Skeleton.Button active size="large" block className="mt-3" />
+                    <Skeleton.Button active size="large" block className="mt-3" />
+                    <Skeleton.Button active size="large" block className="mt-3" />
+                    <Skeleton.Button active size="large" block className="mt-3" />
+                    <Skeleton.Button active size="large" block className="mt-3" />
+                    <Skeleton.Button active size="large" block className="mt-3" />
+                  </Fragment>
+                )}
+                {!loading && [...favoriteSongList, ...mySongList].length > 0 && (
+                  <SongList hiddenHeader hiddenAction data={[...favoriteSongList, ...mySongList]} />
+                )}
+                {loading && <SectionSkeletonV1 />}
               </div>
             </div>
           </div>
@@ -104,7 +119,10 @@ function HomeTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
+          {[...playlistList, ...favoritePlaylistList].length > 0 && (
+            <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
+          )}
+          {loading && <SectionSkeletonV1 />}
         </div>
       </div>
 
@@ -127,7 +145,8 @@ function HomeTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList data={favoriteAlbumList} />
+          {favoriteAlbumList.length > 0 && <AlbumList data={favoriteAlbumList} />}
+          {loading && <SectionSkeletonV1 />}
         </div>
       </div>
 
@@ -150,7 +169,8 @@ function HomeTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <ArtistList data={favoriteArtistList} />
+          {favoriteArtistList.length > 0 && <ArtistList data={favoriteArtistList} />}
+          {loading && <SectionSkeletonV1 />}
         </div>
       </div>
     </div>

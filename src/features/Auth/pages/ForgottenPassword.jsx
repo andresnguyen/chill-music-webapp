@@ -21,9 +21,9 @@ function ForgottenPassword(props) {
       const result = await userAPI.forgottenPasswordS1(values)
       message.success(`Vui lòng kiểm tra mã code trong hộp thư email: ${values.email}`)
       setCurrent(1)
+      setLoading(false)
     } catch (error) {
       message.error('Email không hợp lệ')
-    } finally {
       setLoading(false)
     }
   }
@@ -35,9 +35,9 @@ function ForgottenPassword(props) {
       const result = await userAPI.forgottenPasswordS2({ ...values, email })
       message.success('Nhập password mới để hoàn tất')
       setCurrent(2)
+      setLoading(false)
     } catch (error) {
       message.error('Mã code không hợp lệ')
-    } finally {
       setLoading(false)
     }
   }
@@ -54,9 +54,9 @@ function ForgottenPassword(props) {
           pathname: '/',
         })
       }, 3000)
+      setLoading(false)
     } catch (error) {
       message.error('Thay đổi thất bại')
-    } finally {
       setLoading(false)
     }
   }

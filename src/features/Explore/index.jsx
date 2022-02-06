@@ -16,9 +16,8 @@ function ExploreFeature(props) {
         setLoading(true)
         const { data = {} } = await siteAPI.home()
         setData(data)
+        setLoading(false)
       } catch (error) {
-        console.log('Failed to get home')
-      } finally {
         setLoading(false)
       }
     })()

@@ -1,8 +1,6 @@
 import artistAPI from 'api/artistAPI'
 import avatar from 'assets/images/avatar.jpg'
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import HomeTab from './components/HomeTab'
 
@@ -14,18 +12,15 @@ function ArtistFeature(props) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({})
 
-  console.log(data)
-
   useEffect(() => {
     try {
       ;(async () => {
         setLoading(true)
         const { data } = await artistAPI.getDetail(id)
         setData(data)
+        setLoading(false)
       })()
     } catch (error) {
-      console.log('Failed to fetch')
-    } finally {
       setLoading(false)
     }
   }, [id])

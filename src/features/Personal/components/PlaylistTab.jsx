@@ -15,10 +15,9 @@ function PlaylistTab(props) {
         setLoading(true)
         const { data } = await collectionAPI.getInfo()
         setData(data)
+        setLoading(false)
       })()
     } catch (error) {
-      console.log('Failed to fetch')
-    } finally {
       setLoading(false)
     }
   }, [])
