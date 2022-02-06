@@ -1,5 +1,6 @@
 import albumAPI from 'api/albumAPI'
 import SongList from 'components/SongList'
+import SongListSkeleton from 'components/SongListSkeleton'
 import { changeMusicPlayerValue, changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -14,14 +15,17 @@ function DetailPage(props) {
 
   const [list, setList] = useState({})
   const [isPause, setPause] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useState(() => {
     ;(async () => {
       try {
+        setLoading(true)
         const { data } = await albumAPI.get(id)
         setList(data)
+        setLoading(false)
       } catch (error) {
-        console.log('Failed to get list detail')
+        setLoading(false)
       }
     })()
   }, [])
@@ -32,7 +36,7 @@ function DetailPage(props) {
       dispatch(changeMusicPlayerValue({ name: 'playing', value: false }))
       return
     }
-    
+
     dispatch(changeSongList(list.songList))
   }
 
@@ -62,7 +66,8 @@ function DetailPage(props) {
             </div>
             <div className="container__playlist">
               <div className="playlist__list">
-                <SongList data={list.songList} showHeader hiddenAction showCheck />
+                {!loading && <SongList data={list.songList} showHeader hiddenAction showCheck />}
+                {loading && <SongListSkeleton />}
               </div>
             </div>
           </div>
