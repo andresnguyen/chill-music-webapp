@@ -1,10 +1,12 @@
 import { Form, Input, message, Modal } from 'antd'
 import collectionAPI from 'api/collectionAPI'
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 
 function PlaylistCreate(props) {
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  console.log('first')
 
   const [form] = Form.useForm()
 
@@ -37,11 +39,13 @@ function PlaylistCreate(props) {
   }
 
   return (
-    <div className="col l-2-4 m-3 c-4 mb-30" onClick={handleClick}>
-      <div className="row__item  playlist--create item--playlist">
-        <div className="row__item-container flex--center item-create--properties">
-          <i className="bi bi-plus-lg album__create-icon"></i>
-          <span className="album__create-annotate text-center">Tạo playlist mới</span>
+    <Fragment>
+      <div className="col l-2-4 m-3 c-4 mb-30" onClick={handleClick}>
+        <div className="row__item  playlist--create item--playlist">
+          <div className="row__item-container flex--center item-create--properties">
+            <i className="bi bi-plus-lg album__create-icon"></i>
+            <span className="album__create-annotate text-center">Tạo playlist mới</span>
+          </div>
         </div>
       </div>
 
@@ -60,7 +64,7 @@ function PlaylistCreate(props) {
           </Form.Item>
         </Form>
       </Modal>
-    </div>
+    </Fragment>
   )
 }
 
