@@ -214,7 +214,7 @@ function MusicPlayer(props) {
                 <div
                   className="thumb-img"
                   style={{
-                    background: `url('${currentSong.imageURL}') no-repeat center center / cover`,
+                    background: `url('${currentSong.imageURL}'), url('https://photo-zmp3.zadn.vn/audio_default.png') no-repeat center center / cover`,
                   }}
                 ></div>
                 <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
