@@ -1,6 +1,7 @@
 import collectionAPI from 'api/collectionAPI'
 import AlbumList from 'components/AlbumList'
 import EmptyBox from 'components/EmptyBox'
+import SectionSkeletonV1 from 'features/Explore/components/SectionSkeletonV1'
 import React, { useEffect, useState } from 'react'
 
 function PlaylistTab(props) {
@@ -39,6 +40,7 @@ function PlaylistTab(props) {
             <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
           )}
           {isMount && !loading && [...playlistList, ...favoritePlaylistList].length === 0 && <EmptyBox />}
+          {loading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
     </div>

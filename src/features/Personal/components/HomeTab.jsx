@@ -93,7 +93,7 @@ function HomeTab(props) {
                 {!loading && [...favoriteSongList, ...mySongList].length > 0 && (
                   <SongList hiddenHeader hiddenAction data={[...favoriteSongList, ...mySongList]} />
                 )}
-                {loading && <SectionSkeletonV1 />}
+                {loading && <SectionSkeletonV1 hiddenTitle />}
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@ function HomeTab(props) {
           {[...playlistList, ...favoritePlaylistList].length > 0 && (
             <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
           )}
-          {loading && <SectionSkeletonV1 />}
+          {loading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
 
@@ -146,7 +146,7 @@ function HomeTab(props) {
         </div>
         <div className="col l-12 m-12 c-12">
           {favoriteAlbumList.length > 0 && <AlbumList data={favoriteAlbumList} />}
-          {loading && <SectionSkeletonV1 />}
+          {loading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
 
@@ -170,7 +170,7 @@ function HomeTab(props) {
         </div>
         <div className="col l-12 m-12 c-12">
           {favoriteArtistList.length > 0 && <ArtistList data={favoriteArtistList} />}
-          {loading && <SectionSkeletonV1 />}
+          {loading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
     </div>

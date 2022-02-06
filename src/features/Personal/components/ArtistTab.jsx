@@ -1,6 +1,7 @@
 import collectionAPI from 'api/collectionAPI'
 import ArtistList from 'components/ArtistList'
 import EmptyBox from 'components/EmptyBox'
+import SectionSkeletonV1 from 'features/Explore/components/SectionSkeletonV1'
 import React, { useEffect, useState } from 'react'
 
 function ArtistTab(props) {
@@ -37,6 +38,7 @@ function ArtistTab(props) {
         <div className="col l-12 m-12 c-12">
           {favoriteArtistList.length > 0 && <ArtistList data={favoriteArtistList} />}
           {isMount && !loading && favoriteArtistList.length === 0 && <EmptyBox />}
+          {loading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
     </div>

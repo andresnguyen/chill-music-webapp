@@ -1,7 +1,8 @@
+import { Skeleton } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 function UploadTab(props) {
   const [loading, setLoading] = useState(false)
@@ -32,6 +33,17 @@ function UploadTab(props) {
         <div className="col l-12 m-12 c-12">
           {mySongList?.length > 0 && <SongList data={mySongList} />}
           {mySongList?.length === 0 && <EmptyBox />}
+          {loading && (
+            <Fragment>
+              <Skeleton.Button active size="large" block />
+              <Skeleton.Button active size="large" block className="mt-3" />
+              <Skeleton.Button active size="large" block className="mt-3" />
+              <Skeleton.Button active size="large" block className="mt-3" />
+              <Skeleton.Button active size="large" block className="mt-3" />
+              <Skeleton.Button active size="large" block className="mt-3" />
+              <Skeleton.Button active size="large" block className="mt-3" />
+            </Fragment>
+          )}
         </div>
       </div>
     </div>
