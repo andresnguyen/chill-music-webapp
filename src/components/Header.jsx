@@ -22,7 +22,8 @@ function Header(props) {
     mode = 'REGISTER'
   }
 
-  const isLogin = Boolean(useSelector((state) => state.user.current._id))
+  const user = useSelector((state) => state.user.current)
+  const isLogin = Boolean(user?._id)
 
   useEffect(() => {
     const mainContent = headerRef.current.parentElement.querySelector('.app__container')
@@ -253,12 +254,12 @@ function Header(props) {
           <div className={classNames('header__nav-item avatar hide-on-mobile', { hideAll: !isLogin })} ref={wrapperRef}>
             <div className="header__nav-btn btn--nav-setting">
               <li className="header__nav-item">
-                <img src={avatar} alt="" className="header__nav-btn" data-id="avatar" />
+                <img src={user.avatarURL} alt="" className="header__nav-btn" data-id="avatar" />
               </li>
               <div className={classNames('setting__menu')}>
                 <div className="setting__nav">
                   <Link className="setting__item" to="/my-account">
-                    <div className="setting__item-content" >
+                    <div className="setting__item-content">
                       <i className="bi bi-shield-lock setting__item-icon"></i>
                       <span>Thông tin cá nhân</span>
                     </div>
@@ -298,7 +299,7 @@ function Header(props) {
                     </div>
                   </div>
                   <Link className="setting__item" to="/change-pw">
-                    <div className="setting__item-content" >
+                    <div className="setting__item-content">
                       <i className="bi bi-shield-lock setting__item-icon"></i>
                       <span>Đổi mật khẩu</span>
                     </div>

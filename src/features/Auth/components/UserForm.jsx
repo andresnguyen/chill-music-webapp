@@ -86,7 +86,7 @@ function Detail({ data, updateLoading, onUpdate }) {
     </div>
   )
 
-  const isActionDisable = !Boolean(Object.keys(changedData).length > 0)
+  const isActionDisable = !Boolean(Object.keys(changedData).length > 0) || avatarLoading
 
   const handleCancelClick = () => {
     setFieldsValue(data)
@@ -112,7 +112,11 @@ function Detail({ data, updateLoading, onUpdate }) {
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
               >
-                {avatarURL ? <img src={avatarURL} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                {avatarURL && !avatarLoading ? (
+                  <img src={avatarURL} alt="avatar" style={{ width: '100%' }} />
+                ) : (
+                  uploadButton
+                )}
               </Upload>
             </Form.Item>
           </Descriptions.Item>

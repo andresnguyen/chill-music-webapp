@@ -39,7 +39,12 @@ const userSlice = createSlice({
     },
 
     changeValue(state, action) {
-      state[action.payload.name] = action.payload.value
+      const { name, value } = action.payload
+      if (name === 'current') {
+        localStorage.setItem(StorageKeys.USER, JSON.stringify(value))
+      }
+
+      state[name] = value
     },
   },
   extraReducers: {

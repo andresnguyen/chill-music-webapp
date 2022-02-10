@@ -196,7 +196,7 @@ function MusicPlayer(props) {
     >
       <audio
         id="audio"
-        src={currentSong.mediaURL}
+        src={currentSong?.mediaURL}
         ref={audioRef}
         onEnded={handleSongEnded}
         onTimeUpdate={handleOnTimeUpdate}
@@ -210,7 +210,7 @@ function MusicPlayer(props) {
                 <div
                   className="thumb-img"
                   style={{
-                    background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
+                    background: `url('${currentSong?.imageUrl}') no-repeat center center / cover`,
                   }}
                 ></div>
                 <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -232,7 +232,7 @@ function MusicPlayer(props) {
                 <div className="player__song-title info__title">
                   <div className="player__song-title-custom">
                     <marquee scrollDelay={130} className="player__song-title-marquee">
-                      <span className="player__song-title-span">{currentSong.name}</span>
+                      <span className="player__song-title-span">{currentSong?.name}</span>
                     </marquee>
                   </div>
                 </div>
@@ -381,13 +381,13 @@ function MusicPlayer(props) {
           <div
             className="player__popup-cd-img"
             style={{
-              background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
+              background: `url('${currentSong?.imageUrl}') no-repeat center center / cover`,
             }}
           ></div>
         </div>
         <div className="player__popup-cd-info">
           <h4>Now playing</h4>
-          <h2 className="is-twoline">{currentSong.name}</h2>
+          <h2 className="is-twoline">{currentSong?.name}</h2>
           <h3>
             <a href="#" className="is-ghost">
               Thường Nguyễn
@@ -402,7 +402,7 @@ function MusicPlayer(props) {
                   <div
                     className="thumb-img"
                     style={{
-                      background: `url('${currentSong.imageUrl}') no-repeat center center / cover`,
+                      background: `url('${currentSong?.imageUrl}') no-repeat center center / cover`,
                     }}
                   ></div>
                   <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -424,7 +424,7 @@ function MusicPlayer(props) {
                   <div className="player__song-title info__title">
                     <div className="player__song-title-custom">
                       <marquee scrollDelay={130} className="player__song-title-marquee">
-                        <span className="player__song-title-span">{currentSong.name}</span>
+                        <span className="player__song-title-span">{currentSong?.name}</span>
                       </marquee>
                     </div>
                   </div>

@@ -1,28 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import StorageKeys from 'constants/storage-keys'
 
-const songList = [
-  {
-    name: 'Phố Đã Lên Đèn',
-    imageUrl: 'https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song21.jpg',
-    songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song21.mp3',
-  },
-  {
-    name: 'Thiên Lý Ơi',
-    imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song20.jpg',
-    songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song20.mp3',
-  },
-  {
-    name: 'Tộc ca',
-    imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song19.jpg',
-    songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song19.mp3',
-  },
-  {
-    name: 'Hãy trao cho anh',
-    imageUrl: '	https://vikdang.github.io/Code_web_music_player/assets/img/music/listSong1/song18.jpg',
-    songUrl: 'https://vikdang.github.io/Code_web_music_player/assets/music/listSong1/song18.mp3',
-  },
-]
+const saveSongList = (songList) => {
+  localStorage.setItem('songList', JSON.stringify(songList))
+}
 
 const musicPlayerSlice = createSlice({
   name: 'musicPlayer',
@@ -34,8 +15,8 @@ const musicPlayerSlice = createSlice({
     random: JSON.parse(localStorage.getItem('random')) || false,
     currentIndex: 0,
     currentVolume: JSON.parse(localStorage.getItem('currentVolume')) || 10,
-    indexList: [],
-    songList: songList,
+    indexList: JSON.parse(localStorage.getItem('indexList')) || [],
+    songList: JSON.parse(localStorage.getItem('songList')) || [],
   },
   reducers: {
     logout(state) {
@@ -47,7 +28,7 @@ const musicPlayerSlice = createSlice({
     },
 
     changeMusicPlayerValue(state, action) {
-      const actionList = ['seeking', 'random', 'repeat', 'currentVolume']
+      const actionList = ['seeking', 'random', 'repeat', 'currentVolume', 'indexList']
       if (actionList.includes(action.payload.name)) {
         localStorage.setItem(action.payload.name, JSON.stringify(action.payload.value))
       }
@@ -65,6 +46,7 @@ const musicPlayerSlice = createSlice({
 
       if (currentIndex === -1) {
         state.songList.unshift(song)
+        saveSongList(state.songList)
       }
 
       state.currentIndex = currentIndex > 0 ? currentIndex : 0
@@ -73,6 +55,7 @@ const musicPlayerSlice = createSlice({
 
     changeSongList(state, action) {
       const songList = action.payload
+      saveSongList(songList)
 
       state.songList = songList
       state.currentIndex = 0
