@@ -248,7 +248,7 @@ function MusicPlayer(props) {
                     </marquee>
                   </div>
                 </div>
-                <div className="player__song-author info__author">{renderArtistFromList(currentSong.artistList)}</div>
+                <div className="player__song-author info__author">{renderArtistFromList(currentSong?.artistList)}</div>
               </div>
             </div>
             <div className="media__right hide-on-tablet-mobile">
@@ -440,7 +440,7 @@ function MusicPlayer(props) {
                       </marquee>
                     </div>
                   </div>
-                  <div className="player__song-author info__author">{renderArtistFromList(currentSong.artistList)}</div>
+                  <div className="player__song-author info__author">{renderArtistFromList(currentSong?.artistList)}</div>
                 </div>
               </div>
               <div className="media__right hide-on-tablet-mobile">
