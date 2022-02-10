@@ -2,7 +2,7 @@ import { message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
 import React, { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { renderArtistFromList } from 'utils'
 
 const defaultImageUrl = 'https://photo-zmp3.zadn.vn/audio_default.png'
 function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClick, active, playing }) {
@@ -82,15 +82,7 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClic
         <div className="playlist__song-body media__info">
           <span className="playlist__song-title info__title">{name}</span>
           <p className="playlist__song-author info__author">
-            {artistList?.length > 0 &&
-              artistList.map((item, index) => (
-                <Fragment key={item._id}>
-                  <Link to={`/artists/${item._id}`} className="is-ghost">
-                    {item.fullName}
-                  </Link>
-                  {artistList.length - 1 !== index && ',&ensp;'}
-                </Fragment>
-              ))}
+            {renderArtistFromList(artistList)}
           </p>
         </div>
       </div>

@@ -208,9 +208,9 @@ function MusicPlayer(props) {
             <div className="media__left">
               <div className="player__song-thumb media__thumb note-1">
                 <div
-                  className="thumb-img"
+                  className="thumb-img bg-song"
                   style={{
-                    background: `url('${currentSong?.imageUrl}') no-repeat center center / cover`,
+                    background: `url('${currentSong?.imageUrl}')`,
                   }}
                 ></div>
                 <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -400,9 +400,9 @@ function MusicPlayer(props) {
               <div className="media__left">
                 <div className="player__song-thumb media__thumb note-1">
                   <div
-                    className="thumb-img"
+                    className="thumb-img bg-song"
                     style={{
-                      background: `url('${currentSong?.imageUrl}') no-repeat center center / cover`,
+                      background: `url('${currentSong?.imageUrl}')`,
                     }}
                   ></div>
                   <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">

@@ -1267,6 +1267,10 @@ a {
   margin-bottom: 0;
 }
 
+.mt-3 {
+  margin-top: 3px;
+}
+
 .mb-10 {
   margin-bottom: 10px;
 }
@@ -1279,6 +1283,15 @@ a {
   margin-top: 20px;
 }
 
-.mt-3 {
-  margin-top: 3px;
+.pointer {
+  cursor: pointer;
 }
+
+
+.bg-song {
+ background-position: center !important;
+ background-repeat: no-repeat !important;
+ background-size: cover !important;
+}
+
+

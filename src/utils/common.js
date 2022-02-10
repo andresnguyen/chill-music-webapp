@@ -1,4 +1,6 @@
 import { transform, isEqual, isObject, isArray } from 'lodash'
+import { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 
 export const formatPrice = (price) => {
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
@@ -66,4 +68,30 @@ export function unaccent(str) {
   str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, '') // Huyền sắc hỏi ngã nặng
   str = str.replace(/\u02C6|\u0306|\u031B/g, '') // Â, Ê, Ă, Ơ, Ư
   return str
+}
+
+export const renderArtistFromList = (artistList) => {
+  if (artistList?._id)
+    return (
+      <Link to={`/artists/${artistList._id}`} className="is-ghost">
+        {artistList.fullName}
+      </Link>
+    )
+
+  if (!Array.isArray(artistList) || artistList.length === 0) return 'Unknow'
+  if (artistList.length === 1)
+    return artistList.map((artist) => (
+      <Link to={`/artists/${artist._id}`} className="is-ghost">
+        {artist.fullName}
+      </Link>
+    ))
+
+  return artistList.map((artist, index) => (
+    <Fragment>
+      <Link to={`/artists/${artist._id}`} className="is-ghost">
+        {artist.fullName}
+      </Link>
+      {artistList.length - 1 !== index && <span>,&nbsp;</span>}
+    </Fragment>
+  ))
 }

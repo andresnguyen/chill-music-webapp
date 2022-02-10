@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
-import { formatSongTime } from 'utils'
+import { formatSongTime, renderArtistFromList } from 'utils'
 import smallLogo from 'assets/images/small-logo.png'
 import { useDispatch } from 'react-redux'
 import { changeValue } from 'features/Auth/userSlice'
 import { useSelector } from 'react-redux'
 import { changeMusicPlayerValue } from './musicPlayerSlice'
-import { Drawer, Tabs } from 'antd'
+import { Drawer, message, Tabs } from 'antd'
 import SongList from 'components/SongList'
 const { TabPane } = Tabs
 
@@ -22,6 +22,12 @@ function MusicPlayer(props) {
   const [currentTime, setCurrentTime] = useState(0)
 
   const currentSong = songList[currentIndex]
+
+  useEffect(() => {
+    if(!currentSong.mediaURL) {
+      message.error("Bài hát đang này đang bị lỗi")
+    }
+  }, [currentSong])
 
   const dispatch = useDispatch()
 
@@ -191,6 +197,7 @@ function MusicPlayer(props) {
     dispatch(changeMusicPlayerValue({ name: 'isDrawerOpen', value: true }))
   }
 
+
   return (
     <div
       className={classNames('player grid', { 'open-popup': popupShow, playing: playing })}
@@ -201,7 +208,7 @@ function MusicPlayer(props) {
     >
       <audio
         id="audio"
-        src={currentSong?.mediaURL}
+        src={currentSong?.mediaURL || " "}
         ref={audioRef}
         onEnded={handleSongEnded}
         onTimeUpdate={handleOnTimeUpdate}
@@ -211,11 +218,11 @@ function MusicPlayer(props) {
         <div className="player__container-song">
           <div className={classNames('player__song-info media', { playing: playing })}>
             <div className="media__left">
-              <div className="player__song-thumb media__thumb note-1">
+              <div className="player__song-thumb media__thumb note-1 pointer" onClick={handlePopupClick}>
                 <div
-                  className="thumb-img"
+                  className="thumb-img bg-song"
                   style={{
-                    background: `url('${currentSong?.imageURL}'), url('https://photo-zmp3.zadn.vn/audio_default.png') no-repeat center center / cover`,
+                    background: `url('${currentSong?.imageURL}'), url('https://photo-zmp3.zadn.vn/audio_default.png')`,
                   }}
                 ></div>
                 <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -241,7 +248,7 @@ function MusicPlayer(props) {
                     </marquee>
                   </div>
                 </div>
-                <div className="player__song-author info__author">Author</div>
+                <div className="player__song-author info__author">{renderArtistFromList(currentSong.artistList)}</div>
               </div>
             </div>
             <div className="media__right hide-on-tablet-mobile">
@@ -405,9 +412,9 @@ function MusicPlayer(props) {
               <div className="media__left">
                 <div className="player__song-thumb media__thumb note-1">
                   <div
-                    className="thumb-img"
+                    className="thumb-img bg-song"
                     style={{
-                      background: `url('${currentSong?.imageURL}') no-repeat center center / cover`,
+                      background: `url('${currentSong?.imageURL}')`,
                     }}
                   ></div>
                   <svg fill="#fff" viewBox="0 0 512 512" className="thumb-note note-1">
@@ -433,7 +440,7 @@ function MusicPlayer(props) {
                       </marquee>
                     </div>
                   </div>
-                  <div className="player__song-author info__author">Author</div>
+                  <div className="player__song-author info__author">{renderArtistFromList(currentSong.artistList)}</div>
                 </div>
               </div>
               <div className="media__right hide-on-tablet-mobile">

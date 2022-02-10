@@ -6,6 +6,7 @@ import { pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { renderArtistFromList } from 'utils'
 
 function Album({ data = {}, playlist }) {
   const { imageURL, name, _id } = data
@@ -87,7 +88,7 @@ function Album({ data = {}, playlist }) {
             <a href="#" className="row__info-name is-twoline">
               {name}
             </a>
-            {playlist && <h3 className="row__info-creator">Nal</h3>}
+            <h3 className="row__info-creator">{renderArtistFromList(data.artistList || data.artist)}</h3>
           </div>
         </div>
       </div>
