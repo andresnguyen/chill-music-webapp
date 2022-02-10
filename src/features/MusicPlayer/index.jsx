@@ -24,7 +24,7 @@ function MusicPlayer(props) {
   const currentSong = songList[currentIndex]
 
   useEffect(() => {
-    if(!currentSong.mediaURL) {
+    if(!currentSong?.mediaURL) {
       message.error("Bài hát đang này đang bị lỗi")
     }
   }, [currentSong])

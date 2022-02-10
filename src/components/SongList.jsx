@@ -29,7 +29,7 @@ function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck
               key={item?._id || index}
               index={index}
               data={item}
-              active={item?._id === currentSong._id}
+              active={item?._id === currentSong?._id}
               playing={playing}
               showAction={showAction}
               showRank={showRank}
