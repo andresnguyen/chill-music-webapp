@@ -1,39 +1,43 @@
-import { Dropdown, Menu, message } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Dropdown, Menu, message, Modal } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
 import classNames from 'classnames'
+import { addASong, addASongPriority, pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { renderArtistFromList } from 'utils'
 
-function Album({ data }) {
-  const idList = useSelector((state) => state.user.favoriteAlbumIdList)
+function SongCard({ data = {} }) {
+  const user = useSelector((state) => state.user.current)
+  const idList = useSelector((state) => state.user.favoriteSongIdList)
 
   const [isFavorite, setIsFavorite] = useState(false)
 
   const history = useHistory()
-
-  const { imageURL, name, _id } = data
+  const dispatch = useDispatch()
 
   const queryClient = useQueryClient()
 
+  const { imageURL, name, _id, userId } = data
+
   useEffect(() => {
-    if (idList.some((item) => item.albumId)) setIsFavorite(true)
+    if (idList.some((item) => item === _id)) setIsFavorite(true)
     else setIsFavorite(false)
   }, [idList])
 
   const { mutate, isLoading: updateLoading } = useMutation(
     () => {
-      if (isFavorite) return collectionAPI.deleteAlbumFromFavorite(_id)
-      else return collectionAPI.addAlbumToFavorite({ albumId: _id })
+      if (isFavorite) return collectionAPI.deleteSongFromFavorite(_id)
+      else return collectionAPI.addSongToFavorite({ songId: _id })
     },
     {
       onSuccess: () => {
         message.success('Cập nhật thành công')
         setIsFavorite(!isFavorite)
-        queryClient.invalidateQueries('favorite-album-id-list')
+        queryClient.invalidateQueries('favorite-song-id-list')
       },
 
       onError: () => {
@@ -43,32 +47,62 @@ function Album({ data }) {
   )
 
   const handleItemClick = () => {
-    history.push({
-      pathname: `/albums/${_id}`,
-    })
+    dispatch(pushToSongList(data))
   }
 
   const handleHeartClick = async (e) => {
     e.stopPropagation()
     if (updateLoading) {
-      return  
+      return
     }
     mutate()
   }
 
   const handlePlayClick = (e) => {
     e.stopPropagation()
-    history.push({
-      pathname: `/albums/${_id}`,
-      search: '?play=true'
-    })
+    dispatch(pushToSongList(data))
   }
+
+  const handleDownload = () => {}
+
+  const handleAddToList = () => {
+    dispatch(addASong(data))
+  }
+
+  const handleAddToListPriority = () => {
+    dispatch(addASongPriority(data))
+  }
+
+  const handleAddToPlaylist = () => {}
 
   const menu = (
     <Menu>
       <Fragment>
-        <Menu.Item key="0" onClick={() => null}>
-          Thêm vào danh sách phát
+        <Menu.Item key="0" onClick={handleDownload}>
+          <div className="menu__item">
+            <i className="bi bi-download"></i>
+            <span>Tải xuống</span>
+          </div>
+        </Menu.Item>
+
+        <Menu.Item key="1" onClick={handleAddToList}>
+          <div className="menu__item">
+            <i className="bi bi-skip-start-fill"></i>
+            <span>Thêm vào danh sách phát</span>
+          </div>
+        </Menu.Item>
+
+        <Menu.Item key="2" onClick={handleAddToListPriority}>
+          <div className="menu__item">
+            <i className="bi bi-tv"></i> <span>Phát tiếp theo</span>
+          </div>
+        </Menu.Item>
+
+        <Menu.Item key="3" onClick={handleAddToPlaylist}>
+          <div className="menu__item">
+            <i className="bi bi-plus-square"></i>
+            <span>Thêm vào playlist</span>  
+          </div>
         </Menu.Item>
       </Fragment>
     </Menu>
@@ -101,7 +135,7 @@ function Album({ data }) {
                   <i className="bi bi-play-fill"></i>
                 </div>
               </div>
-              <div onClick={(e) => e.stopPropagation()}>
+              <div onClick={(e) => e.stopPropagation()} title="Khác">
                 <Dropdown overlay={menu}>
                   <div className="action-btn">
                     <i className="btn--icon bi bi-three-dots"></i>
@@ -115,7 +149,7 @@ function Album({ data }) {
             <a href="#" className="row__info-name is-twoline">
               {name}
             </a>
-            <h3 className="row__info-creator">{renderArtistFromList(data.artist)}</h3>
+            <h3 className="row__info-creator">{renderArtistFromList(data.artistList)}</h3>
           </div>
         </div>
       </div>
@@ -123,6 +157,6 @@ function Album({ data }) {
   )
 }
 
-Album.propTypes = {}
+SongCard.propTypes = {}
 
-export default Album
+export default SongCard

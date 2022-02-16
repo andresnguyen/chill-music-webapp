@@ -1,24 +1,22 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import smallLogo from 'assets/images/small-logo.png'
 import logo from 'assets/images/logo.svg'
-
+import smallLogo from 'assets/images/small-logo.png'
+import { changeValueCommon } from 'features/Common/commonSlice'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { Link, NavLink } from 'react-router-dom'
 
 function Sidebar(props) {
+  const dispatch = useDispatch()
+  const handleCreateClick = () => {
+    dispatch(changeValueCommon({ name: 'playlistCreateOpen', value: true }))
+  }
+
   return (
     <div className="app__sidebar">
-      <div className="sidebar__logo hide-on-mobile">
+      <div className="sidebar__logo hide-on-mobile" title="Trang chủ">
         <Link to="/" className="sidebar__logo-link">
-          <img
-            src={logo}
-            alt="Logo"
-            className="sidebar__logo-img"
-          />
-          <img
-            src={smallLogo}
-            alt="Logo"
-            className="sidebar__small-logo"
-          />
+          <img src={logo} alt="Logo" className="sidebar__logo-img" />
+          <img src={smallLogo} alt="Logo" className="sidebar__small-logo" />
         </Link>
       </div>
       <div className="sidebar__nav">
@@ -240,7 +238,7 @@ function Sidebar(props) {
           </li>
         </ul>
       </div>
-      <div className="sidebar__create-playlist">
+      <div className="sidebar__create-playlist" onClick={handleCreateClick}>
         <div className="sidebar__create-container hide-on-tablet-mobile">
           <i className="bi bi-plus-lg"></i>
           <h2 className="sidebar__create-title">Tạo playlist mới</h2>

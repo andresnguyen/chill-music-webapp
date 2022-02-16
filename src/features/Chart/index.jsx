@@ -1,7 +1,27 @@
+import siteAPI from 'api/siteAPI'
 import SongList from 'components/SongList'
+import SongListSkeleton from 'components/SongListSkeleton'
 import React from 'react'
+import { useRef } from 'react'
+import { useState } from 'react'
+import { useQuery } from 'react-query'
 
 function ChartFeature(props) {
+  const [limit, setLimit] = useState(10)
+  const tmpData = useRef(null)
+
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useQuery(['top-song', limit], () => siteAPI.top({ limit: limit }), {
+    select: (value) => value?.data,
+  })
+
+  if(data && data.length > 0) {
+    tmpData.current = data
+  }
+
   return (
     <div className="app__container tab--charts">
       <div className="app__container-content">
@@ -18,14 +38,24 @@ function ChartFeature(props) {
               <div className="col l-12 m-12 c-12">
                 <div className="container__playlist">
                   <div className="playlist__list-charts overflow-visible">
-                    <SongList data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} showRank />
+                    <SongList data={data || tmpData.current || []} showRank />
+                    {isLoading && <SongListSkeleton />}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="charts__expand">
-              <button className="button charts__expand-btn">Xem top 100</button>
+              {limit === 10 && (
+                <button className="button charts__expand-btn" onClick={() => setLimit(100)}>
+                  Xem top 100
+                </button>
+              )}
+              {limit === 100 && (
+                <button className="button charts__expand-btn" onClick={() => setLimit(10)}>
+                  Xem top 10
+                </button>
+              )}
             </div>
           </div>
         </div>

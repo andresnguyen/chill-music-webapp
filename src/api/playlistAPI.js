@@ -16,8 +16,8 @@ const playlistAPI = {
     return axiosClient.post(url, data);
   },
 
-  update(data) {
-    const url = `/playlists/${data.id}`;
+  update(id, data) {
+    const url = `/playlists/${id}`;
     return axiosClient.patch(url, data);
   },
 

@@ -29,6 +29,7 @@ function UserDetail(props) {
   })
 
   const handleUpdate = async (id, data) => {
+    if(updateLoading) return
     mutate({ id, data })
   }
 

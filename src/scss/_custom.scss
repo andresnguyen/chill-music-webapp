@@ -95,19 +95,43 @@
   justify-content: center;
 }
 
+.d-f-c-c {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .album-name {
   font-size: 1.7rem;
   margin: 0;
   margin-top: 20px;
+  line-height: 1.4;
 }
 
 .artist-feature-custom {
   .app__header-user {
     height: 300px;
     top: 70px;
+    background-position-y: -100px !important;
   }
 
   .content {
     padding-top: 350px;
+  }
+}
+
+.upload-media .ant-upload.ant-upload-select-picture-card {
+  width: 100%;
+}
+
+.menu__item {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: inline-block;
+    margin-left: 5px;
   }
 }

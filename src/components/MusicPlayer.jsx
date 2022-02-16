@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { formatSongTime } from 'utils'
@@ -276,6 +274,7 @@ function MusicPlayer(props) {
                 active: repeat,
               })}
               onClick={handleRepeatClick}
+              title={repeat ? 'Tắt lặp lại một bài' : 'Bật lặp lại một bài'}
             >
               <i className="bi bi-arrow-repeat"></i>
             </div>
@@ -468,6 +467,7 @@ function MusicPlayer(props) {
                   active: repeat,
                 })}
                 onClick={handleRepeatClick}
+                title={repeat ? 'Tắt lặp lại một bài' : 'Bật lặp lại một bài'}
               >
                 <i className="bi bi-arrow-repeat"></i>
               </div>

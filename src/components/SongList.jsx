@@ -3,9 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SongItem from './SongItem'
 
-const fakeData = new Array(20).fill()
-
-function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck, hiddenAll }) {
+function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAll, showDelete, handleDeleteClick, handleUpdateClick }) {
   const dispatch = useDispatch()
   const currentSong = useSelector((state) => state.musicPlayer.songList?.[state.musicPlayer.currentIndex]) || {}
   const playing = useSelector((state) => state.musicPlayer.playing)
@@ -22,11 +20,13 @@ function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck
           <span className="playlist__header-time">Thời gian</span>
         </div>
       )}
+
       <div className="playlist__list mb-30 overflow-visible">
         {data.length > 0 &&
           data.map((item, index) => (
             <SongItem
-              key={item?._id || index}
+              showDelete={showDelete}
+              key={item?._id}
               index={index}
               data={item}
               active={item?._id === currentSong?._id}
@@ -36,6 +36,8 @@ function SongList({ data = fakeData, showHeader, showAction, showRank, showCheck
               showCheck={showCheck}
               hiddenAll={hiddenAll}
               onPlayPauseClick={handlePlayPauseClick}
+              handleUpdateClick={handleUpdateClick}
+              handleDeleteClick={handleDeleteClick}
             />
           ))}
       </div>

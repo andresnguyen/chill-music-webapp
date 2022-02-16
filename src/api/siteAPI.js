@@ -5,6 +5,10 @@ const siteAPI = {
     const url = '/home';
     return axiosClient.get(url, { params });
   },
+  top(params) {
+    const url = '/top';
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default siteAPI;

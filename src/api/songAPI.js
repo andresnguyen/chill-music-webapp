@@ -16,8 +16,8 @@ const songAPI = {
     return axiosClient.post(url, data)
   },
 
-  update(data) {
-    const url = `/songs/${data.id}`
+  update(id, data) {
+    const url = `/songs/${id}`
     return axiosClient.patch(url, data)
   },
 

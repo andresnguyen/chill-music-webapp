@@ -1,9 +1,9 @@
-import avatar from 'assets/images/avatar.jpg'
+import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
-import { logout } from 'features/Auth/userSlice'
+import { getFavoriteSuccess, logout } from 'features/Auth/userSlice'
 import React, { Fragment, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useQuery } from 'react-query'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 function Header(props) {
@@ -24,6 +24,78 @@ function Header(props) {
 
   const user = useSelector((state) => state.user.current)
   const isLogin = Boolean(user?._id)
+
+  const {} = useQuery(
+    ['favorite-song-id-list', user?._id],
+    () => {
+      return collectionAPI.getFavoriteSongIdList()
+    },
+    {
+      enabled: Boolean(user?._id),
+      onSuccess: (value) => {
+        dispatch(
+          getFavoriteSuccess({
+            name: 'favoriteSongIdList',
+            value,
+          })
+        )
+      },
+    }
+  )
+
+  const {} = useQuery(
+    ['favorite-album-id-list', user?._id],
+    () => {
+      return collectionAPI.getFavoriteAlbumIdList()
+    },
+    {
+      enabled: Boolean(user?._id),
+      onSuccess: (value) => {
+        dispatch(
+          getFavoriteSuccess({
+            name: 'favoriteAlbumIdList',
+            value,
+          })
+        )
+      },
+    }
+  )
+
+  const {} = useQuery(
+    ['favorite-playlist-id-list', user?._id],
+    () => {
+      return collectionAPI.getFavoritePlaylistIdList()
+    },
+    {
+      enabled: Boolean(user?._id),
+      onSuccess: (value) => {
+        dispatch(
+          getFavoriteSuccess({
+            name: 'favoritePlaylistIdList',
+            value,
+          })
+        )
+      },
+    }
+  )
+
+  const {} = useQuery(
+    ['favorite-artist-id-list', user?._id],
+    () => {
+      return collectionAPI.getFavoriteArtistIdList()
+    },
+    {
+      enabled: Boolean(user?._id),
+      onSuccess: (value) => {
+        dispatch(
+          getFavoriteSuccess({
+            name: 'favoriteArtistIdList',
+            value,
+          })
+        )
+      },
+    }
+  )
 
   useEffect(() => {
     const mainContent = headerRef.current.parentElement.querySelector('.app__container')
@@ -46,6 +118,7 @@ function Header(props) {
 
   useEffect(() => {
     document.addEventListener('click', (e) => {
+      if (!wrapperRef.current) return
       const element = wrapperRef.current.querySelector('.setting__menu')
 
       if (e.target.dataset.id === 'avatar') {
@@ -123,7 +196,7 @@ function Header(props) {
       <div className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item">
-            <div className="header__nav-btn nav-btn--theme">
+            <div className="header__nav-btn nav-btn--theme" title="Thay đổi chủ đề của giao diện">
               <svg width="20" height="20" className="header__nav-icon" viewBox="0 0 20 20">
                 <defs>
                   <linearGradient id="j32lhg93hd" x1="62.206%" x2="18.689%" y1="70.45%" y2="39.245%">
@@ -229,7 +302,7 @@ function Header(props) {
             </div>
           </li>
           <li className="header__nav-item hide-on-mobile">
-            <div className="header__nav-btn">
+            <div className="header__nav-btn" title="Tải lên bài hát của bạn">
               <input type="file" name="upload song" id="header__nav-input" />
               <label htmlFor="header__nav-input">
                 <i className="bi bi-upload header__nav-icon"></i>
@@ -254,7 +327,13 @@ function Header(props) {
           <div className={classNames('header__nav-item avatar hide-on-mobile', { hideAll: !isLogin })} ref={wrapperRef}>
             <div className="header__nav-btn btn--nav-setting">
               <li className="header__nav-item">
-                <img src={user.avatarURL} alt="" className="header__nav-btn" data-id="avatar" />
+                <img
+                  src={user.avatarURL}
+                  alt=""
+                  className="header__nav-btn"
+                  data-id="avatar"
+                  title="Thông tin cá nhân"
+                />
               </li>
               <div className={classNames('setting__menu')}>
                 <div className="setting__nav">

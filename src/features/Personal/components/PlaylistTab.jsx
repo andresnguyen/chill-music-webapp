@@ -1,29 +1,27 @@
 import collectionAPI from 'api/collectionAPI'
-import AlbumList from 'components/AlbumList'
 import EmptyBox from 'components/EmptyBox'
+import PlaylistList from 'components/PlaylistList'
 import SectionSkeletonV1 from 'features/Explore/components/SectionSkeletonV1'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useQuery } from 'react-query'
 
 function PlaylistTab(props) {
-  const [loading, setLoading] = useState(false)
-  const [data, setData] = useState({})
-  let isMount = false
-
-  useEffect(() => {
-    isMount = true
-    try {
-      ;(async () => {
-        setLoading(true)
-        const { data } = await collectionAPI.getInfo()
-        setData(data)
-        setLoading(false)
-      })()
-    } catch (error) {
-      setLoading(false)
+  const { data: favoritePlaylistList = [], isLoading: playlistLoading } = useQuery(
+    ['favorite-playlist-list'],
+    () => collectionAPI.getFavoritePlaylistList(),
+    {
+      select: (value) => value?.data,
     }
-  }, [])
+  )
 
-  const { playlistList = [], favoritePlaylistList = [] } = data || {}
+  const { data: myPlaylistList = [], isLoading: myPlaylistLoading } = useQuery(
+    ['my-playlist-list'],
+    () => collectionAPI.getMyPlaylistList(),
+    {
+      select: (value) => value?.data,
+    }
+  )
+
   return (
     <div className="grid container__tab tab-playlist">
       <div className="container__section row">
@@ -36,11 +34,13 @@ function PlaylistTab(props) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          {[...playlistList, ...favoritePlaylistList].length > 0 && (
-            <AlbumList playlist data={[...playlistList, ...favoritePlaylistList]} />
+          {[...favoritePlaylistList, ...myPlaylistList].length > 0 && (
+            <PlaylistList playlist data={[...myPlaylistList, ...favoritePlaylistList]} />
           )}
-          {isMount && !loading && [...playlistList, ...favoritePlaylistList].length === 0 && <EmptyBox />}
-          {loading && <SectionSkeletonV1 hiddenTitle />}
+          {!playlistLoading && !myPlaylistLoading && [...myPlaylistList, ...favoritePlaylistList].length === 0 && (
+            <EmptyBox />
+          )}
+          {playlistLoading && myPlaylistLoading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
     </div>

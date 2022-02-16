@@ -41,29 +41,6 @@ function HomeTab({ data, loading }) {
         </div>
       </div>
 
-      {/* <div className="container__section row">
-        <div className="col l-12 m-12 c-12 mb-16">
-          <div className="container__header">
-            <a href="#" className="container__header-title">
-              <h3>Playlist&nbsp;</h3>
-              <i className="bi bi-chevron-right container__header-icon"></i>
-            </a>
-            <h3 className="container__header-subtitle">Playlist</h3>
-            <div className="container__header-actions hide-on-tablet-mobile">
-              <div className="container__move-btn move-btn--playlist button--disabled">
-                <i className="bi bi-chevron-left container__move-btn-icon"></i>
-              </div>
-              <div className="container__move-btn move-btn--playlist">
-                <i className="bi bi-chevron-right container__move-btn-icon"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col l-12 m-12 c-12">
-          <AlbumList hiddenCreate playlist data={data.albumList} />
-        </div>
-      </div> */}
-
       <div className="container__section row mt-50">
         <div className="col l-12 m-12 c-12 mb-16">
           <div className="container__header">
@@ -83,7 +60,7 @@ function HomeTab({ data, loading }) {
           </div>
         </div>
         <div className="col l-12 m-12 c-12">
-          <AlbumList hiddenCreate data={albumList} />
+          <AlbumList data={albumList} />
           {!loading && albumList.length === 0 && (
             <div className="box--no-content">
               <div className="no-content-image"></div>

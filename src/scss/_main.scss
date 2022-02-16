@@ -779,6 +779,7 @@
 .app__user-avatar {
   padding: 4px;
   height: 103px;
+  display: block;
 }
 
 .app__user-img {
@@ -1904,6 +1905,7 @@ label .container__header-icon {
   color: var(--text-color);
   background-color: var(--bg-color);
   font-size: 16px;
+  cursor: pointer;
 }
 
 .player__list-icon::before {

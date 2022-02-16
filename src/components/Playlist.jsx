@@ -2,38 +2,41 @@ import { Dropdown, Menu, message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
 import classNames from 'classnames'
+import { changeValueCommon } from 'features/Common/commonSlice'
+import { pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { renderArtistFromList } from 'utils'
 
-function Album({ data }) {
-  const idList = useSelector((state) => state.user.favoriteAlbumIdList)
-
+function Playlist({ data }) {
   const [isFavorite, setIsFavorite] = useState(false)
 
-  const history = useHistory()
-
-  const { imageURL, name, _id } = data
+  const user = useSelector((state) => state.user.current)
+  const idList = useSelector((state) => state.user.favoritePlaylistIdList)
 
   const queryClient = useQueryClient()
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  const { imageURL, name, _id, userId } = data
 
   useEffect(() => {
-    if (idList.some((item) => item.albumId)) setIsFavorite(true)
+    if (idList.some((item) => item.playlistId === _id)) setIsFavorite(true)
     else setIsFavorite(false)
   }, [idList])
 
   const { mutate, isLoading: updateLoading } = useMutation(
-    () => {
-      if (isFavorite) return collectionAPI.deleteAlbumFromFavorite(_id)
-      else return collectionAPI.addAlbumToFavorite({ albumId: _id })
+    (values) => {
+      if (isFavorite) return collectionAPI.deletePlaylistFromFavorite(_id)
+      else return collectionAPI.addPlaylistToFavorite({ playlistId: _id })
     },
     {
       onSuccess: () => {
         message.success('Cập nhật thành công')
         setIsFavorite(!isFavorite)
-        queryClient.invalidateQueries('favorite-album-id-list')
+        queryClient.invalidateQueries('favorite-playlist-id-list')
       },
 
       onError: () => {
@@ -44,14 +47,46 @@ function Album({ data }) {
 
   const handleItemClick = () => {
     history.push({
-      pathname: `/albums/${_id}`,
+      pathname: `/playlists/${_id}`,
     })
+  }
+
+  const handleUpdateClick = () => {
+    dispatch(
+      changeValueCommon({
+        name: 'playlistUpdateData',
+        value: data,
+      })
+    )
+
+    dispatch(
+      changeValueCommon({
+        name: 'playlistUpdateOpen',
+        value: true,
+      })
+    )
+  }
+
+  const handleDeleteClick = () => {
+    dispatch(
+      changeValueCommon({
+        name: 'playlistDeleteData',
+        value: data,
+      })
+    )
+
+    dispatch(
+      changeValueCommon({
+        name: 'playlistDeleteOpen',
+        value: true,
+      })
+    )
   }
 
   const handleHeartClick = async (e) => {
     e.stopPropagation()
     if (updateLoading) {
-      return  
+      return
     }
     mutate()
   }
@@ -59,18 +94,22 @@ function Album({ data }) {
   const handlePlayClick = (e) => {
     e.stopPropagation()
     history.push({
-      pathname: `/albums/${_id}`,
+      pathname: `/playlists/${_id}`,
       search: '?play=true'
-    })
-  }
+    })  }
 
-  const menu = (
+  const menuPlaylist = (
     <Menu>
-      <Fragment>
-        <Menu.Item key="0" onClick={() => null}>
-          Thêm vào danh sách phát
-        </Menu.Item>
-      </Fragment>
+      {user._id === userId && (
+        <Fragment>
+          <Menu.Item key="0" onClick={handleUpdateClick}>
+            Chỉnh sửa
+          </Menu.Item>
+          <Menu.Item key="1" onClick={handleDeleteClick}>
+            Xóa
+          </Menu.Item>
+        </Fragment>
+      )}
     </Menu>
   )
 
@@ -102,7 +141,7 @@ function Album({ data }) {
                 </div>
               </div>
               <div onClick={(e) => e.stopPropagation()}>
-                <Dropdown overlay={menu}>
+                <Dropdown overlay={menuPlaylist}>
                   <div className="action-btn">
                     <i className="btn--icon bi bi-three-dots"></i>
                   </div>
@@ -115,7 +154,7 @@ function Album({ data }) {
             <a href="#" className="row__info-name is-twoline">
               {name}
             </a>
-            <h3 className="row__info-creator">{renderArtistFromList(data.artist)}</h3>
+            <h3 className="row__info-creator">{renderArtistFromList(data.artistList || data.artist)}</h3>
           </div>
         </div>
       </div>
@@ -123,6 +162,6 @@ function Album({ data }) {
   )
 }
 
-Album.propTypes = {}
+Playlist.propTypes = {}
 
-export default Album
+export default Playlist

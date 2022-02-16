@@ -2,26 +2,19 @@ import { Skeleton } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
-import React, { Fragment, useEffect, useState } from 'react'
+import SongListSkeleton from 'components/SongListSkeleton'
+import React, { Fragment } from 'react'
+import { useQuery } from 'react-query'
 
 function SongTab(props) {
-  const [loading, setLoading] = useState(false)
-  const [data, setData] = useState({})
-
-  useEffect(() => {
-    try {
-      ;(async () => {
-        setLoading(true)
-        const { data } = await collectionAPI.getInfo()
-        setData(data)
-        setLoading(false)
-      })()
-    } catch (error) {
-      setLoading(false)
+  const { data: favoriteSongList, isLoading: songLoading } = useQuery(
+    ['favorite-song-list'],
+    () => collectionAPI.getFavoriteSongList(),
+    {
+      select: (value) => value?.data,
     }
-  }, [])
+  )
 
-  const { favoriteSongList } = data || {}
   return (
     <div className="grid container__tab tab-song">
       <div className="row no-gutters">
@@ -32,7 +25,7 @@ function SongTab(props) {
             </a>
             <h3 className="container__header-subtitle">Bài Hát</h3>
             <div className="container__header-actions">
-              <div className="button is-small container__header-btn hide-on-mobile">
+              <div className="button is-small container__header-btn hide-on-mobile" title="Tải bài hát của bạn lên">
                 <input type="file" name="upload song" id="song__upload-input" className="container__header-input" />
                 <label htmlFor="song__upload-input">
                   <i className="bi bi-upload container__header-icon"></i>
@@ -49,17 +42,7 @@ function SongTab(props) {
         <div className="col l-12 m-12 c-12">
           {favoriteSongList?.length > 0 && <SongList showCheck showHeader data={favoriteSongList} />}
           {favoriteSongList?.length === 0 && <EmptyBox />}
-          {loading && (
-            <Fragment>
-              <Skeleton.Button active size="large" block />
-              <Skeleton.Button active size="large" block className="mt-3" />
-              <Skeleton.Button active size="large" block className="mt-3" />
-              <Skeleton.Button active size="large" block className="mt-3" />
-              <Skeleton.Button active size="large" block className="mt-3" />
-              <Skeleton.Button active size="large" block className="mt-3" />
-              <Skeleton.Button active size="large" block className="mt-3" />
-            </Fragment>
-          )}
+          {songLoading && <SongListSkeleton />}
         </div>
       </div>
     </div>

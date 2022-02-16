@@ -1,7 +1,7 @@
 import avatar from 'assets/images/avatar.jpg'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom'
+import { Link, NavLink, Route, Switch, useRouteMatch } from 'react-router-dom'
 import AlbumTab from './components/AlbumTab'
 import ArtistTab from './components/ArtistTab'
 import HomeTab from './components/HomeTab'
@@ -18,19 +18,19 @@ function PersonalFeature(props) {
   return (
     <div className="app__container tab--personal active">
       <div className="app__header">
-        <div
+        {/* <div
           className="app__header-bg"
           style={{
             background:
               "url('https://vikdang.github.io/Code_web_music_player/assets/img/avatars/avatar.jpg') no-repeat center center / cover",
           }}
         ></div>
-        <div className="app__header-overlay"></div>
+        <div className="app__header-overlay"></div> */}
         <div className="app__header-container">
           <div className="app__header-user">
-            <div className="app__user-avatar">
-              <img src={user.avatarURL || avatar} alt="avatar" className="app__user-img" />
-            </div>
+            <Link className="app__user-avatar" to="/my-account" title="Thông tin cá nhân">
+              <img src={user.avatarURL || avatar} alt="avatar" className="app__user-img" alt="Thông tin cá nhân" />
+            </Link>
             <span className="app__user-name">{user.fullName}</span>
           </div>
           {/* <div className="app__header-actions">
@@ -89,7 +89,7 @@ function PersonalFeature(props) {
         </div>
         <div className="content__container">
           <Switch>
-            <Route path={match.url} exact component={HomeTab} song="fdfd"/>
+            <Route path={match.url} exact component={HomeTab} />
             <Route path={`${match.url}/library/song`} exact component={SongTab} />
             <Route path={`${match.url}/library/playlist`} exact component={PlaylistTab} />
             <Route path={`${match.url}/library/album`} exact component={AlbumTab} />

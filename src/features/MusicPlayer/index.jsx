@@ -24,8 +24,8 @@ function MusicPlayer(props) {
   const currentSong = songList[currentIndex]
 
   useEffect(() => {
-    if(!currentSong?.mediaURL) {
-      message.error("Bài hát đang này đang bị lỗi")
+    if (!currentSong?.mediaURL) {
+      message.error('Bài hát đang này đang bị lỗi')
     }
   }, [currentSong])
 
@@ -197,6 +197,9 @@ function MusicPlayer(props) {
     dispatch(changeMusicPlayerValue({ name: 'isDrawerOpen', value: true }))
   }
 
+  const handleVolumeClick = () => {
+    setCurrentVolume(0)
+  }
 
   return (
     <div
@@ -208,7 +211,7 @@ function MusicPlayer(props) {
     >
       <audio
         id="audio"
-        src={currentSong?.mediaURL || " "}
+        src={currentSong?.mediaURL || ' '}
         ref={audioRef}
         onEnded={handleSongEnded}
         onTimeUpdate={handleOnTimeUpdate}
@@ -270,17 +273,22 @@ function MusicPlayer(props) {
                 active: random,
               })}
               onClick={handleRandomClick}
+              title={random ? 'Tắt chế độ phát ngẫu nhiên' : 'Bật chế độ phát ngẫu nhiên'}
             >
               <i className="bi bi-shuffle"></i>
             </div>
-            <div className="control-btn btn-prev" onClick={handlePrevClick}>
+            <div className="control-btn btn-prev" title="Bài phía trước" onClick={handlePrevClick}>
               <i className="bi bi-skip-start-fill"></i>
             </div>
-            <div className="control-btn btn-toggle-play btn--play-song is-medium" onClick={handlePlayClick}>
+            <div
+              className="control-btn btn-toggle-play btn--play-song is-medium"
+              title="Tạm dừng/Chơi nhạc"
+              onClick={handlePlayClick}
+            >
               <i className="bi bi-pause icon-pause"></i>
               <i className="bi bi-play-fill icon-play"></i>
             </div>
-            <div className="control-btn btn-next" onClick={handleNextClick}>
+            <div className="control-btn btn-next" title="Bài tiếp theo" onClick={handleNextClick}>
               <i className="bi bi-skip-end-fill"></i>
             </div>
             <div
@@ -288,6 +296,7 @@ function MusicPlayer(props) {
                 active: repeat,
               })}
               onClick={handleRepeatClick}
+              title={repeat ? 'Tắt lặp lại một bài' : 'Bật lặp lại một bài'}
             >
               <i className="bi bi-arrow-repeat"></i>
             </div>
@@ -329,8 +338,12 @@ function MusicPlayer(props) {
             <div className="player__options-btn option-btn hide-on-tablet-mobile">
               <i className="bi bi-mic btn--icon"></i>
             </div>
-            <div className="player__options-btn volume option-btn">
-              <i className="bi bi-volume-up btn--icon"></i>
+            <div className="player__options-btn volume option-btn" onClick={handleVolumeClick}>
+              {currentVolume == 0 ? (
+                <i className="bi bi-volume-mute btn--icon"></i>
+              ) : (
+                <i className="bi bi-volume-up btn--icon"></i>
+              )}
             </div>
             <div className="player__volume-progress">
               <input
@@ -440,7 +453,9 @@ function MusicPlayer(props) {
                       </marquee>
                     </div>
                   </div>
-                  <div className="player__song-author info__author">{renderArtistFromList(currentSong?.artistList)}</div>
+                  <div className="player__song-author info__author">
+                    {renderArtistFromList(currentSong?.artistList)}
+                  </div>
                 </div>
               </div>
               <div className="media__right hide-on-tablet-mobile">
@@ -462,17 +477,22 @@ function MusicPlayer(props) {
                   active: random,
                 })}
                 onClick={handleRandomClick}
+                title={random ? 'Tắt chế độ phát ngẫu nhiên' : 'Bật chế độ phát ngẫu nhiên'}
               >
                 <i className="bi bi-shuffle"></i>
               </div>
-              <div className="control-btn btn-prev" onClick={handlePrevClick}>
+              <div className="control-btn btn-prev" title="Bài phía trước" onClick={handlePrevClick}>
                 <i className="bi bi-skip-start-fill"></i>
               </div>
-              <div className="control-btn btn-toggle-play btn--play-song is-medium" onClick={handlePlayClick}>
+              <div
+                className="control-btn btn-toggle-play btn--play-song is-medium"
+                title="Tạm dừng/Chơi nhạc"
+                onClick={handlePlayClick}
+              >
                 <i className="bi bi-pause icon-pause"></i>
                 <i className="bi bi-play-fill icon-play"></i>
               </div>
-              <div className="control-btn btn-next" onClick={handleNextClick}>
+              <div className="control-btn btn-next" title="Bài tiếp theo" onClick={handleNextClick}>
                 <i className="bi bi-skip-end-fill"></i>
               </div>
               <div
@@ -480,6 +500,7 @@ function MusicPlayer(props) {
                   active: repeat,
                 })}
                 onClick={handleRepeatClick}
+                title={repeat ? 'Tắt lặp lại một bài' : 'Bật lặp lại một bài'}
               >
                 <i className="bi bi-arrow-repeat"></i>
               </div>
@@ -521,8 +542,12 @@ function MusicPlayer(props) {
               <div className="player__options-btn option-btn hide-on-tablet-mobile">
                 <i className="bi bi-mic btn--icon"></i>
               </div>
-              <div className="player__options-btn volume option-btn">
-                <i className="bi bi-volume-up btn--icon"></i>
+              <div className="player__options-btn volume option-btn" onClick={handleVolumeClick}>
+                {currentVolume == 0 ? (
+                  <i className="bi bi-volume-mute btn--icon"></i>
+                ) : (
+                  <i className="bi bi-volume-up btn--icon"></i>
+                )}
               </div>
               <div className="player__volume-progress">
                 <input

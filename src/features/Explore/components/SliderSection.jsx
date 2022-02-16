@@ -10,14 +10,14 @@ function SliderSection(props) {
             <h3>Mới Phát Hành</h3>
           </a>
           <h3 className="container__header-subtitle">Mới Phát Hành</h3>
-          <div className="container__header-actions new-playlist--move hide-on-tablet-mobile">
+          {/* <div className="container__header-actions new-playlist--move hide-on-tablet-mobile">
             <div className="container__move-btn move-btn--new-playlist btn--prev button--disabled">
               <i className="bi bi-chevron-left container__move-btn-icon"></i>
             </div>
             <div className="container__move-btn move-btn--new-playlist btn--next">
               <i className="bi bi-chevron-right container__move-btn-icon"></i>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="col l-12 m-12 c-12">

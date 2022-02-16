@@ -28,6 +28,10 @@ const userSlice = createSlice({
     current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
     settings: {},
     isModalOpen: false,
+    favoriteSongIdList: [],
+    favoriteAlbumIdList: [],
+    favoritePlaylistIdList: [],
+    favoriteArtistIdList: [],
   },
   reducers: {
     logout(state) {
@@ -46,6 +50,10 @@ const userSlice = createSlice({
 
       state[name] = value
     },
+
+    getFavoriteSuccess(state, action) {
+      state[action.payload.name] = action.payload.value.data
+    },
   },
   extraReducers: {
     [register.fulfilled]: (state, action) => {
@@ -59,5 +67,5 @@ const userSlice = createSlice({
 })
 
 const { actions, reducer } = userSlice
-export const { logout, changeValue } = actions
+export const { logout, changeValue, getFavoriteSuccess } = actions
 export default reducer

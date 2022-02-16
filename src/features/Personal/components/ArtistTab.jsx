@@ -2,28 +2,17 @@ import collectionAPI from 'api/collectionAPI'
 import ArtistList from 'components/ArtistList'
 import EmptyBox from 'components/EmptyBox'
 import SectionSkeletonV1 from 'features/Explore/components/SectionSkeletonV1'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useQuery } from 'react-query'
 
 function ArtistTab(props) {
-  const [loading, setLoading] = useState(false)
-  const [data, setData] = useState({})
-  let isMount = false
-
-  useEffect(() => {
-    isMount = true
-    try {
-      ;(async () => {
-        setLoading(true)
-        const { data } = await collectionAPI.getInfo()
-        setData(data)
-        setLoading(false)
-      })()
-    } catch (error) {
-      setLoading(false)
+  const { data: favoriteArtistList = [], isLoading: artistLoading } = useQuery(
+    ['favorite-artist-list'],
+    () => collectionAPI.getFavoriteArtistList(),
+    {
+      select: (value) => value?.data,
     }
-  }, [])
-
-  const { favoriteArtistList = [] } = data || {}
+  )
 
   return (
     <div className="grid container__tab tab-artist">
@@ -37,8 +26,8 @@ function ArtistTab(props) {
         </div>
         <div className="col l-12 m-12 c-12">
           {favoriteArtistList.length > 0 && <ArtistList data={favoriteArtistList} />}
-          {isMount && !loading && favoriteArtistList.length === 0 && <EmptyBox />}
-          {loading && <SectionSkeletonV1 hiddenTitle />}
+          {!artistLoading && favoriteArtistList.length === 0 && <EmptyBox />}
+          {artistLoading && <SectionSkeletonV1 hiddenTitle />}
         </div>
       </div>
     </div>

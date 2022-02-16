@@ -53,6 +53,24 @@ const musicPlayerSlice = createSlice({
       state.playing = true
     },
 
+    addASongPriority(state, action) {
+      const song = action.payload
+      if (state.songList.length === 0) {
+        state.songList.push(song)
+      } else {
+        state.songList.splice(state.currentIndex, 0, song)
+      }
+      state.playing = true
+      saveSongList(state.songList)
+    },
+
+    addASong(state, action) {
+      const song = action.payload
+      state.songList.push(song)
+      state.playing = true
+      saveSongList(state.songList)
+    },
+
     changeSongList(state, action) {
       const songList = action.payload
       saveSongList(songList)
@@ -65,5 +83,5 @@ const musicPlayerSlice = createSlice({
 })
 
 const { actions, reducer } = musicPlayerSlice
-export const { logout, changeMusicPlayerValue, pushToSongList, changeSongList } = actions
+export const { logout, changeMusicPlayerValue, pushToSongList, changeSongList, addASongPriority, addASong } = actions
 export default reducer
