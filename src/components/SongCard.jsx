@@ -3,6 +3,7 @@ import { Dropdown, Menu, message, Modal } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
 import classNames from 'classnames'
+import { changeValueCommon } from 'features/Common/commonSlice'
 import { addASong, addASongPriority, pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
@@ -73,38 +74,50 @@ function SongCard({ data = {} }) {
     dispatch(addASongPriority(data))
   }
 
-  const handleAddToPlaylist = () => {}
+  const handleAddToPlaylist = () => {
+    dispatch(
+      changeValueCommon({
+        name: 'addToPlaylistOpen',
+        value: true,
+      })
+    )
+
+    dispatch(
+      changeValueCommon({
+        name: 'addToPlaylistData',
+        value: data,
+      })
+    )
+  }
 
   const menu = (
     <Menu>
-      <Fragment>
-        <Menu.Item key="0" onClick={handleDownload}>
-          <div className="menu__item">
-            <i className="bi bi-download"></i>
-            <span>Tải xuống</span>
-          </div>
-        </Menu.Item>
+      <Menu.Item key="0" onClick={handleDownload}>
+        <div className="menu__item">
+          <i className="bi bi-download"></i>
+          <span>Tải xuống</span>
+        </div>
+      </Menu.Item>
 
-        <Menu.Item key="1" onClick={handleAddToList}>
-          <div className="menu__item">
-            <i className="bi bi-skip-start-fill"></i>
-            <span>Thêm vào danh sách phát</span>
-          </div>
-        </Menu.Item>
+      <Menu.Item key="1" onClick={handleAddToList}>
+        <div className="menu__item">
+          <i className="bi bi-skip-start-fill"></i>
+          <span>Thêm vào danh sách phát</span>
+        </div>
+      </Menu.Item>
 
-        <Menu.Item key="2" onClick={handleAddToListPriority}>
-          <div className="menu__item">
-            <i className="bi bi-tv"></i> <span>Phát tiếp theo</span>
-          </div>
-        </Menu.Item>
+      <Menu.Item key="2" onClick={handleAddToListPriority}>
+        <div className="menu__item">
+          <i className="bi bi-tv"></i> <span>Phát tiếp theo</span>
+        </div>
+      </Menu.Item>
 
-        <Menu.Item key="3" onClick={handleAddToPlaylist}>
-          <div className="menu__item">
-            <i className="bi bi-plus-square"></i>
-            <span>Thêm vào playlist</span>  
-          </div>
-        </Menu.Item>
-      </Fragment>
+      <Menu.Item key="3" onClick={handleAddToPlaylist}>
+        <div className="menu__item">
+          <i className="bi bi-plus-square"></i>
+          <span>Thêm vào playlist</span>
+        </div>
+      </Menu.Item>
     </Menu>
   )
 

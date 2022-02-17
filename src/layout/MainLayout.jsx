@@ -1,3 +1,8 @@
+
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
+
+
 import SongModalCreate from 'components/SongModalCreate'
 import SongModalUpdate from 'components/SongModalUpdate'
 import SongModalDelete from 'components/SongModalDelete'
@@ -16,11 +21,12 @@ import FollowingFeature from 'features/Following'
 import MusicPlayer from 'features/MusicPlayer'
 import PersonalFeature from 'features/Personal'
 import PlaylistFeature from 'features/Playlist'
-import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import CategoryFeature from 'features/Category'
+
 import PlaylistModalCreate from 'components/PlaylistModalCreate'
 import PlaylistModalUpdate from 'components/PlaylistModalUpdate'
 import PlaylistModalDelete from 'components/PlaylistModalDelete'
+import AddToPlaylistModal from 'components/AddToPlaylistModal'
 
 function MainLayout() {
   return (
@@ -41,6 +47,7 @@ function MainLayout() {
         <Route path="/following" exact component={FollowingFeature} />
         <Route path="/albums" component={AlbumFeature} />
         <Route path="/playlists" component={PlaylistFeature} />
+        <Route path="/categories" component={CategoryFeature} />
         <Route path="/explore" exact component={ExploreFeature} />
         <Route path="/artists/:id" exact component={ArtistFeature} />
         <Route path="/charts" exact component={ChartFeature} />
@@ -55,6 +62,7 @@ function MainLayout() {
       <PlaylistModalCreate />
       <PlaylistModalUpdate />
       <PlaylistModalDelete />
+      <AddToPlaylistModal />
 
     </div>
   )

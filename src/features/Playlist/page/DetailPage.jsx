@@ -121,7 +121,7 @@ function DetailPage(props) {
                 {isLoading ? (
                   <SongListSkeleton />
                 ) : songList?.length > 0 ? (
-                  <SongList data={songList} showHeader hiddenAction showCheck />
+                  <SongList data={songList} showHeader hiddenAction showCheck playlistId={data._id} />
                 ) : (
                   <EmptyBox
                     text="Không có bài hát trong playlist của bạn"

@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SongItem from './SongItem'
 
-function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAll, showDelete, handleDeleteClick, handleUpdateClick }) {
+function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAll, showDelete, handleDeleteClick, handleUpdateClick, playlistId }) {
   const dispatch = useDispatch()
   const currentSong = useSelector((state) => state.musicPlayer.songList?.[state.musicPlayer.currentIndex]) || {}
   const playing = useSelector((state) => state.musicPlayer.playing)
@@ -35,6 +35,7 @@ function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAl
               showRank={showRank}
               showCheck={showCheck}
               hiddenAll={hiddenAll}
+              playlistId={playlistId}
               onPlayPauseClick={handlePlayPauseClick}
               handleUpdateClick={handleUpdateClick}
               handleDeleteClick={handleDeleteClick}

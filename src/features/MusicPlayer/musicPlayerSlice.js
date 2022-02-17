@@ -58,7 +58,7 @@ const musicPlayerSlice = createSlice({
       if (state.songList.length === 0) {
         state.songList.push(song)
       } else {
-        state.songList.splice(state.currentIndex, 0, song)
+        state.songList.splice(state.currentIndex + 1, 0, song)
       }
       state.playing = true
       saveSongList(state.songList)

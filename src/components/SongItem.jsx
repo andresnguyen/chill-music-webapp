@@ -1,20 +1,34 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { message, Modal } from 'antd'
+import { Dropdown, Menu, message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
-import songAPI from 'api/songAPI'
 import classNames from 'classnames'
+import { changeValueCommon } from 'features/Common/commonSlice'
+import { addASong, addASongPriority } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { renderArtistFromList } from 'utils'
 
 const defaultImageUrl = 'https://photo-zmp3.zadn.vn/audio_default.png'
-function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClick, active, playing, showDelete, handleUpdateClick, handleDeleteClick }) {
+function SongItem({
+  index,
+  data,
+  showRank,
+  showCheck,
+  hiddenAll,
+  onPlayPauseClick,
+  active,
+  playing,
+  playlistId,
+  showDelete,
+  handleUpdateClick,
+  handleDeleteClick,
+}) {
   const { imageURL, name, artistList, _id } = data || {}
   const [isFavorite, setIsFavorite] = useState(false)
   const songIdList = useSelector((state) => state.user.favoriteSongIdList)
 
   const queryClient = useQueryClient()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (songIdList.some((item) => item.songId === _id)) setIsFavorite(true)
@@ -43,16 +57,19 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClic
     }
   )
 
-  const { mutate: deleteSong, isLoading: deleteLoading } = useMutation(() => songAPI.remove(_id), {
-    onSuccess: () => {
-      message.success('Xóa bài hát thành công')
-      queryClient.invalidateQueries('home-tab')
-    },
+  const { mutate: mutateDeleteSongPlaylist, isDeleteSongPlaylist } = useMutation(
+    ({ playlistId, songId }) => collectionAPI.deleteSongFromPlaylist(playlistId, songId),
+    {
+      onSuccess: () => {
+        message.success(`Xóa bài hát ${data.name} khỏi playlist thành công`)
+        queryClient.invalidateQueries('playlist')
+      },
 
-    onError: () => {
-      message.error('Xóa bài hát thất bại')
-    },
-  })
+      onError: () => {
+        message.error(`Xóa bài hát ${data.name} khỏi playlist thất bại`)
+      },
+    }
+  )
 
   const handleHeartClick = (e) => {
     e.stopPropagation()
@@ -69,6 +86,73 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClic
     e.stopPropagation()
     handleUpdateClick(data)
   }
+
+  const handleDownload = () => {}
+
+  const handleAddToList = () => {
+    dispatch(addASong(data))
+  }
+
+  const handleAddToListPriority = () => {
+    dispatch(addASongPriority(data))
+  }
+
+  const handleAddToPlaylist = () => {
+    dispatch(
+      changeValueCommon({
+        name: 'addToPlaylistOpen',
+        value: true,
+      })
+    )
+
+    dispatch(
+      changeValueCommon({
+        name: 'addToPlaylistData',
+        value: data,
+      })
+    )
+  }
+
+  const handleDeleteFromPlaylist = () => {
+    if(playlistId) mutateDeleteSongPlaylist({ playlistId, songId: data._id })
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="0" onClick={handleDownload}>
+        <div className="menu__item">
+          <i className="bi bi-download"></i>
+          <span>Tải xuống</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="1" onClick={handleAddToList}>
+        <div className="menu__item">
+          <i className="bi bi-skip-start-fill"></i>
+          <span>Thêm vào danh sách phát</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="2" onClick={handleAddToListPriority}>
+        <div className="menu__item">
+          <i className="bi bi-tv"></i> <span>Phát tiếp theo</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="3" onClick={handleAddToPlaylist}>
+        <div className="menu__item">
+          <i className="bi bi-plus-square"></i>
+          <span>Thêm vào playlist</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="3" onClick={handleDeleteFromPlaylist}>
+        <div className="menu__item">
+          <i className="bi bi-trash"></i> <span>Xóa khỏi playlist này</span>
+        </div>
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <div
@@ -159,11 +243,15 @@ function SongItem({ index, data, showRank, showCheck, hiddenAll, onPlayPauseClic
             })}
           ></i>
         </div>
-        {/* {!hiddenAll && (
-          <div className="playlist__song-btn option-btn ">
-            <i className="btn--icon bi bi-three-dots"></i>
+        {!hiddenAll && (
+          <div onClick={(e) => e.stopPropagation()} title="Khác">
+            <Dropdown overlay={menu}>
+              <div className="action-btn">
+                <i className="btn--icon bi bi-three-dots"></i>
+              </div>
+            </Dropdown>
           </div>
-        )} */}
+        )}
       </div>
     </div>
   )

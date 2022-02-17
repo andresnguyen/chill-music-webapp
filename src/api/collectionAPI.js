@@ -122,7 +122,15 @@ const collectionAPI = {
     return axiosClient.get(url)
   },
 
+  addSongToPlaylist(playlistId, songId) {
+    const url = `/collections/playlists/${playlistId}/add`
+    return axiosClient.post(url, { songId })
+  },
 
+  deleteSongFromPlaylist(playlistId, songId) {
+    const url = `/collections/playlists/${playlistId}/delete`
+    return axiosClient.patch(url, { songId })
+  },
 }
 
 export default collectionAPI

@@ -13,7 +13,7 @@ function Sidebar(props) {
 
   return (
     <div className="app__sidebar">
-      <div className="sidebar__logo hide-on-mobile" title="Trang chủ">
+      <div className="sidebar__logo hide-on-mobile">
         <Link to="/" className="sidebar__logo-link">
           <img src={logo} alt="Logo" className="sidebar__logo-img" />
           <img src={smallLogo} alt="Logo" className="sidebar__small-logo" />
@@ -47,23 +47,24 @@ function Sidebar(props) {
               <span>#chillchart</span>
             </span>
           </NavLink>
-          <NavLink to="/radio" className="sidebar__nav-item">
+          <NavLink to="/categories" className="sidebar__nav-item">
             <span className="sidebar__item-link">
               <i className="bi bi-soundwave"></i>
-              <span>Radio</span>
-              <div className="sidebar__nav-label">LIVE</div>
+              <span>Thể loại</span>
+              {/* <div className="sidebar__nav-label">LIVE</div> */}
             </span>
           </NavLink>
           <NavLink to="/following" className="sidebar__nav-item">
             <span className="sidebar__item-link">
-              <i className="bi bi-file-earmark-slides"></i>
-              <span>Theo Dõi</span>
+              <i className="bi bi-music-note-beamed"></i>
+              <span>Nhạc mới</span>
             </span>
+            <div className="sidebar__nav-label">HOT</div>
           </NavLink>
         </ul>
       </div>
       <div className="sidebar__subnav hide-on-mobile">
-        <ul className="sidebar__nav-list">
+        {/* <ul className="sidebar__nav-list">
           <li className="sidebar__nav-item subnab--item">
             <a href="#" className="sidebar__item-link">
               <i className="bi bi-music-note-beamed"></i>
@@ -88,7 +89,7 @@ function Sidebar(props) {
               <span>MV</span>
             </a>
           </li>
-        </ul>
+        </ul> */}
         {/* <div className="sidebar__login">
           <p className="sidebar__login-description">Nghe nhạc không quảng cáo cùng kho nhạc VIP</p>
           <a href="#" className="sidebar__login-btn button is-small button-gold">
@@ -98,9 +99,9 @@ function Sidebar(props) {
         <ul className="sidebar__subnav-menu">
           <li className="sidebar__menu-item menu-header">
             <h2 className="sidebar__menu-title">THƯ VIỆN</h2>
-            <i className="bi bi-pencil hide-on-tablet"></i>
+            {/* <i className="bi bi-pencil hide-on-tablet"></i> */}
           </li>
-          <li className="sidebar__menu-item">
+          <Link to="/mymusic/library/song" className="sidebar__menu-item">
             <a href="#" className="sidebar__menu-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <defs>
@@ -146,8 +147,8 @@ function Sidebar(props) {
               </svg>
               <span>Bài hát</span>
             </a>
-          </li>
-          <li className="sidebar__menu-item">
+          </Link>
+          <Link to="/mymusic/library/playlist" className="sidebar__menu-item">
             <a href="#" className="sidebar__menu-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <defs>
@@ -184,8 +185,8 @@ function Sidebar(props) {
 
               <span>Playlist</span>
             </a>
-          </li>
-          <li className="sidebar__menu-item">
+          </Link>
+          <Link to="/history" className="sidebar__menu-item">
             <a href="#" className="sidebar__menu-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <defs>
@@ -218,9 +219,9 @@ function Sidebar(props) {
 
               <span>Gần đây</span>
             </a>
-          </li>
+          </Link>
         </ul>
-        <ul className="sidebar__nav-list hide-on-tablet-mobile">
+        {/* <ul className="sidebar__nav-list hide-on-tablet-mobile">
           <li className="sidebar__nav-item">
             <a href="#" className="sidebar__item-link">
               <span className="sidebar__link-topic">Tháng 1</span>
@@ -236,7 +237,7 @@ function Sidebar(props) {
               <span className="sidebar__link-topic">Sky Ơi</span>
             </a>
           </li>
-        </ul>
+        </ul> */}
       </div>
       <div className="sidebar__create-playlist" onClick={handleCreateClick}>
         <div className="sidebar__create-container hide-on-tablet-mobile">

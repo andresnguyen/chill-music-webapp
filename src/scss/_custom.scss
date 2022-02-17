@@ -135,3 +135,14 @@
     margin-left: 5px;
   }
 }
+
+.add-to-playlist-modal {
+  .ant-menu-light {
+    border: none !important;
+  }
+
+  .ant-modal-body {
+    max-height: 400px !important;
+    overflow-y: scroll;
+  }
+}

@@ -1,6 +1,7 @@
 import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
 import { getFavoriteSuccess, logout } from 'features/Auth/userSlice'
+import { changeValueCommon } from 'features/Common/commonSlice'
 import React, { Fragment, useEffect, useRef } from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
@@ -135,6 +136,15 @@ function Header(props) {
 
   const handleLogoutClick = () => {
     dispatch(logout())
+  }
+
+  const handleUploadSongClick = () => {
+    dispatch(
+      changeValueCommon({
+        name: 'songCreateOpen',
+        value: true,
+      })
+    )
   }
 
   return (
@@ -302,8 +312,7 @@ function Header(props) {
             </div>
           </li>
           <li className="header__nav-item hide-on-mobile">
-            <div className="header__nav-btn" title="Tải lên bài hát của bạn">
-              <input type="file" name="upload song" id="header__nav-input" />
+            <div className="header__nav-btn" title="Tải lên bài hát của bạn" onClick={handleUploadSongClick}>
               <label htmlFor="header__nav-input">
                 <i className="bi bi-upload header__nav-icon"></i>
               </label>

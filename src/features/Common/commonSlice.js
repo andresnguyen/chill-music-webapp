@@ -17,6 +17,8 @@ const commonSlice = createSlice({
    playlistUpdateData: {},
    playlistDeleteData: {},
 
+   addToPlaylistOpen: false,
+   addToPlaylistData: {},
   },
   reducers: {
     changeValueCommon(state, action) {

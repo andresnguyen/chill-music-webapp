@@ -1,9 +1,8 @@
-import { Skeleton } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
 import SongListSkeleton from 'components/SongListSkeleton'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useQuery } from 'react-query'
 
 function SongTab(props) {

@@ -20,7 +20,7 @@ function Album({ data }) {
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    if (idList.some((item) => item.albumId)) setIsFavorite(true)
+    if (idList.some((item) => item.albumId === _id)) setIsFavorite(true)
     else setIsFavorite(false)
   }, [idList])
 
@@ -38,7 +38,7 @@ function Album({ data }) {
 
       onError: () => {
         message.error('Cập nhật thất bại')
-      },
+      },  
     }
   )
 
