@@ -49,18 +49,25 @@ function Sidebar(props) {
           </NavLink>
           <NavLink to="/categories" className="sidebar__nav-item">
             <span className="sidebar__item-link">
-              <i className="bi bi-soundwave"></i>
+              <i className="bi bi-card-text"></i>
               <span>Thể loại</span>
               {/* <div className="sidebar__nav-label">LIVE</div> */}
             </span>
           </NavLink>
-          <NavLink to="/following" className="sidebar__nav-item">
+          <NavLink to="/search" className="sidebar__nav-item">
+            <span className="sidebar__item-link">
+              <i className="bi bi-search"></i>
+              <span>Tìm kiếm</span>
+            </span>
+          </NavLink>
+          {/* <NavLink to="/new" className="sidebar__nav-item">
             <span className="sidebar__item-link">
               <i className="bi bi-music-note-beamed"></i>
               <span>Nhạc mới</span>
             </span>
             <div className="sidebar__nav-label">HOT</div>
-          </NavLink>
+          </NavLink> */}
+
         </ul>
       </div>
       <div className="sidebar__subnav hide-on-mobile">

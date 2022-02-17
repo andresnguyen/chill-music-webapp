@@ -5,6 +5,7 @@ import { changeValueCommon } from 'features/Common/commonSlice'
 import React, { Fragment, useEffect, useRef } from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Link, useLocation } from 'react-router-dom'
 
 function Header(props) {
@@ -12,6 +13,7 @@ function Header(props) {
   const wrapperRef = useRef(null)
   const location = useLocation()
   const dispatch = useDispatch()
+  const history = useHistory()
 
   let mode
 
@@ -24,6 +26,8 @@ function Header(props) {
   }
 
   const user = useSelector((state) => state.user.current)
+  const search = useSelector((state) => state.common.search)
+
   const isLogin = Boolean(user?._id)
 
   const {} = useQuery(
@@ -121,6 +125,7 @@ function Header(props) {
     document.addEventListener('click', (e) => {
       if (!wrapperRef.current) return
       const element = wrapperRef.current.querySelector('.setting__menu')
+      if (!element) return
 
       if (e.target.dataset.id === 'avatar') {
         return element.classList.toggle('open')
@@ -147,6 +152,24 @@ function Header(props) {
     )
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+      history.push({
+        pathname: '/search',
+      })
+    }
+  }
+
+  const handleSearch = (e) => {
+    const value = e.target.value
+    dispatch(
+      changeValueCommon({
+        value,
+        name: 'search',
+      })
+    )
+  }
+
   return (
     <header className="header grid" ref={headerRef}>
       <div className="header__with-search">
@@ -157,11 +180,18 @@ function Header(props) {
           <i className="bi bi-arrow-right header__button-icon"></i>
         </button>
         <div className="header__search">
-          <input type="text" placeholder="Nhập tên bài hát, nghệ sĩ hoặc MV..." className="header__search-input" />
-          <div className="header__search-btn">
+          <input
+            type="text"
+            placeholder="Nhập tên bài hát, nghệ sĩ hoặc MV..."
+            className="header__search-input"
+            value={search}
+            onChange={handleSearch}
+            onKeyDown={handleKeyDown}
+          />
+          <div className="header__search-btn" onClick={() => history.push({pathname: '/search'})}>
             <i className="bi bi-search header__search-icon"></i>
           </div>
-          <div className="header__search-history">
+          {/* <div className="header__search-history">
             <ul className="header__search-list">
               <li className="header__search-item">
                 <i className="bi bi-search header__item-icon"></i>
@@ -200,7 +230,7 @@ function Header(props) {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="header__nav">

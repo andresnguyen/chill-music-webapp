@@ -9,6 +9,11 @@ const siteAPI = {
     const url = '/top';
     return axiosClient.get(url, { params });
   },
+
+  search(params) {
+    const url = '/search';
+    return axiosClient.get(url, { params });
+  },
 };
 
 export default siteAPI;

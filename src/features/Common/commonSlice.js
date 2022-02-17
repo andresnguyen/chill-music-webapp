@@ -3,22 +3,24 @@ import { createSlice } from '@reduxjs/toolkit'
 const commonSlice = createSlice({
   name: 'common',
   initialState: {
-   songDeleteOpen: false,
-   songUpdateOpen: false,
-   songCreateOpen: false,
-   songCreateData: {},
-   songUpdateData: {},
-   songDeleteData: {},
+    songDeleteOpen: false,
+    songUpdateOpen: false,
+    songCreateOpen: false,
+    songCreateData: {},
+    songUpdateData: {},
+    songDeleteData: {},
 
-   playlistDeleteOpen: false,
-   playlistUpdateOpen: false,
-   playlistCreateOpen: false,
-   playlistCreateData: {},
-   playlistUpdateData: {},
-   playlistDeleteData: {},
+    playlistDeleteOpen: false,
+    playlistUpdateOpen: false,
+    playlistCreateOpen: false,
+    playlistCreateData: {},
+    playlistUpdateData: {},
+    playlistDeleteData: {},
 
-   addToPlaylistOpen: false,
-   addToPlaylistData: {},
+    addToPlaylistOpen: false,
+    addToPlaylistData: {},
+
+    search: '',
   },
   reducers: {
     changeValueCommon(state, action) {
