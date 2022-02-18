@@ -1,13 +1,12 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
-import classNames from 'classnames'
-import { formatSongTime, renderArtistFromList } from 'utils'
-import smallLogo from 'assets/images/small-logo.png'
-import { useDispatch } from 'react-redux'
-import { changeValue } from 'features/Auth/userSlice'
-import { useSelector } from 'react-redux'
-import { changeMusicPlayerValue } from './musicPlayerSlice'
 import { Drawer, message, Tabs } from 'antd'
+import siteAPI from 'api/siteAPI'
+import smallLogo from 'assets/images/small-logo.png'
+import classNames from 'classnames'
 import SongList from 'components/SongList'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { formatSongTime, renderArtistFromList } from 'utils'
+import { changeMusicPlayerValue } from './musicPlayerSlice'
 const { TabPane } = Tabs
 
 function MusicPlayer(props) {
@@ -66,6 +65,7 @@ function MusicPlayer(props) {
   useEffect(() => {
     if (playing) {
       document.title = songList?.[currentIndex].name || 'Chillmusic'
+      handleRecentSong()
     }
   }, [playing, currentIndex])
 
@@ -199,6 +199,14 @@ function MusicPlayer(props) {
 
   const handleVolumeClick = () => {
     setCurrentVolume(0)
+  }
+
+  const handleRecentSong = async () => {
+    if(currentSong._id) {
+      const value = await siteAPI.createRecentSong({
+        songId: currentSong._id
+      })
+    }
   }
 
   return (

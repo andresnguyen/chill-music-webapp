@@ -4,6 +4,8 @@ import { formatSongTime } from 'utils'
 import smallLogo from 'assets/images/small-logo.png'
 import { useDispatch } from 'react-redux'
 import { changeValue } from 'features/Auth/userSlice'
+import siteAPI from 'api/siteAPI'
+import { current } from '@reduxjs/toolkit'
 
 function MusicPlayer(props) {
   const isMountRef = useRef(null)
@@ -54,6 +56,7 @@ function MusicPlayer(props) {
   useEffect(() => {
     if (playing) {
       document.title = songList?.[currentIndex].name || 'Chillmusic'
+      handleRecentSong()
     }
   }, [playing, currentIndex])
 
@@ -182,6 +185,14 @@ function MusicPlayer(props) {
 
   const handleDrawerChange = () => {
     dispatch(changeValue({ name: 'isDrawerOpen', value: true }))
+  }
+
+  const handleRecentSong = async () => {
+    if(currentSong._id) {
+      const value = await siteAPI.createRecentSong({
+        songId: currentSong._id
+      })
+    }
   }
 
   return (

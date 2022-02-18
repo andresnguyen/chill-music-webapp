@@ -188,7 +188,7 @@ function Header(props) {
             onChange={handleSearch}
             onKeyDown={handleKeyDown}
           />
-          <div className="header__search-btn" onClick={() => history.push({pathname: '/search'})}>
+          <div className="header__search-btn" onClick={() => history.push({ pathname: '/search' })}>
             <i className="bi bi-search header__search-icon"></i>
           </div>
           {/* <div className="header__search-history">

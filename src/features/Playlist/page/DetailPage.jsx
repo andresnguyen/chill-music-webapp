@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom'
 import { parse } from 'query-string'
 import { changeValueCommon } from 'features/Common/commonSlice'
 import EmptyBox from 'components/EmptyBox'
+import siteAPI from 'api/siteAPI'
 
 function DetailPage(props) {
   const {
@@ -28,6 +29,10 @@ function DetailPage(props) {
   const { data, isLoading, isError } = useQuery(['playlist', id], () => playlistAPI.get(id), {
     select: (value) => value?.data,
   })
+
+  useEffect(() => {
+    handleRecentPlaylist()
+  }, [data])
 
   useEffect(() => {
     if (parse(location.search)?.play === 'true' && !countRef.current && data?.songList?.length > 0) {
@@ -61,6 +66,14 @@ function DetailPage(props) {
         value: true,
       })
     )
+  }
+
+  const handleRecentPlaylist = async () => {
+    if (data._id) {
+      const value = await siteAPI.createRecentPlaylist({
+        playlistId: data._id,
+      })
+    }
   }
 
   return (

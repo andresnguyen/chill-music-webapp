@@ -5,13 +5,10 @@ import ArtistList from 'components/ArtistList'
 import EmptyBox from 'components/EmptyBox'
 import PlaylistList from 'components/PlaylistList'
 import SongCardList from 'components/SongCardList'
-import { changeValueCommon } from 'features/Common/commonSlice'
 import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useRef } from 'react'
-import { useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useMutation } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 
 function SearchFeature(props) {
   const search = useSelector((state) => state.common.search)
@@ -41,6 +38,12 @@ function SearchFeature(props) {
       handleSearch()
     }
   }, [search])
+
+  useEffect(() => {
+    const inputSearch = document.querySelector('.header__search-input')
+    if(!inputSearch) return 
+    inputSearch.focus() 
+  }, [])
 
   return (
     <div className="app__container tab--personal active">

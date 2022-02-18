@@ -1,16 +1,14 @@
 import albumAPI from 'api/albumAPI'
+import siteAPI from 'api/siteAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
 import SongListSkeleton from 'components/SongListSkeleton'
 import { changeMusicPlayerValue, changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import { parse } from 'query-string'
-import React, { useState } from 'react'
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useQuery } from 'react-query'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useRouteMatch } from 'react-router-dom'
 
 function DetailPage(props) {
@@ -25,6 +23,10 @@ function DetailPage(props) {
   const { data, isLoading, isError } = useQuery(['album', id], () => albumAPI.get(id), {
     select: (value) => value?.data,
   })
+
+  useEffect(() => {
+    handleRecentAlbum()
+  }, [data])
 
   useEffect(() => {
     if (parse(location.search)?.play === 'true' && !countRef.current && data?.songList?.length > 0) {
@@ -44,6 +46,14 @@ function DetailPage(props) {
     }
 
     dispatch(changeSongList(songList))
+  }
+
+  const handleRecentAlbum = async () => {
+    if (data._id) {
+      const value = await siteAPI.createRecentAlbum({
+        albumId: data._id,
+      })
+    }
   }
 
   return (
