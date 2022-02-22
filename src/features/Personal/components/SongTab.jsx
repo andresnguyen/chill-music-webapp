@@ -2,8 +2,10 @@ import collectionAPI from 'api/collectionAPI'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
 import SongListSkeleton from 'components/SongListSkeleton'
+import { changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux'
 
 function SongTab(props) {
   const { data: favoriteSongList, isLoading: songLoading } = useQuery(
@@ -13,6 +15,14 @@ function SongTab(props) {
       select: (value) => value?.data,
     }
   )
+
+  const dispatch = useDispatch()
+
+  const handlePlayAll = () => {
+    if (favoriteSongList?.length > 0) {
+      dispatch(changeSongList(favoriteSongList))
+    }
+  }
 
   return (
     <div className="grid container__tab tab-song">
@@ -31,7 +41,7 @@ function SongTab(props) {
                   Tải lên
                 </label>
               </div>
-              <button className="button is-small button-primary container__header-btn btn--play-all">
+              <button className="button is-small button-primary container__header-btn btn--play-all" onClick={handlePlayAll}>
                 <i className="bi bi-play-fill container__header-icon"></i>
                 <span>Phát tất cả</span>
               </button>

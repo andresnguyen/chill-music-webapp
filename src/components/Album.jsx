@@ -10,6 +10,7 @@ import { renderArtistFromList } from 'utils'
 
 function Album({ data }) {
   const idList = useSelector((state) => state.user.favoriteAlbumIdList)
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
 
   const [isFavorite, setIsFavorite] = useState(false)
 
@@ -38,7 +39,7 @@ function Album({ data }) {
 
       onError: () => {
         message.error('Cập nhật thất bại')
-      },  
+      },
     }
   )
 
@@ -50,8 +51,13 @@ function Album({ data }) {
 
   const handleHeartClick = async (e) => {
     e.stopPropagation()
+    if(!isLogin) {
+      message.warn("Vui lòng đăng nhập để thực hiện chức năng")
+return
+    }
+
     if (updateLoading) {
-      return  
+      return
     }
     mutate()
   }
@@ -60,7 +66,7 @@ function Album({ data }) {
     e.stopPropagation()
     history.push({
       pathname: `/albums/${_id}`,
-      search: '?play=true'
+      search: '?play=true',
     })
   }
 

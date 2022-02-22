@@ -14,6 +14,7 @@ import { renderArtistFromList } from 'utils'
 function SongCard({ data = {} }) {
   const user = useSelector((state) => state.user.current)
   const idList = useSelector((state) => state.user.favoriteSongIdList)
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
 
   const [isFavorite, setIsFavorite] = useState(false)
 
@@ -53,6 +54,11 @@ function SongCard({ data = {} }) {
 
   const handleHeartClick = async (e) => {
     e.stopPropagation()
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     if (updateLoading) {
       return
     }
@@ -75,6 +81,11 @@ function SongCard({ data = {} }) {
   }
 
   const handleAddToPlaylist = () => {
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     dispatch(
       changeValueCommon({
         name: 'addToPlaylistOpen',

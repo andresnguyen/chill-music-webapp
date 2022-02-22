@@ -21,7 +21,7 @@ const albumAPI = {
     return axiosClient.patch(url, data);
   },
 
-  remove(id) {
+  delete(id) {
     const url = `/albums/${id}`;
     return axiosClient.delete(url);
   },

@@ -1,10 +1,20 @@
 import AlbumList from 'components/AlbumList'
 import ArtistList from 'components/ArtistList'
 import SongList from 'components/SongList'
+import { changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 function HomeTab({ data, loading }) {
-  const { songList = [], albumList = [], artistList = [] } = data || {}
+  const { songList = [], albumList = [], artistList = [] } = data || {} 
+  const dispatch = useDispatch()
+
+  const handlePlayAll = () => {
+    if (songList?.length > 0) {
+      dispatch(changeSongList(songList))
+    }
+  }
+
   return (
     <div className="grid container__tab tab-home active">
       <div className="container__control row">
@@ -17,7 +27,7 @@ function HomeTab({ data, loading }) {
             <h3 className="container__header-subtitle">Bài Hát</h3>
             <div className="container__header-actions">
               <input type="hidden" />
-              <button className="button is-small button-primary container__header-btn btn--play-all">
+              <button className="button is-small button-primary container__header-btn btn--play-all" onClick={handlePlayAll}>
                 <i className="bi bi-play-fill container__header-icon"></i>
                 <span>Phát tất cả</span>
               </button>

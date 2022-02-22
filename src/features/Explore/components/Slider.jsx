@@ -66,19 +66,19 @@ function Slider(props) {
         const nextBtn = e.target.closest('.slide__move-btn.btn--next')
 
         if (!prevBtn && !nextBtn) {
-          autoMoveSlideId.current = setInterval(next, 3500)
+          autoMoveSlideId.current = setInterval(next, 5000)
         }
 
         if (prevBtn) {
           prev()
           clearInterval(autoMoveSlideId.current)
-          autoMoveSlideId.current = setInterval(prev, 3500)
+          autoMoveSlideId.current = setInterval(prev, 5000)
         }
 
         if (nextBtn) {
           next()
           clearInterval(autoMoveSlideId.current)
-          autoMoveSlideId.current = setInterval(next, 3500)
+          autoMoveSlideId.current = setInterval(next, 5000)
         }
       }
     }

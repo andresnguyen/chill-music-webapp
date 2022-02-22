@@ -25,8 +25,9 @@ function DetailPage(props) {
   const countRef = useRef(null)
 
   const isPlaying = useSelector((state) => state.musicPlayer.playing)
+  const user = useSelector((state) => state.user.current)
 
-  const { data, isLoading, isError } = useQuery(['playlist', id], () => playlistAPI.get(id), {
+  const { data, isLoading, isError } = useQuery(['playlist-detail', id], () => playlistAPI.get(id), {
     select: (value) => value?.data,
   })
 
@@ -134,7 +135,7 @@ function DetailPage(props) {
                 {isLoading ? (
                   <SongListSkeleton />
                 ) : songList?.length > 0 ? (
-                  <SongList data={songList} showHeader hiddenAction showCheck playlistId={data._id} />
+                  <SongList data={songList} showHeader hiddenAction showCheck playlistId={data._id} myPlaylist={data.userId === user._id}/>
                 ) : (
                   <EmptyBox
                     text="Không có bài hát trong playlist của bạn"

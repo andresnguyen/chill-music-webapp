@@ -42,7 +42,7 @@ function SearchFeature(props) {
   useEffect(() => {
     const inputSearch = document.querySelector('.header__search-input')
     if(!inputSearch) return 
-    inputSearch.focus() 
+    inputSearch.focus(  ) 
   }, [])
 
   return (

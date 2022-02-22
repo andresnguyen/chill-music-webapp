@@ -2,7 +2,7 @@ import { Dropdown, Menu, message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
 import { changeValueCommon } from 'features/Common/commonSlice'
-import { addASong, addASongPriority } from 'features/MusicPlayer/musicPlayerSlice'
+import { addASong, addASongPriority, deleteASong } from 'features/MusicPlayer/musicPlayerSlice'
 import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,12 +13,14 @@ function SongItem({
   index,
   data,
   showRank,
+  myPlaylist,
   showCheck,
   hiddenAll,
   onPlayPauseClick,
   active,
   playing,
   playlistId,
+  drawer,
   showDelete,
   handleUpdateClick,
   handleDeleteClick,
@@ -26,6 +28,8 @@ function SongItem({
   const { imageURL, name, artistList, _id } = data || {}
   const [isFavorite, setIsFavorite] = useState(false)
   const songIdList = useSelector((state) => state.user.favoriteSongIdList)
+  const user = useSelector((state) => state.user.current)
+  const isLogin = Boolean(user?._id)
 
   const queryClient = useQueryClient()
   const dispatch = useDispatch()
@@ -62,7 +66,7 @@ function SongItem({
     {
       onSuccess: () => {
         message.success(`Xóa bài hát ${data.name} khỏi playlist thành công`)
-        queryClient.invalidateQueries('playlist')
+        queryClient.invalidateQueries('playlist-detail')
       },
 
       onError: () => {
@@ -73,6 +77,11 @@ function SongItem({
 
   const handleHeartClick = (e) => {
     e.stopPropagation()
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     if (isLoading) return
     mutate()
   }
@@ -93,11 +102,20 @@ function SongItem({
     dispatch(addASong(data))
   }
 
+  const handleDeleteFromList = () => {
+    dispatch(deleteASong(data))
+  }
+
   const handleAddToListPriority = () => {
     dispatch(addASongPriority(data))
   }
 
   const handleAddToPlaylist = () => {
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     dispatch(
       changeValueCommon({
         name: 'addToPlaylistOpen',
@@ -114,8 +132,33 @@ function SongItem({
   }
 
   const handleDeleteFromPlaylist = () => {
-    if(playlistId) mutateDeleteSongPlaylist({ playlistId, songId: data._id })
+    if (playlistId) mutateDeleteSongPlaylist({ playlistId, songId: data._id })
   }
+
+  const menuDrawer = (
+    <Menu>
+      <Menu.Item key="0" onClick={handleDownload}>
+        <div className="menu__item">
+          <i className="bi bi-download"></i>
+          <span>Tải xuống</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="1" onClick={handleDeleteFromList}>
+        <div className="menu__item">
+          <i className="bi bi-skip-start-fill"></i>
+          <span>Xóa khỏi danh sách phát</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="3" onClick={handleAddToPlaylist}>
+        <div className="menu__item">
+          <i className="bi bi-plus-square"></i>
+          <span>Thêm vào playlist</span>
+        </div>
+      </Menu.Item>
+    </Menu>
+  )
 
   const menu = (
     <Menu>
@@ -146,11 +189,13 @@ function SongItem({
         </div>
       </Menu.Item>
 
-      <Menu.Item key="3" onClick={handleDeleteFromPlaylist}>
-        <div className="menu__item">
-          <i className="bi bi-trash"></i> <span>Xóa khỏi playlist này</span>
-        </div>
-      </Menu.Item>
+      {myPlaylist && (
+        <Menu.Item key="3" onClick={handleDeleteFromPlaylist}>
+          <div className="menu__item">
+            <i className="bi bi-trash"></i> <span>Xóa khỏi playlist này</span>
+          </div>
+        </Menu.Item>
+      )}
     </Menu>
   )
 
@@ -243,15 +288,13 @@ function SongItem({
             })}
           ></i>
         </div>
-        {!hiddenAll && (
-          <div onClick={(e) => e.stopPropagation()} title="Khác">
-            <Dropdown overlay={menu}>
-              <div className="action-btn">
-                <i className="btn--icon bi bi-three-dots"></i>
-              </div>
-            </Dropdown>
-          </div>
-        )}
+        <div onClick={(e) => e.stopPropagation()} title="Khác">
+          <Dropdown overlay={drawer ? menuDrawer : menu}>
+            <div className="action-btn">
+              <i className="btn--icon bi bi-three-dots"></i>
+            </div>
+          </Dropdown>
+        </div>
       </div>
     </div>
   )

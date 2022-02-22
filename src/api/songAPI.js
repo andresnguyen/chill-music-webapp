@@ -21,7 +21,7 @@ const songAPI = {
     return axiosClient.patch(url, data)
   },
 
-  remove(id) {
+  delete(id) {
     const url = `/songs/${id}`
     return axiosClient.delete(url)
   },

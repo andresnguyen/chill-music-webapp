@@ -11,12 +11,13 @@ import { useHistory } from 'react-router-dom'
 function Artist({ data = {} }) {
   const { _id, fullName, favoriteNumber, avatarURL } = data
   const queryClient = useQueryClient()
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
+
 
   const history = useHistory()
   const dispatch = useDispatch()
 
   const handleNavigationClick = () => {
-    console.log('first')
     history.push({
       pathname: `/artists/${_id}`,
     })
@@ -62,6 +63,11 @@ function Artist({ data = {} }) {
   })
 
   const handleFavoriteClick = () => {
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+    
     if (updateLoading) return
     mutate({ artistId: _id })
   }

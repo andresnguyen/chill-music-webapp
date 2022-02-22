@@ -52,7 +52,7 @@ const userAPI = {
     return axiosClient.patch(url, data, { baseURL: USER_API_URL })
   },
 
-  remove(id) {
+  delete(id) {
     const url = `/users/${id}`
     return axiosClient.delete(url, { baseURL: USER_API_URL })
   },

@@ -26,7 +26,7 @@ const artistAPI = {
     return axiosClient.patch(url, data);
   },
 
-  remove(id) {
+  delete(id) {
     const url = `/artists/${id}`;
     return axiosClient.delete(url);
   },

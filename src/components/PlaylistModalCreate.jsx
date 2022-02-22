@@ -58,7 +58,7 @@ function PlaylistModalCreate() {
       okText="Tạo"
       cancelText="Hủy bỏ"
       confirmLoading={isLoading}
-      width={800}
+      width={400}
     >
       <Form form={form} onFinish={handleFinish}>
         <Form.Item name="name" rules={[{ required: true, message: 'Vui lòng nhập tên playlist' }]}>

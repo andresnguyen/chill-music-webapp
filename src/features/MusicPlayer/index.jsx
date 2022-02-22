@@ -15,6 +15,8 @@ function MusicPlayer(props) {
   const { playing, repeat, seeking, random, currentIndex, currentVolume, indexList, songList, isDrawerOpen } =
     useSelector((state) => state.musicPlayer)
 
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
+
   const [value, setValue] = useState(0)
   const [popupShow, setPopupShow] = useState(false)
 
@@ -65,7 +67,7 @@ function MusicPlayer(props) {
   useEffect(() => {
     if (playing) {
       document.title = songList?.[currentIndex].name || 'Chillmusic'
-      handleRecentSong()
+      if (isLogin) handleRecentSong()
     }
   }, [playing, currentIndex])
 
@@ -202,9 +204,9 @@ function MusicPlayer(props) {
   }
 
   const handleRecentSong = async () => {
-    if(currentSong._id) {
+    if (currentSong._id) {
       const value = await siteAPI.createRecentSong({
-        songId: currentSong._id
+        songId: currentSong._id,
       })
     }
   }
@@ -595,7 +597,7 @@ function MusicPlayer(props) {
       >
         <Tabs defaultActiveKey="1" onChange={(value) => console.log(value)}>
           <TabPane tab="Danh sách phát" key="1">
-            <SongList data={songList} hiddenHeader hiddenAll />
+            <SongList data={songList} hiddenHeader hiddenAll drawer />
           </TabPane>
           <TabPane tab="Nghe gần đây" key="2">
             <div>

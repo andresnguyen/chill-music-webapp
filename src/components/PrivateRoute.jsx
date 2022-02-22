@@ -7,6 +7,7 @@ export function PrivateRoute(props) {
   // If yes, show route
   // Otherwise, redirect to login page
   const isLogin = Boolean(useSelector((state) => state.user.current._id))
+
   if (!isLogin) return <Redirect to="/auth/login" />;
 
   return <Route {...props} />;

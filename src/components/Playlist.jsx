@@ -15,6 +15,7 @@ function Playlist({ data }) {
 
   const user = useSelector((state) => state.user.current)
   const idList = useSelector((state) => state.user.favoritePlaylistIdList)
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
 
   const queryClient = useQueryClient()
   const history = useHistory()
@@ -85,6 +86,11 @@ function Playlist({ data }) {
 
   const handleHeartClick = async (e) => {
     e.stopPropagation()
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     if (updateLoading) {
       return
     }
@@ -95,8 +101,9 @@ function Playlist({ data }) {
     e.stopPropagation()
     history.push({
       pathname: `/playlists/${_id}`,
-      search: '?play=true'
-    })  }
+      search: '?play=true',
+    })
+  }
 
   const menuPlaylist = (
     <Menu>

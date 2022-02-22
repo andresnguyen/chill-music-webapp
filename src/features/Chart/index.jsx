@@ -1,14 +1,18 @@
 import siteAPI from 'api/siteAPI'
 import SongList from 'components/SongList'
 import SongListSkeleton from 'components/SongListSkeleton'
+import { changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React from 'react'
 import { useRef } from 'react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux'
 
 function ChartFeature(props) {
   const [limit, setLimit] = useState(10)
   const tmpData = useRef(null)
+  const dispatch = useDispatch()
+
 
   const {
     data,
@@ -22,6 +26,12 @@ function ChartFeature(props) {
     tmpData.current = data
   }
 
+  const handlePlayAll = () => {
+    if (data?.length > 0) {
+      dispatch(changeSongList(data))
+    }
+  }
+
   return (
     <div className="app__container tab--charts">
       <div className="app__container-content">
@@ -29,7 +39,7 @@ function ChartFeature(props) {
           <div className="grid">
             <div className="chart__container-header mb-40">
               <h3 className="chart__header-name">#chillchart</h3>
-              <div className="chart__header-btn">
+              <div className="chart__header-btn" onClick={handlePlayAll}>
                 <i className="bi bi-play-fill chart__header-icon"></i>
               </div>
             </div>

@@ -15,6 +15,8 @@ function ArtistFeature(props) {
 
   const [isFavorite, setIsFavorite] = useState(false)
   const artistIdList = useSelector((state) => state.user.favoriteArtistIdList)
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
+
 
   useEffect(() => {
     if (artistIdList.some((item) => item.artistId === id)) setIsFavorite(true)
@@ -62,6 +64,11 @@ function ArtistFeature(props) {
   )
 
   const handleFavoriteClick = () => {
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+    
     if (updateLoading) return
     mutate({ artistId: id })
   }

@@ -5,7 +5,6 @@ import smallLogo from 'assets/images/small-logo.png'
 import { useDispatch } from 'react-redux'
 import { changeValue } from 'features/Auth/userSlice'
 import siteAPI from 'api/siteAPI'
-import { current } from '@reduxjs/toolkit'
 
 function MusicPlayer(props) {
   const isMountRef = useRef(null)

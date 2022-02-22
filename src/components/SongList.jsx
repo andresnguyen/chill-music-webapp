@@ -3,7 +3,20 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SongItem from './SongItem'
 
-function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAll, showDelete, handleDeleteClick, handleUpdateClick, playlistId }) {
+function SongList({
+  data,
+  showHeader,
+  showAction,
+  showRank,
+  showCheck,
+  hiddenAll,
+  showDelete,
+  drawer,
+  handleDeleteClick,
+  handleUpdateClick,
+  playlistId,
+  myPlaylist,
+}) {
   const dispatch = useDispatch()
   const currentSong = useSelector((state) => state.musicPlayer.songList?.[state.musicPlayer.currentIndex]) || {}
   const playing = useSelector((state) => state.musicPlayer.playing)
@@ -25,6 +38,7 @@ function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAl
         {data.length > 0 &&
           data.map((item, index) => (
             <SongItem
+              myPlaylist={myPlaylist}
               showDelete={showDelete}
               key={item?._id}
               index={index}
@@ -36,6 +50,7 @@ function SongList({ data , showHeader, showAction, showRank, showCheck, hiddenAl
               showCheck={showCheck}
               hiddenAll={hiddenAll}
               playlistId={playlistId}
+              drawer={drawer}
               onPlayPauseClick={handlePlayPauseClick}
               handleUpdateClick={handleUpdateClick}
               handleDeleteClick={handleDeleteClick}

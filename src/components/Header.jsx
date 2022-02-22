@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
 import { getFavoriteSuccess, logout } from 'features/Auth/userSlice'
@@ -144,6 +145,11 @@ function Header(props) {
   }
 
   const handleUploadSongClick = () => {
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     dispatch(
       changeValueCommon({
         name: 'songCreateOpen',
@@ -173,10 +179,10 @@ function Header(props) {
   return (
     <header className="header grid" ref={headerRef}>
       <div className="header__with-search">
-        <button className="header__button">
+        <button className="header__button" onClick={history.goBack}>
           <i className="bi bi-arrow-left header__button-icon"></i>
         </button>
-        <button className="header__button button--disabled">
+        <button className="header__button" onClick={history.goForward}>
           <i className="bi bi-arrow-right header__button-icon"></i>
         </button>
         <div className="header__search">

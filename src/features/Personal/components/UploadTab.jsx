@@ -1,10 +1,13 @@
+import { message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
 import SongListSkeleton from 'components/SongListSkeleton'
 import { changeValueCommon } from 'features/Common/commonSlice'
+import { changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
 function UploadTab(props) {
@@ -16,8 +19,15 @@ function UploadTab(props) {
     }
   )
   const dispatch = useDispatch()
+  const isLogin = Boolean(useSelector((state) => state.user.current?._id))
+
 
   const handleUploadClick = () => {
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
+    }
+
     dispatch(
       changeValueCommon({
         name: 'songCreateOpen',
@@ -58,6 +68,12 @@ function UploadTab(props) {
     )
   }
 
+  const handlePlayAll = () => {
+    if (mySongList?.length > 0) {
+      dispatch(changeSongList(mySongList))
+    }
+  }
+
   return (
     <div className="grid container__tab tab-upload">
       <div className="container__section row">
@@ -71,7 +87,7 @@ function UploadTab(props) {
                 <i class="bi bi-upload container__header-icon"></i>Tải lên
               </label>
             </div>
-            <button class="button is-small button-primary container__header-btn btn--play-all">
+            <button class="button is-small button-primary container__header-btn btn--play-all" onClick={handlePlayAll}>
               <i class="bi bi-play-fill container__header-icon"></i>
               <span>Phát tất cả</span>
             </button>

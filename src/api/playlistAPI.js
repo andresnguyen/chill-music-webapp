@@ -21,7 +21,7 @@ const playlistAPI = {
     return axiosClient.patch(url, data);
   },
 
-  remove(id) {
+  delete(id) {
     const url = `/playlists/${id}`;
     return axiosClient.delete(url);
   },

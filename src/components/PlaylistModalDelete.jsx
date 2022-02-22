@@ -31,7 +31,7 @@ function PlaylistModalUpdate() {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries('home-tab')
+      queryClient.invalidateQueries('my-playlist-list')
       setVisible(false)
     },
   })

@@ -46,9 +46,10 @@ function PlaylistModalUpdate() {
     onError: () => {
       message.error('Cập nhật playlist thất bại')
     },
-
+    
     onSettled: () => {
       queryClient.invalidateQueries('my-playlist-list')
+      queryClient.invalidateQueries('playlist-detail')
       setVisible(false)
       form.resetFields()
     },

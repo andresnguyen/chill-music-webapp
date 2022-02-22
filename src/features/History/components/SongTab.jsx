@@ -2,13 +2,23 @@ import siteAPI from 'api/siteAPI'
 import EmptyBox from 'components/EmptyBox'
 import SongList from 'components/SongList'
 import SongListSkeleton from 'components/SongListSkeleton'
+import { changeSongList } from 'features/MusicPlayer/musicPlayerSlice'
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux'
 
 function SongTab(props) {
   const { data, isLoading } = useQuery(['recent-song'], () => siteAPI.getRecentSong(), {
     select: (value) => value?.data,
   })
+
+  const dispatch = useDispatch()
+
+  const handlePlayAll = () => {
+    if (data?.length > 0) {
+      dispatch(changeSongList(data))
+    }
+  }
 
   return (
     <div className="grid container__tab tab-song">
@@ -17,7 +27,7 @@ function SongTab(props) {
           <div className="container__header mb-10">
             <a href="#" className="container__header-title">
               <h3>Bài Hát&nbsp;</h3>
-            </a>
+            </a>  
             <h3 className="container__header-subtitle">Bài Hát</h3>
             <div className="container__header-actions">
               <div className="button is-small container__header-btn hide-on-mobile" title="Tải bài hát của bạn lên">
@@ -27,7 +37,7 @@ function SongTab(props) {
                   Tải lên
                 </label>
               </div>
-              <button className="button is-small button-primary container__header-btn btn--play-all">
+              <button className="button is-small button-primary container__header-btn btn--play-all" onClick={handlePlayAll}>
                 <i className="bi bi-play-fill container__header-icon"></i>
                 <span>Phát tất cả</span>
               </button>
