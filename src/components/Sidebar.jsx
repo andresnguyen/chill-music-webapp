@@ -1,13 +1,20 @@
+import { message } from 'antd'
 import logo from 'assets/images/logo.svg'
 import smallLogo from 'assets/images/small-logo.png'
 import { changeValueCommon } from 'features/Common/commonSlice'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 
 function Sidebar(props) {
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.current)
   const handleCreateClick = () => {
+    if (!user?._id) {
+      return message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+    }
+    
     dispatch(changeValueCommon({ name: 'playlistCreateOpen', value: true }))
   }
 
@@ -67,7 +74,6 @@ function Sidebar(props) {
             </span>
             <div className="sidebar__nav-label">HOT</div>
           </NavLink> */}
-
         </ul>
       </div>
       <div className="sidebar__subnav hide-on-mobile">
