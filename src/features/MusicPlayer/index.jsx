@@ -1,4 +1,4 @@
-import { Drawer, message, Tabs } from 'antd'
+import { Drawer, Menu, message, Tabs } from 'antd'
 import siteAPI from 'api/siteAPI'
 import songAPI from 'api/songAPI'
 import smallLogo from 'assets/images/small-logo.png'
@@ -6,6 +6,8 @@ import classNames from 'classnames'
 import SongList from 'components/SongList'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { FacebookShareButton } from 'react-share'
 import { formatSongTime, renderArtistFromList } from 'utils'
 import { changeMusicPlayerValue } from './musicPlayerSlice'
 const { TabPane } = Tabs
@@ -22,6 +24,7 @@ function MusicPlayer(props) {
   const [currentTime, setCurrentTime] = useState(0)
   const [popupShow, setPopupShow] = useState(false)
   const currentSong = songList[currentIndex]
+  const history = useHistory()
 
   useEffect(() => {
     if (!currentSong?.mediaURL) {
@@ -192,7 +195,9 @@ function MusicPlayer(props) {
   }
 
   const handlePopupClick = () => {
-    setPopupShow(!popupShow)
+    history.push({
+      pathname: `/songs/${currentSong._id}`
+    })
   }
 
   const handleDrawerChange = () => {
@@ -216,6 +221,32 @@ function MusicPlayer(props) {
       const value = await songAPI.updateView(currentSong._id)
     }
   }
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <div className="menu__item">
+          <i className="bi bi-download"></i>
+          <span>Tải xuống</span>
+        </div>
+      </Menu.Item>
+
+      <Menu.Item key="4">
+        <Link to={`/songs/${currentSong?._id}`} className="menu__item">
+          <i className="bi bi-box-arrow-right"></i>
+          <span>Chi tiết bài hát</span>
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item key="5" onClick={() => null}>
+        <FacebookShareButton url={`${window.location.origin}/songs/${currentSong?._id}`}>
+          <div className="menu__item">
+            <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
+          </div>
+        </FacebookShareButton>
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <div
@@ -270,16 +301,7 @@ function MusicPlayer(props) {
                 <div className="player__song-author info__author">{renderArtistFromList(currentSong?.artistList)}</div>
               </div>
             </div>
-            <div className="media__right hide-on-tablet-mobile">
-              <div className="player__song-options">
-                <div className="player__song-btn option-btn btn--heart">
-                  <i className="btn--icon icon--heart bi bi-heart-fill primary"></i>
-                </div>
-                <div className="player__song-btn option-btn">
-                  <i className="btn--icon bi bi-three-dots"></i>
-                </div>
-              </div>
-            </div>
+         
           </div>
         </div>
         <div className="player__control">
@@ -614,3 +636,18 @@ function MusicPlayer(props) {
 MusicPlayer.propTypes = {}
 
 export default MusicPlayer
+
+{/* <div className="media__right hide-on-tablet-mobile">
+<div className="player__song-options">
+  <div className="player__song-btn option-btn btn--heart">
+    <i className="btn--icon icon--heart bi bi-heart-fill primary"></i>
+  </div>
+  <div onClick={(e) => e.stopPropagation()} title="Khác">
+    <Dropdown overlay={menu}>
+      <div className="action-btn player__song-btn">
+        <i className="btn--icon bi bi-three-dots"></i>
+      </div>
+    </Dropdown>
+  </div>
+</div>
+</div> */}

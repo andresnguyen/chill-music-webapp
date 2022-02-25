@@ -1,18 +1,21 @@
 import Album from 'components/Album'
+import Artist from 'components/Artist'
 import Playlist from 'components/Playlist'
 import SongCard from 'components/SongCard'
 import React from 'react'
 
 function Section({ data = {} }) {
   const renderList = (data) => {
-    const firstItem = data[0]
+    const firstItem = data[0] || {}
     const isAlbum = firstItem.songList && firstItem.artistId
     const isPlaylist = firstItem.songList && !firstItem.artistId
     const isSong = firstItem.mediaURL
+    const isArtist = firstItem.gender
 
     if (isAlbum) return data.map((item) => <Album key={item._id} data={item} />)
     if (isPlaylist) return data.map((item) => <Playlist key={item._id} data={item} />)
     if (isSong) return data.map((item) => <SongCard key={item._id} data={item} />)
+    if (isArtist) return data.map((item) => <Artist key={item._id} data={item} />)
   }
 
   return (

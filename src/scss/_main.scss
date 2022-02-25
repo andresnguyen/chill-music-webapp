@@ -1274,11 +1274,11 @@ label .container__header-icon {
 }
 .playlist__list-song:hover .play-song--actions,
 .playlist__list-song:hover .playlist__song-check {
-  display: block;
+  // display: block;
 }
 
 .playlist__list-song:hover .playlist__song-info > i {
-  visibility: hidden;
+  // visibility: hidden;
 }
 
 .playlist__song-info > i {

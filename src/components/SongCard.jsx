@@ -1,14 +1,15 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Dropdown, Menu, message, Modal } from 'antd'
+import { Dropdown, Menu, message } from 'antd'
 import collectionAPI from 'api/collectionAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
 import classNames from 'classnames'
 import { changeValueCommon } from 'features/Common/commonSlice'
 import { addASong, addASongPriority, pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { FacebookShareButton } from 'react-share'
 import { renderArtistFromList } from 'utils'
 
 function SongCard({ data = {} }) {
@@ -49,7 +50,9 @@ function SongCard({ data = {} }) {
   )
 
   const handleItemClick = () => {
-    dispatch(pushToSongList(data))
+    history.push({
+      pathname: `/songs/${_id}`,
+    })
   }
 
   const handleHeartClick = async (e) => {
@@ -128,6 +131,20 @@ function SongCard({ data = {} }) {
           <i className="bi bi-plus-square"></i>
           <span>Thêm vào playlist</span>
         </div>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <Link to={`/songs/${data._id}`} className="menu__item">
+          <i className="bi bi-box-arrow-right"></i>
+          <span>Chi tiết bài hát</span>
+        </Link>
+      </Menu.Item>
+
+      <Menu.Item key="5" onClick={() => null}>
+        <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
+          <div className="menu__item">
+            <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
+          </div>
+        </FacebookShareButton>
       </Menu.Item>
     </Menu>
   )

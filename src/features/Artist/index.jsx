@@ -16,24 +16,13 @@ function ArtistFeature(props) {
   const [isFavorite, setIsFavorite] = useState(false)
   const artistIdList = useSelector((state) => state.user.favoriteArtistIdList)
   const isLogin = Boolean(useSelector((state) => state.user.current?._id))
-
+  const queryClient = useQueryClient()
+  const containerRef = useRef(null)
 
   useEffect(() => {
     if (artistIdList.some((item) => item.artistId === id)) setIsFavorite(true)
     else setIsFavorite(false)
   }, [artistIdList])
-
-  const queryClient = useQueryClient()
-
-  const containerRef = useRef(null)
-
-  const {
-    data = {},
-    isLoading: getLoading,
-    isError,
-  } = useQuery(['artist-detail', id], () => artistAPI.getDetail(id), {
-    select: (value) => value?.data,
-  })
 
   useEffect(() => {
     containerRef.current.scrollTo({
@@ -41,6 +30,16 @@ function ArtistFeature(props) {
       behavior: 'smooth',
     })
   }, [id])
+
+  let {
+    data,
+    isLoading: getLoading,
+    isError,
+  } = useQuery(['artist-detail', id], () => artistAPI.getDetail(id), {
+    select: (value) => value?.data,
+  })
+
+  data = data ? data : {}
 
   const { mutate, isLoading: updateLoading } = useMutation(
     (values) => {
@@ -68,7 +67,7 @@ function ArtistFeature(props) {
       message.warn('Vui lòng đăng nhập để thực hiện chức năng')
       return
     }
-    
+
     if (updateLoading) return
     mutate({ artistId: id })
   }
@@ -86,7 +85,7 @@ function ArtistFeature(props) {
               justifyContent: 'center',
             }}
           >
-            <div className="app__user-avatar" >
+            <div className="app__user-avatar">
               <img src={data.avatarURL || avatar} alt="avatar" className="app__user-img" />
             </div>
             <span className="app__user-name">{data.fullName || 'Unknown'}</span>

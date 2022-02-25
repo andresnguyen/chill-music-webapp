@@ -4,10 +4,11 @@ import songAPI from 'api/songAPI'
 import fallbackImage from 'assets/images/fallback.jpg'
 import SongCardList from 'components/SongCardList'
 import { changeMusicPlayerValue, pushToSongList } from 'features/MusicPlayer/musicPlayerSlice'
-import React, { useRef } from 'react'
+import moment from 'moment'
+import React from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useRouteMatch } from 'react-router-dom'
+import { useRouteMatch } from 'react-router-dom'
 import { FacebookShareButton } from 'react-share'
 import { renderArtistFromList } from 'utils'
 import Lyric from '../component/Lyric'
@@ -35,7 +36,7 @@ function DetailPage(props) {
     }
   )
 
-  const { name, imageURL, artistList } = data || {}
+  const { name, imageURL, artistList, view = 0 } = data || {}
 
   const handlePlayPauseAllClick = () => {
     if (isPlaying) {
@@ -73,6 +74,8 @@ function DetailPage(props) {
                 {renderArtistFromList(artistList)}
               </div>
 
+              <div style={{ color: 'var(--text-secondary)', fontSize: 12, marginTop: 3 }}>{view} lượt nghe</div>
+
               <div className="container__header-actions container__header-actions-custom mt-20">
                 <span></span>
                 <button
@@ -102,10 +105,15 @@ function DetailPage(props) {
                     <Lyric />
                   </Tabs.TabPane>
                   <Tabs.TabPane tab="Mô tả bài hát" key="3">
-                    <Lyric />
+                    <h4>Ngày phát hành: {moment(data?.createdAt).format('DD/MM/YYYY')}</h4>
+                    <h4 style={{ maxWidth: 800 }}>
+                      Mô tả: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique eligendi aliquid
+                      repellendus doloremque asperiores itaque alias blanditiis reiciendis possimus, a quae excepturi
+                      deleniti odit nam omnis odio cupiditate impedit ab.
+                    </h4>
                   </Tabs.TabPane>
                   <Tabs.TabPane tab="Chia sẻ lên mạng xã hội" key="4">
-                    <FacebookShareButton url={`${window.location.origin}/songóng/${data?._id}`}>
+                    <FacebookShareButton url={`${window.location.origin}/songs/${data?._id}`}>
                       <Button
                         icon={<FacebookOutlined />}
                         size="large"

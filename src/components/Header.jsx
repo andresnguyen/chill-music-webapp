@@ -3,11 +3,10 @@ import collectionAPI from 'api/collectionAPI'
 import classNames from 'classnames'
 import { getFavoriteSuccess, logout } from 'features/Auth/userSlice'
 import { changeValueCommon } from 'features/Common/commonSlice'
-import React, { Fragment, useEffect, useRef } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
 function Header(props) {
   const headerRef = useRef(null)
@@ -15,6 +14,7 @@ function Header(props) {
   const location = useLocation()
   const dispatch = useDispatch()
   const history = useHistory()
+  const [focus, setFocus] = useState(false)
 
   let mode
 
@@ -176,6 +176,14 @@ function Header(props) {
     )
   }
 
+  const handleFocus = (e) => {
+    setFocus(true)
+  }
+
+  const handleBlur = (e) => {
+    setFocus(false)
+  }
+
   return (
     <header className="header grid" ref={headerRef}>
       <div className="header__with-search">
@@ -185,7 +193,7 @@ function Header(props) {
         <button className="header__button" onClick={history.goForward}>
           <i className="bi bi-arrow-right header__button-icon"></i>
         </button>
-        <div className="header__search">
+        <div className={`header__search ${focus ? 'focus' : ''}`}>
           <input
             type="text"
             placeholder="Nhập tên bài hát, nghệ sĩ hoặc album..."
@@ -193,6 +201,8 @@ function Header(props) {
             value={search}
             onChange={handleSearch}
             onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           />
           <div className="header__search-btn" onClick={() => history.push({ pathname: '/search' })}>
             <i className="bi bi-search header__search-icon"></i>
@@ -388,7 +398,7 @@ function Header(props) {
                       <span>Thông tin cá nhân</span>
                     </div>
                   </Link>
-                  <div className="setting__item">
+                  {/* <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-badge-hd setting__item-icon"></i>
                       <span>Chất lượng nhạc</span>
@@ -401,10 +411,10 @@ function Header(props) {
                       <span>Trình phát nhạc</span>
                     </div>
                     <i className="bi bi-chevron-right setting__item-icon"></i>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="setting__subnav">
-                  <div className="setting__item">
+                  {/* <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-exclamation-circle setting__item-icon"></i>
                       <span>Giới thiệu</span>
@@ -421,19 +431,19 @@ function Header(props) {
                       <i className="bi bi-telephone setting__item-icon"></i>
                       <span>Liên hệ</span>
                     </div>
-                  </div>
+                  </div> */}
                   <Link className="setting__item" to="/change-pw">
                     <div className="setting__item-content">
-                      <i className="bi bi-shield-lock setting__item-icon"></i>
+                      <i className="bi bi-flag setting__item-icon"></i>
                       <span>Đổi mật khẩu</span>
                     </div>
                   </Link>
-                  <div className="setting__item">
+                  {/* <div className="setting__item">
                     <div className="setting__item-content">
                       <i className="bi bi-badge-ad setting__item-icon"></i>
                       <span>Quảng cáo</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="setting__item">
                     <div className="setting__item-content" onClick={handleLogoutClick}>
                       <i className="bi bi-file-text setting__item-icon"></i>

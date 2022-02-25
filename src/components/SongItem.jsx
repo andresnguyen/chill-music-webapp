@@ -7,6 +7,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { FacebookShareButton } from 'react-share'
 import { formatSongTime, renderArtistFromList } from 'utils'
 
 const defaultImageUrl = 'https://photo-zmp3.zadn.vn/audio_default.png'
@@ -161,9 +162,17 @@ function SongItem({
 
       <Menu.Item key="4">
         <Link to={`/songs/${data._id}`} className="menu__item">
-          <i className="bi bi-plus-square"></i>
+          <i className="bi bi-box-arrow-right"></i>
           <span>Chi tiết bài hát</span>
         </Link>
+      </Menu.Item>
+
+      <Menu.Item key="5" onClick={() => null}>
+        <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
+          <div className="menu__item">
+            <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
+          </div>
+        </FacebookShareButton>
       </Menu.Item>
     </Menu>
   )
@@ -207,9 +216,17 @@ function SongItem({
 
       <Menu.Item key="5">
         <Link to={`/songs/${data._id}`} className="menu__item">
-          <i className="bi bi-plus-square"></i>
+          <i className="bi bi-box-arrow-right"></i>
           <span>Chi tiết bài hát</span>
         </Link>
+      </Menu.Item>
+
+      <Menu.Item key="6" onClick={() => null}>
+        <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
+          <div className="menu__item">
+            <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
+          </div>
+        </FacebookShareButton>
       </Menu.Item>
     </Menu>
   )
