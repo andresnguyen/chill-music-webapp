@@ -24,6 +24,8 @@ import PlaylistFeature from 'features/Playlist'
 import CategoryFeature from 'features/Category'
 import SearchFeature from 'features/Search'
 import HistoryFeature from 'features/History'
+import SongFeature from 'features/Song'
+
 
 
 import PlaylistModalCreate from 'components/PlaylistModalCreate'
@@ -55,6 +57,7 @@ function MainLayout() {
         <Route path="/search" component={SearchFeature} />
         <Route path="/explore" exact component={ExploreFeature} />
         <Route path="/artists/:id" exact component={ArtistFeature} />
+        <Route path="/songs" component={SongFeature} />
         <Route path="/charts" exact component={ChartFeature} />
         <Route exact component={NotFound} />
       </Switch>

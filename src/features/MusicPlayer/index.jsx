@@ -1,5 +1,6 @@
 import { Drawer, message, Tabs } from 'antd'
 import siteAPI from 'api/siteAPI'
+import songAPI from 'api/songAPI'
 import smallLogo from 'assets/images/small-logo.png'
 import classNames from 'classnames'
 import SongList from 'components/SongList'
@@ -18,10 +19,8 @@ function MusicPlayer(props) {
   const isLogin = Boolean(useSelector((state) => state.user.current?._id))
 
   const [value, setValue] = useState(0)
-  const [popupShow, setPopupShow] = useState(false)
-
   const [currentTime, setCurrentTime] = useState(0)
-
+  const [popupShow, setPopupShow] = useState(false)
   const currentSong = songList[currentIndex]
 
   useEffect(() => {
@@ -68,6 +67,7 @@ function MusicPlayer(props) {
     if (playing) {
       document.title = songList?.[currentIndex].name || 'Chillmusic'
       if (isLogin) handleRecentSong()
+      handleUpdateView()
     }
   }, [playing, currentIndex])
 
@@ -211,6 +211,12 @@ function MusicPlayer(props) {
     }
   }
 
+  const handleUpdateView = async () => {
+    if (currentSong._id) {
+      const value = await songAPI.updateView(currentSong._id)
+    }
+  }
+
   return (
     <div
       className={classNames('player grid', { 'open-popup': popupShow, playing: playing })}
@@ -342,12 +348,12 @@ function MusicPlayer(props) {
         </div>
         <div className="player__options hide-on-mobile">
           <div className="player__options-container">
-            <div className="player__options-btn option-btn hide-on-tablet-mobile" onClick={handlePopupClick}>
+            {/* <div className="player__options-btn option-btn hide-on-tablet-mobile" onClick={handlePopupClick}>
               <i className="bi bi-camera-video btn--icon"></i>
             </div>
             <div className="player__options-btn option-btn hide-on-tablet-mobile">
               <i className="bi bi-mic btn--icon"></i>
-            </div>
+            </div> */}
             <div className="player__options-btn volume option-btn" onClick={handleVolumeClick}>
               {currentVolume == 0 ? (
                 <i className="bi bi-volume-mute btn--icon"></i>
@@ -598,11 +604,6 @@ function MusicPlayer(props) {
         <Tabs defaultActiveKey="1" onChange={(value) => console.log(value)}>
           <TabPane tab="Danh sách phát" key="1">
             <SongList data={songList} hiddenHeader hiddenAll drawer />
-          </TabPane>
-          <TabPane tab="Nghe gần đây" key="2">
-            <div>
-              <SongList data={[1, 2, 3, 4, 5, 6, 7, 8, 9]} hiddenHeader hiddenAll />
-            </div>
           </TabPane>
         </Tabs>
       </Drawer>

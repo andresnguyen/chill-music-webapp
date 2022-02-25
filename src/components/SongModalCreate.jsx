@@ -3,7 +3,8 @@ import { Button, Descriptions, Form, Input, message, Modal, Upload } from 'antd'
 import songAPI from 'api/songAPI'
 import { IMAGE_API_URL, UPLOAD_SONG_API_URL } from 'config'
 import { changeValueCommon } from 'features/Common/commonSlice'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { requiredLabel } from 'utils'
@@ -11,6 +12,7 @@ import { requiredLabel } from 'utils'
 function SongModalCreate() {
   const visible = useSelector((state) => state.common.songCreateOpen)
   const dispatch = useDispatch()
+  const audioRef = useRef()
 
   const setVisible = (value) => {
     dispatch(
@@ -26,6 +28,7 @@ function SongModalCreate() {
   const [mediaLoading, setMediaLoading] = useState(false)
   const [imageURL, setImageURL] = useState(null)
   const [mediaURL, setMediaURL] = useState(null)
+
   const queryClient = useQueryClient()
 
   const { mutate, isLoading } = useMutation((data) => songAPI.add(data), {
@@ -61,6 +64,9 @@ function SongModalCreate() {
     if (payload.mediaURL) {
       payload.mediaURL = payload.mediaURL.fileList.slice(-1)[0].response.data.path
     }
+
+    payload.time = audioRef.current?.duration
+
     mutate(payload)
   }
 
@@ -174,7 +180,7 @@ function SongModalCreate() {
                 onChange={handleChangeMedia}
               >
                 {mediaURL && !mediaLoading ? (
-                  <audio controls>
+                  <audio controls ref={audioRef}>
                     <source src={mediaURL} type="audio/ogg" />
                   </audio>
                 ) : (

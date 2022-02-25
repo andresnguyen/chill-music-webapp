@@ -8,6 +8,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { FacebookShareButton } from 'react-share'
 import { renderArtistFromList } from 'utils'
 
 function Playlist({ data }) {
@@ -117,6 +118,11 @@ function Playlist({ data }) {
           </Menu.Item>
         </Fragment>
       )}
+      <Menu.Item key="3" onClick={() => null}>
+        <FacebookShareButton url={`${window.location.origin}/playlists/${_id}`}>
+          <span>Chia sẻ lên Facebook</span>
+        </FacebookShareButton>
+      </Menu.Item>
     </Menu>
   )
 

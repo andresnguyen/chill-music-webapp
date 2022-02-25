@@ -6,7 +6,8 @@ import { addASong, addASongPriority, deleteASong } from 'features/MusicPlayer/mu
 import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
-import { renderArtistFromList } from 'utils'
+import { Link } from 'react-router-dom'
+import { formatSongTime, renderArtistFromList } from 'utils'
 
 const defaultImageUrl = 'https://photo-zmp3.zadn.vn/audio_default.png'
 function SongItem({
@@ -157,6 +158,13 @@ function SongItem({
           <span>Thêm vào playlist</span>
         </div>
       </Menu.Item>
+
+      <Menu.Item key="4">
+        <Link to={`/songs/${data._id}`} className="menu__item">
+          <i className="bi bi-plus-square"></i>
+          <span>Chi tiết bài hát</span>
+        </Link>
+      </Menu.Item>
     </Menu>
   )
 
@@ -190,12 +198,19 @@ function SongItem({
       </Menu.Item>
 
       {myPlaylist && (
-        <Menu.Item key="3" onClick={handleDeleteFromPlaylist}>
+        <Menu.Item key="4" onClick={handleDeleteFromPlaylist}>
           <div className="menu__item">
             <i className="bi bi-trash"></i> <span>Xóa khỏi playlist này</span>
           </div>
         </Menu.Item>
       )}
+
+      <Menu.Item key="5">
+        <Link to={`/songs/${data._id}`} className="menu__item">
+          <i className="bi bi-plus-square"></i>
+          <span>Chi tiết bài hát</span>
+        </Link>
+      </Menu.Item>
     </Menu>
   )
 
@@ -261,7 +276,9 @@ function SongItem({
           </p>
         </div>
       </div>
-      {!hiddenAll && <span className="playlist__song-time media__content">04:30</span>}
+      {!hiddenAll && (
+        <span className="playlist__song-time media__content">{data?.time ? formatSongTime(data.time) : '--:--'}</span>
+      )}
       <div className="playlist__song-option song--tab media__right">
         {showDelete && (
           <div className="playlist__song-btn btn--mic option-btn hide-on-mobile" onClick={handleDelete}>

@@ -11,6 +11,16 @@ const songAPI = {
     return axiosClient.get(url)
   },
 
+  getRecommend(categoryId) {
+    const url = `/songs/song-recommend/${categoryId}`
+    return axiosClient.get(url)
+  },
+  
+  updateView(id) {
+    const url = `/songs/song-view/${id}`;
+    return axiosClient.get(url);
+  },
+
   add(data) {
     const url = '/songs'
     return axiosClient.post(url, data)

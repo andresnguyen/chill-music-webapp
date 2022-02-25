@@ -6,6 +6,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { FacebookShareButton } from 'react-share'
 import { renderArtistFromList } from 'utils'
 
 function Album({ data }) {
@@ -51,9 +52,9 @@ function Album({ data }) {
 
   const handleHeartClick = async (e) => {
     e.stopPropagation()
-    if(!isLogin) {
-      message.warn("Vui lòng đăng nhập để thực hiện chức năng")
-return
+    if (!isLogin) {
+      message.warn('Vui lòng đăng nhập để thực hiện chức năng')
+      return
     }
 
     if (updateLoading) {
@@ -75,6 +76,11 @@ return
       <Fragment>
         <Menu.Item key="0" onClick={() => null}>
           Thêm vào danh sách phát
+        </Menu.Item>
+        <Menu.Item key="1" onClick={() => null}>
+          <FacebookShareButton url={`${window.location.origin}/albums/${_id}`}>
+            <span>Chia sẻ lên Facebook</span>
+          </FacebookShareButton>
         </Menu.Item>
       </Fragment>
     </Menu>

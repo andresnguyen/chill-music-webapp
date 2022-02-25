@@ -6,18 +6,16 @@ import EmptyBox from 'components/EmptyBox'
 import PlaylistList from 'components/PlaylistList'
 import SongCardList from 'components/SongCardList'
 import { debounce } from 'lodash'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 function SearchFeature(props) {
   const search = useSelector((state) => state.common.search)
-  const isMount = useRef(null)
   const [songList, setSongList] = useState([])
   const [albumList, setAlbumList] = useState([])
   const [playlistList, setPlaylistList] = useState([])
   const [artistList, setArtistList] = useState([])
-  const dispatch = useDispatch()
 
   const { mutate, isLoading } = useMutation(() => siteAPI.search({ q: search }), {
     onSuccess: (value) => {
@@ -41,16 +39,21 @@ function SearchFeature(props) {
 
   useEffect(() => {
     const inputSearch = document.querySelector('.header__search-input')
-    if(!inputSearch) return 
-    inputSearch.focus(  ) 
+    if (!inputSearch) return
+    inputSearch.focus()
   }, [])
 
   return (
     <div className="app__container tab--personal active">
-      <div className="content" style={{ paddingTop: 160 }}>
+      <div className="content" style={{ paddingTop: 140 }}>
         <div className="content__container">
           <div className="grid container__tab tab-home active">
-            {songList.length > 0 && (
+            {!isLoading && search && (
+              <h3 style={{ fontSize: '2rem', marginBottom: 40, color: 'var(--text-secondary)' }}>
+                Kết quả tìm kiếm của "{search}"
+              </h3>
+            )}
+            {search && !isLoading && songList.length > 0 && (
               <div className="container__section row">
                 <div className="col l-12 m-12 c-12 mb-16">
                   <div className="container__header">
@@ -66,7 +69,7 @@ function SearchFeature(props) {
               </div>
             )}
 
-            {playlistList.length > 0 && (
+            {search && !isLoading && playlistList.length > 0 && (
               <div className="container__section row">
                 <div className="col l-12 m-12 c-12 mb-16">
                   <div className="container__header">
@@ -82,7 +85,7 @@ function SearchFeature(props) {
               </div>
             )}
 
-            {albumList.length > 0 && (
+            {search && !isLoading && albumList.length > 0 && (
               <div className="container__section row">
                 <div className="col l-12 m-12 c-12 mb-16">
                   <div className="container__header">
@@ -98,7 +101,7 @@ function SearchFeature(props) {
               </div>
             )}
 
-            {artistList.length > 0 && (
+            {search && !isLoading && artistList.length > 0 && (
               <div className="container__section row">
                 <div className="col l-12 m-12 c-12 mb-16">
                   <div className="container__header">
@@ -121,14 +124,9 @@ function SearchFeature(props) {
               !playlistList.length &&
               !artistList.length && <EmptyBox text="Không có kết quả được tìm thấy" />}
 
-            {!isLoading &&
-              !search &&
-              !songList.length &&
-              !albumList.length &&
-              !playlistList.length &&
-              !artistList.length && (
-                <EmptyBox text="Nhập tên bài hát, tên nghệ sỹ, tên album hoặc tên playlist để tìm kiếm" />
-              )}
+            {!isLoading && !search && (
+              <EmptyBox text="Nhập tên bài hát, tên nghệ sỹ, tên album hoặc tên playlist để tìm kiếm" />
+            )}
 
             {isLoading && (
               <div className="d-f-c-c" style={{ height: 150 }}>

@@ -188,7 +188,7 @@ function Header(props) {
         <div className="header__search">
           <input
             type="text"
-            placeholder="Nhập tên bài hát, nghệ sĩ hoặc MV..."
+            placeholder="Nhập tên bài hát, nghệ sĩ hoặc album..."
             className="header__search-input"
             value={search}
             onChange={handleSearch}
@@ -241,7 +241,7 @@ function Header(props) {
       </div>
       <div className="header__nav">
         <ul className="header__nav-list">
-          <li className="header__nav-item">
+          {/* <li className="header__nav-item">
             <div className="header__nav-btn nav-btn--theme" title="Thay đổi chủ đề của giao diện">
               <svg width="20" height="20" className="header__nav-icon" viewBox="0 0 20 20">
                 <defs>
@@ -346,7 +346,7 @@ function Header(props) {
                 </g>
               </svg>
             </div>
-          </li>
+          </li> */}
           <li className="header__nav-item hide-on-mobile">
             <div className="header__nav-btn" title="Tải lên bài hát của bạn" onClick={handleUploadSongClick}>
               <label htmlFor="header__nav-input">

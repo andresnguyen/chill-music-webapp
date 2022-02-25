@@ -1,7 +1,7 @@
 import { FacebookOutlined, GoogleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { Button, Card, Descriptions, Form, Input, message } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { login } from '../userSlice'
@@ -10,17 +10,21 @@ function Login(props) {
   const history = useHistory()
   const dispatch = useDispatch()
   const [form] = Form.useForm()
+  const [loading, setLoading] = useState(false)
 
   const handleFinish = async (values) => {
     try {
+      setLoading(true)
       const result = await dispatch(login(values))
       unwrapResult(result)
       history.push({
         pathname: '/',
       })
+      setLoading(false)
     } catch (error) {
       message.error('Đăng nhập không thành công')
       form.setFieldsValue({ password: undefined })
+      setLoading(false)
     }
   }
 
@@ -45,11 +49,7 @@ function Login(props) {
                   },
                 ]}
               >
-                <Input
-                  size="large"
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="Email"
-                />
+                <Input size="large" prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
               </Form.Item>
               <Form.Item
                 name="password"
@@ -67,7 +67,15 @@ function Login(props) {
               </Form.Item>
 
               <Form.Item>
-                <Button size="large" type="primary" htmlType="submit" className="login-form-button" block>
+                <Button
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                  block
+                  loading={loading}
+                  disabled={loading}
+                >
                   Đăng nhập
                 </Button>
               </Form.Item>
@@ -76,7 +84,7 @@ function Login(props) {
                   Quên mật khẩu
                 </Link>
               </div>
-              <Button
+              {/* <Button
                 size="large"
                 type="primary"
                 htmlType="submit"
@@ -95,7 +103,7 @@ function Login(props) {
                 block
               >
                 Đăng nhập bằng Facebook
-              </Button>
+              </Button> */}
             </Descriptions.Item>
           </Descriptions>
         </Card>

@@ -14,6 +14,7 @@ import { parse } from 'query-string'
 import { changeValueCommon } from 'features/Common/commonSlice'
 import EmptyBox from 'components/EmptyBox'
 import siteAPI from 'api/siteAPI'
+import { FacebookIcon, FacebookShareButton } from 'react-share'
 
 function DetailPage(props) {
   const {
@@ -108,6 +109,12 @@ function DetailPage(props) {
                     <span>{!isPlaying ? 'Phát tất cả' : 'Tạm dừng'}</span>
                   </button>
                 )}
+                {/* <div style={{ marginLeft: 10 }}>
+                  {console.log(window.location.href)}
+                  <FacebookShareButton url={window.location.href}>
+                    <FacebookIcon size={32} round={true} />
+                  </FacebookShareButton>
+                </div> */}
                 <span></span>
               </div>
 
@@ -135,12 +142,16 @@ function DetailPage(props) {
                 {isLoading ? (
                   <SongListSkeleton />
                 ) : songList?.length > 0 ? (
-                  <SongList data={songList} showHeader hiddenAction showCheck playlistId={data._id} myPlaylist={data.userId === user._id}/>
-                ) : (
-                  <EmptyBox
-                    text="Không có bài hát trong playlist của bạn"
-                    style={{marginTop: 22}}
+                  <SongList
+                    data={songList}
+                    showHeader
+                    hiddenAction
+                    showCheck
+                    playlistId={data._id}
+                    myPlaylist={data.userId === user._id}
                   />
+                ) : (
+                  <EmptyBox text="Không có bài hát trong playlist của bạn" style={{ marginTop: 22 }} />
                 )}
               </div>
             </div>

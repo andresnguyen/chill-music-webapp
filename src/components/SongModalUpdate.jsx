@@ -17,6 +17,7 @@ function SongModalUpdate(props) {
   const [mediaLoading, setMediaLoading] = useState(false)
   const [imageURL, setImageURL] = useState(null)
   const [mediaURL, setMediaURL] = useState(null)
+  const audioRef = useRef()
   const dispatch = useDispatch()
 
   const queryClient = useQueryClient()
@@ -75,6 +76,7 @@ function SongModalUpdate(props) {
     if (payload.mediaURL) {
       payload.mediaURL = payload.mediaURL.fileList.slice(-1)[0].response.data.path
     }
+    payload.time = audioRef.current.duration
 
     mutate({ id: data._id, value: payload })
   }
@@ -195,7 +197,7 @@ function SongModalUpdate(props) {
                 onChange={handleChangeMedia}
               >
                 {mediaURL && !mediaLoading ? (
-                  <audio controls>
+                  <audio controls ref={audioRef}>
                     <source src={mediaURL} type="audio/ogg" />
                   </audio>
                 ) : (

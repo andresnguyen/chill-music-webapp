@@ -31,7 +31,7 @@ function SongModalUpdate() {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries('home-tab')
+      queryClient.invalidateQueries('my-song-list')
       setVisible(false)
     },
   })
