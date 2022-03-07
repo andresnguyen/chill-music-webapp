@@ -381,7 +381,7 @@ function Header(props) {
           )}
           <div className={classNames('header__nav-item avatar hide-on-mobile', { hideAll: !isLogin })} ref={wrapperRef}>
             <div className="header__nav-btn btn--nav-setting">
-              <li className="header__nav-item">
+              <li className="header__nav-item" style={{ margin: 0 }}>
                 <img
                   src={user.avatarURL}
                   alt=""

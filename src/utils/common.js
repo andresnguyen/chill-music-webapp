@@ -78,7 +78,7 @@ export const renderArtistFromList = (artistList) => {
       </Link>
     )
 
-  if (!Array.isArray(artistList) || artistList.length === 0) return 'Unknow'
+  if (!Array.isArray(artistList) || artistList.length === 0) return ''
   if (artistList.length === 1)
     return artistList.map((artist) => (
       <Link to={`/artists/${artist._id}`} className="is-ghost">

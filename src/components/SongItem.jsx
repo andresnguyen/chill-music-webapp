@@ -160,20 +160,24 @@ function SongItem({
         </div>
       </Menu.Item>
 
-      <Menu.Item key="4">
-        <Link to={`/songs/${data._id}`} className="menu__item">
-          <i className="bi bi-box-arrow-right"></i>
-          <span>Chi tiết bài hát</span>
-        </Link>
-      </Menu.Item>
+      {data.isActive && (
+        <Menu.Item key="4">
+          <Link to={`/songs/${data._id}`} className="menu__item">
+            <i className="bi bi-box-arrow-right"></i>
+            <span>Chi tiết bài hát</span>
+          </Link>
+        </Menu.Item>
+      )}
 
-      <Menu.Item key="5" onClick={() => null}>
-        <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
-          <div className="menu__item">
-            <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
-          </div>
-        </FacebookShareButton>
-      </Menu.Item>
+      {data.isActive && (
+        <Menu.Item key="5" onClick={() => null}>
+          <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
+            <div className="menu__item">
+              <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
+            </div>
+          </FacebookShareButton>
+        </Menu.Item>
+      )}
     </Menu>
   )
 
@@ -214,20 +218,24 @@ function SongItem({
         </Menu.Item>
       )}
 
-      <Menu.Item key="5">
-        <Link to={`/songs/${data._id}`} className="menu__item">
-          <i className="bi bi-box-arrow-right"></i>
-          <span>Chi tiết bài hát</span>
-        </Link>
-      </Menu.Item>
+      {data.isActive && (
+        <Menu.Item key="5">
+          <Link to={`/songs/${data._id}`} className="menu__item">
+            <i className="bi bi-box-arrow-right"></i>
+            <span>Chi tiết bài hát</span>
+          </Link>
+        </Menu.Item>
+      )}
 
-      <Menu.Item key="6" onClick={() => null}>
-        <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
-          <div className="menu__item">
-            <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
-          </div>
-        </FacebookShareButton>
-      </Menu.Item>
+      {data.isActive && (
+        <Menu.Item key="6" onClick={() => null}>
+          <FacebookShareButton url={`${window.location.origin}/songs/${_id}`}>
+            <div className="menu__item">
+              <i className="bi bi-facebook"></i> <span>Chia sẻ lên Facebook</span>
+            </div>
+          </FacebookShareButton>
+        </Menu.Item>
+      )}
     </Menu>
   )
 

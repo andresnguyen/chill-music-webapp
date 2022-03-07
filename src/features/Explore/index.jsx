@@ -30,8 +30,8 @@ function ExploreFeature(props) {
             {data?.map((item, index) => (
               <Fragment>
                 <Section key={item._id} data={item} />
-                {index === 3 && <SliderSection />}
-                {index === 7 && <Partner />}
+                {/* {index === 3 && <SliderSection />} */}
+                {/* {index === 7 && <Partner />} */}
               </Fragment>
             ))}
 

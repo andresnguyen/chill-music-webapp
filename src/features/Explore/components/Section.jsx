@@ -26,6 +26,14 @@ function Section({ data = {} }) {
             <h3>{data.title}</h3>
           </a>
           <h3 className="container__header-subtitle">{data.title}</h3>
+          <div className="container__header-actions hide-on-tablet-mobile">
+            <div className="container__move-btn move-btn--playlist">
+              <i className="bi bi-chevron-left container__move-btn-icon"></i>
+            </div>
+            <div className="container__move-btn move-btn--playlist">
+              <i className="bi bi-chevron-right container__move-btn-icon"></i>
+            </div>
+          </div>
         </div>
       </div>
 

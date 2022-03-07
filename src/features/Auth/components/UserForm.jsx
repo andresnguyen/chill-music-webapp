@@ -82,7 +82,7 @@ function Detail({ data, updateLoading, onUpdate }) {
   const uploadButton = (
     <div>
       {avatarLoading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>Tải lên</div>
     </div>
   )
 

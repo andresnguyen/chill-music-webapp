@@ -114,7 +114,7 @@ function Artist({ data = {} }) {
                   </i>
                 </span>
               </div>
-              <h3 className="row__info-creator text-center">{favoriteNumber} quan tâm</h3>
+              <h3 className="row__info-creator text-center">{favoriteNumber || 0} quan tâm</h3>
             </div>
           </div>
           <div className="row__item-btn">

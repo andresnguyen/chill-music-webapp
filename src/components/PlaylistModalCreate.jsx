@@ -29,7 +29,7 @@ function PlaylistModalCreate() {
     form.submit()
   }
 
-  const { mutate, isLoading } = useMutation((values) => collectionAPI.createPlaylist(values), {
+  const { mutate, isLoading } = useMutation((values) => collectionAPI.createPlaylist({ ...values, type: 1 }), {
     onSuccess: () => {
       message.success('Thêm playlist mới thành công')
     },

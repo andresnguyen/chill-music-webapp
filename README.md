@@ -65,3 +65,9 @@ State tính toán phụ thuộc vào state có sẵn
 - cartItemsCount
 - cartTotal
 --> createSelector()
+
+
+REACT_APP_API_URL=http://localhost:3008
+REACT_APP_USER_API_URL=http://localhost:3008
+REACT_APP_IMAGE_API_URL=https://chill-music-image-api.herokuapp.com
+REACT_APP_UPLOAD_SONG_API_URL=https://chill-music-upload-song-api.herokuapp.com

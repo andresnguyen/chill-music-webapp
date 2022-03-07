@@ -31,7 +31,7 @@ function SongModalCreate() {
 
   const queryClient = useQueryClient()
 
-  const { mutate, isLoading } = useMutation((data) => songAPI.add(data), {
+  const { mutate, isLoading } = useMutation((data) => songAPI.add({ ...data, type: 1, isActive: false }), {
     onSuccess: () => {
       message.success('Tải bài hát lên thành công')
     },
@@ -73,14 +73,14 @@ function SongModalCreate() {
   const uploadButton = (
     <div>
       {imageLoading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>Tải lên</div>
     </div>
   )
 
   const uploadButtonMedia = (
     <div>
       {mediaLoading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>Tải lên</div>
     </div>
   )
 
